@@ -4,7 +4,7 @@
     <projectFile>Academic/Academic.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="59eca938-9bf3-402d-849e-68bda72e82ad" name="Default Changelist" comment="" />
+    <list default="true" id="59eca938-9bf3-402d-849e-68bda72e82ad" name="Default Changelist" comment="v1" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,6 +42,7 @@
     </option>
   </component>
   <component name="ProjectId" id="1jfKVQGv2IkUI3JQbufhUCpXmPT" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
