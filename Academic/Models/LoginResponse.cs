@@ -4,6 +4,7 @@ namespace Academic.Models
 {
     public class LoginResponse
     {
+        //modelul ce returneaza utilizatorul, dupa ce s-a facut request-ul
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

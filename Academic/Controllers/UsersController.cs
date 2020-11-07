@@ -10,7 +10,7 @@ using Academic.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using Academic.Services;
-
+//in controller se fac requesturile la api
 namespace Academic.Controllers
 {
 
@@ -31,7 +31,7 @@ namespace Academic.Controllers
                 _appSettings = appSettings.Value;
                 _mapper = mapper;
             }
-
+            //request-ul de login
             [HttpPost("authenticate")]
             public IActionResult Autentificate(LoginRequest model)
             {
@@ -62,6 +62,7 @@ namespace Academic.Controllers
                 }
             }
             */
+            //request-ul ce returneaa un user dupa id
             [HttpGet("{id}")]
             public IActionResult GetById(int id)
             {
@@ -91,6 +92,7 @@ namespace Academic.Controllers
                 }
             }
             */
+            //requestul ce returneaza toti userii
             [Authorize]
             [HttpGet]
             public IActionResult GetAll()

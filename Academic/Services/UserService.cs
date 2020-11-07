@@ -36,7 +36,7 @@ namespace Academic.Services
             _appSettings = appSettings.Value;
             _context = context;
         }
-
+        //Serviciul de login
         public LoginResponse Login(string Username, string Password)
         {
             var user = _context.Users.SingleOrDefault(x => x.Username == Username);
@@ -91,7 +91,7 @@ namespace Academic.Services
             _context.SaveChanges();
         }
         */
-
+        //serviciul de delete
         public void Delete(int id)
         {
             var user = _context.Users.Find(id);
@@ -123,15 +123,17 @@ namespace Academic.Services
             return user;
         }
         */
+        //serviciul ce returneazza toti userii
         public IEnumerable<Users> GetAll()
         {
             return _context.Users;
         }
-
+        //serviciul ce returneaza un user dupa id
         public Users GetById(int id)
         {
             return _context.Users.Find(id);
         }
+        //serviciul ce genereaza token-ul
         private string generateJwtToken(Users user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -145,6 +147,8 @@ namespace Academic.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
+        //serviciul folosit pt verificarea tokenului
+        //!!trebuie facute conversiile din byte in bitarray
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             if (password == null) throw new ArgumentNullException("empty password");
@@ -177,6 +181,7 @@ namespace Academic.Services
 
             return bytes;
         }
+        //verifica hash-ul parolei
         private static bool VerifyPasswordHash(string password, BitArray storedHash, BitArray storedSalt)
         {
             if (password == null) throw new ArgumentNullException("password");
@@ -198,3 +203,4 @@ namespace Academic.Services
     }
     }
 }
+//ar fi recomandat sa creem adminService, pt a putea face request-uri de creere cont si sa putem verifica cum trebuie login-ul!

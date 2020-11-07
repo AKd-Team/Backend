@@ -31,14 +31,16 @@ namespace Academic
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //adauga contextul basei de date
             services.AddDbContext<academicContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("Db")));
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            //adauga corsul(chestia care decide daca te lasa sau nu sa faci request, trebuie dezvoltat
             services.AddCors();
             services.AddControllers();
-
+            //basic appsettings
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-
+            //se adauga user service-ul ce se va ocupa de servicii
             services.AddScoped<UserService.IUsersService, UserService.UsersService>();
         }
 
@@ -55,13 +57,15 @@ namespace Academic
             app.UseEndpoints(endpoints =>
             {
                 app.UseRouting();
-
+                //se selecteaza ce poate face Cors-ul
                 app.UseCors(x => x
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader());
-
+                //basically meniul de "home" dar pt api-uri
+                //aici putem selecta adresa pe care facem toate requesturile(in cazul actual /users/...
                 app.UseMiddleware<JwtMiddleware>();
+                //ce va inchide aplicatia?
                 app.UseEndpoints(x => x.MapControllers());
             });
         }

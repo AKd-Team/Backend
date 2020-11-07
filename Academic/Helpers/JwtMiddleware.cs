@@ -19,6 +19,7 @@ namespace Academic.Helpers
             _next = next;
             _appSettings = appSettings.Value;
         }
+        //invoca atasarea UserContextului
         public async Task Invoke(HttpContext context, UserService.IUsersService userService)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
@@ -30,8 +31,11 @@ namespace Academic.Helpers
         {
             try
             {
+                //genereaza token
                 var tokenHandler = new JwtSecurityTokenHandler();
+                //genereaza secret
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                //valideaa tokenul de validare
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
@@ -39,11 +43,11 @@ namespace Academic.Helpers
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ClockSkew = TimeSpan.Zero
-                }, out SecurityToken validatedToken);
+                }, out SecurityToken validatedToken);//daca e bine, da tokenul pt requesturi
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
-                var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
-                context.Items["Users"] = userService.GetById(userId);
+                var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);//genereaza userId-ul pe baza tokenului
+                context.Items["Users"] = userService.GetById(userId);//returneaza userul pt tokenul generat
             }
             catch
             {

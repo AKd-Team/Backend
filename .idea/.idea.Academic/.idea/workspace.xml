@@ -13,23 +13,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="59eca938-9bf3-402d-849e-68bda72e82ad" name="Default Changelist" comment="v1">
-      <change afterPath="$PROJECT_DIR$/Academic/Helpers/JwtMiddleware.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/contentModel.xml" afterDir="false" />
+    <list default="true" id="59eca938-9bf3-402d-849e-68bda72e82ad" name="Default Changelist" comment="login works!">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Academic/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Controllers/UsersController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Academic/Helpers/JwtMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Helpers/JwtMiddleware.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Academic/Models/LoginRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Models/LoginRequest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Academic/Models/LoginResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Models/LoginResponse.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Academic/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Services/UserService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Academic/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Academic.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Academic.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Academic.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Academic.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.csprojAssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/project.nuget.cache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,18 +48,18 @@
         <option value="$PROJECT_DIR$/Academic/Models/loginRequest.cs" />
         <option value="$PROJECT_DIR$/Academic/Models/loginResponse.cs" />
         <option value="$PROJECT_DIR$/Academic/Helpers/AutoMapper.cs" />
-        <option value="$PROJECT_DIR$/Academic/Models/LoginRequest.cs" />
         <option value="$PROJECT_DIR$/Academic/Helpers/AppSettings.cs" />
         <option value="$PROJECT_DIR$/Academic/Entities/UsersContext.cs" />
         <option value="$PROJECT_DIR$/Academic/appsettings.json" />
         <option value="$PROJECT_DIR$/Academic/Entities/academicContext.cs" />
         <option value="$PROJECT_DIR$/Academic/Entities/Users.cs" />
         <option value="$PROJECT_DIR$/Academic/Helpers/AutoMapperProfile.cs" />
-        <option value="$PROJECT_DIR$/Academic/Models/LoginResponse.cs" />
+        <option value="$PROJECT_DIR$/Academic/Startup.cs" />
+        <option value="$PROJECT_DIR$/Academic/Helpers/JwtMiddleware.cs" />
         <option value="$PROJECT_DIR$/Academic/Controllers/UsersController.cs" />
         <option value="$PROJECT_DIR$/Academic/Services/UserService.cs" />
-        <option value="$PROJECT_DIR$/Academic/Helpers/JwtMiddleware.cs" />
-        <option value="$PROJECT_DIR$/Academic/Startup.cs" />
+        <option value="$PROJECT_DIR$/Academic/Models/LoginRequest.cs" />
+        <option value="$PROJECT_DIR$/Academic/Models/LoginResponse.cs" />
       </list>
     </option>
   </component>
@@ -133,7 +124,7 @@
       <workItem from="1604189740698" duration="13279000" />
       <workItem from="1604234342726" duration="7166000" />
       <workItem from="1604255987702" duration="2835000" />
-      <workItem from="1604754645772" duration="2386000" />
+      <workItem from="1604754645772" duration="3562000" />
     </task>
     <task id="LOCAL-00001" summary="v1">
       <created>1604256192843</created>
@@ -149,7 +140,21 @@
       <option name="project" value="LOCAL" />
       <updated>1604256334398</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="login works!">
+      <created>1604757137181</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1604757137181</updated>
+    </task>
+    <task id="LOCAL-00004" summary="login works!">
+      <created>1604757146884</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1604757146884</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -172,7 +177,8 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="v1" />
-    <option name="LAST_COMMIT_MESSAGE" value="v1" />
+    <MESSAGE value="login works!" />
+    <option name="LAST_COMMIT_MESSAGE" value="login works!" />
   </component>
   <component name="WindowStateProjectService">
     <state x="838" y="418" key="Github.ShareDialog" timestamp="1604256084251">
@@ -183,22 +189,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="691" y="226" key="Github.UntrackedFilesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604256102896" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1604756385103">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1604757013787">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604756385103" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1604756385102">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604757013787" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1604757013787">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604756385102" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1604756385102">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604757013787" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1604757013787">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604756385102" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1604756385103">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604757013787" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1604757013787">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604756385103" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604757013787" />
     <state x="552" y="252" key="Rider.ProjectTemplateDialog.Size" timestamp="1604330801959">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
