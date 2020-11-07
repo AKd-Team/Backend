@@ -13,15 +13,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="59eca938-9bf3-402d-849e-68bda72e82ad" name="Default Changelist" comment="login works!">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Controllers/UsersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Helpers/JwtMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Helpers/JwtMiddleware.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Models/LoginRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Models/LoginRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Models/LoginResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Models/LoginResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Services/UserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Startup.cs" afterDir="false" />
-    </list>
+    <list default="true" id="59eca938-9bf3-402d-849e-68bda72e82ad" name="Default Changelist" comment="login works!Also it's commented now" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -124,7 +116,7 @@
       <workItem from="1604189740698" duration="13279000" />
       <workItem from="1604234342726" duration="7166000" />
       <workItem from="1604255987702" duration="2835000" />
-      <workItem from="1604754645772" duration="3562000" />
+      <workItem from="1604754645772" duration="4337000" />
     </task>
     <task id="LOCAL-00001" summary="v1">
       <created>1604256192843</created>
@@ -154,7 +146,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604757146884</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="login works!Also it's commented now">
+      <created>1604758263131</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1604758263131</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,7 +177,8 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="v1" />
     <MESSAGE value="login works!" />
-    <option name="LAST_COMMIT_MESSAGE" value="login works!" />
+    <MESSAGE value="login works!Also it's commented now" />
+    <option name="LAST_COMMIT_MESSAGE" value="login works!Also it's commented now" />
   </component>
   <component name="WindowStateProjectService">
     <state x="838" y="418" key="Github.ShareDialog" timestamp="1604256084251">
