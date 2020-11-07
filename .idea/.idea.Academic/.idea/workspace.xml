@@ -116,7 +116,7 @@
       <workItem from="1604189740698" duration="13279000" />
       <workItem from="1604234342726" duration="7166000" />
       <workItem from="1604255987702" duration="2835000" />
-      <workItem from="1604754645772" duration="4337000" />
+      <workItem from="1604754645772" duration="4674000" />
     </task>
     <task id="LOCAL-00001" summary="v1">
       <created>1604256192843</created>
@@ -153,7 +153,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604758263131</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="login works!Also it's commented now">
+      <created>1604758997023</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1604758997023</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -209,13 +216,13 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="252" key="Rider.ProjectTemplateDialog.Size/0.0.1920.1040@0.0.1920.1040" timestamp="1604330801959" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1604256362951">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1604759321619">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1604256362951" />
-    <state x="756" y="421" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1604256325608">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1604759321619" />
+    <state x="756" y="421" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1604759307634">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="756" y="421" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604256325608" />
+    <state x="756" y="421" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604759307634" />
   </component>
 </project>
