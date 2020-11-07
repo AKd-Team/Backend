@@ -39,7 +39,7 @@ namespace Academic
 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
-            //services.AddScoped<IUserService, UserService>();
+            services.AddScoped<UserService.IUsersService, UserService.UsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,8 +61,8 @@ namespace Academic
                     .AllowAnyMethod()
                     .AllowAnyHeader());
 
-               // app.UseMiddleware<JwtMiddleware>();
-                endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
+                app.UseMiddleware<JwtMiddleware>();
+                app.UseEndpoints(x => x.MapControllers());
             });
         }
     }

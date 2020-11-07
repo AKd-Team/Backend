@@ -32,6 +32,12 @@
         <e p="Helpers" t="Include">
           <e p="AppSettings.cs" t="Include" />
           <e p="AutoMapperProfile.cs" t="Include" />
+          <e p="JwtMiddleware.cs" t="Include" />
+        </e>
+        <e p="Migrations" t="Include">
+          <e p="20201107131145_InitialAdd.cs" t="Include" />
+          <e p="20201107131145_InitialAdd.Designer.cs" t="Include" />
+          <e p="academicContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="Models" t="Include">
           <e p="loginRequest.cs" t="Include" />

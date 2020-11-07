@@ -155,24 +155,43 @@ namespace Academic.Services
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
         }
+        private static byte[] ToByteArray(BitArray bits) {
+            int numBytes = bits.Count / 8;
 
+            if (bits.Count % 8 != 0) numBytes++;
+
+            byte[] bytes = new byte[numBytes];
+
+            int byteIndex = 0, bitIndex = 0;
+
+            for (int i = 0; i < bits.Count; i++) {
+                if (bits[i])
+                    bytes[byteIndex] |= (byte)(1 << bitIndex);
+
+                bitIndex++;
+                if (bitIndex == 8) {
+                    bitIndex = 0;
+                    byteIndex++;
+                }
+            }
+
+            return bytes;
+        }
         private static bool VerifyPasswordHash(string password, BitArray storedHash, BitArray storedSalt)
         {
             if (password == null) throw new ArgumentNullException("password");
             if (storedHash.Length != 64) throw new ArgumentException("hash exceeds limit");
             if (storedSalt.Length != 128) throw new ArgumentException("salt exceeds limit");
-            BitArray hash = new BitArray(storedHash);
-            BitArray salt = new BitArray(storedSalt);
 
-            /*using (var hmac = new System.Security.Cryptography.HMACSHA512(salt))
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(ToByteArray(storedSalt)))
             {
                 var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
                 for (int i = 0; i < computedHash.Length; i++)
                 {
-                    if (hash[i] != hash[i]) return false;
+                    if (computedHash[i] != ToByteArray(storedHash)[i]) return false;
                 }
             }
-            */
+            
 
             return true;
         }
