@@ -32,8 +32,8 @@ namespace Academic.Controllers
                 _mapper = mapper;
             }
             //request-ul de login
-            [HttpPost("authenticate")]
-            public IActionResult Autentificate(LoginRequest model)
+            [HttpPost("login")]
+            public IActionResult Login(LoginRequest model)
             {
                 var response = _usersService.Login(model.Username, model.Password);
 
@@ -41,18 +41,17 @@ namespace Academic.Controllers
                     return BadRequest(new {message = "User or Password is incorrect"});
                 return Ok(response);
             }
-
-            /*
+            
             [HttpPost("register")]
             public IActionResult Register(RegisterRequest model)
             {
                 // map model to entity
-                var user = _mapper.Map<User>(model);
+                var user = _mapper.Map<Users>(model);
     
                 try
                 {
                     // create user
-                    _userService.Create(user,model.Password);
+                    _usersService.Create(user,model.Password);
                     return Ok();
                 }
                 catch (AppException ex)
@@ -61,7 +60,6 @@ namespace Academic.Controllers
                     return BadRequest(new { message = ex.Message });
                 }
             }
-            */
             //request-ul ce returneaa un user dupa id
             [HttpGet("{id}")]
             public IActionResult GetById(int id)

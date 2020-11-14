@@ -12,8 +12,8 @@ namespace Academic.Entities
         public string Prenume { get; set; }
         public string Cnp { get; set; }
         public string TipUtilizator { get; set; }
-        public BitArray PHash { get; set; }
-        public BitArray PSalt { get; set; }
+        public byte[] PHash { get; set; }
+        public byte[] PSalt { get; set; }
         public int IdAdmin { get; set; }
         public string Mail { get; set; }
         public int? IdSpecializare { get; set; }

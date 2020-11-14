@@ -21,7 +21,7 @@ namespace Academic.Services
         LoginResponse Login(string username, string password);
         IEnumerable<Users> GetAll();
         Users GetById(int id);
-        //Users Create(Users user, string password);
+        Users Create(Users user, string password);
         void Delete(int id);
         //void Update(Users user, string password = null);
     }
@@ -101,28 +101,27 @@ namespace Academic.Services
                 _context.SaveChanges();
             }
         }
-        /*
+
         public Users Create(Users user, string password)
         {
             // validation
             if (string.IsNullOrWhiteSpace(password))
                 throw new AppException("Password is required");
 
-            if (_context.Users.Any(x => x.UserName == user.UserName))
-                throw new AppException("Username \"" + user.UserName + "\" is already taken");
+            if (_context.Users.Any(x => x.Username == user.Username))
+                throw new AppException("Username \"" + user.Username + "\" is already taken");
 
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
+            user.PHash = passwordHash;
+            user.PSalt = passwordSalt;
 
             _context.Users.Add(user);
             _context.SaveChanges();
 
             return user;
         }
-        */
         //serviciul ce returneazza toti userii
         public IEnumerable<Users> GetAll()
         {
@@ -159,45 +158,21 @@ namespace Academic.Services
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
         }
-        private static byte[] ToByteArray(BitArray bits) {
-            int numBytes = bits.Count / 8;
-
-            if (bits.Count % 8 != 0) numBytes++;
-
-            byte[] bytes = new byte[numBytes];
-
-            int byteIndex = 0, bitIndex = 0;
-
-            for (int i = 0; i < bits.Count; i++) {
-                if (bits[i])
-                    bytes[byteIndex] |= (byte)(1 << bitIndex);
-
-                bitIndex++;
-                if (bitIndex == 8) {
-                    bitIndex = 0;
-                    byteIndex++;
-                }
-            }
-
-            return bytes;
-        }
         //verifica hash-ul parolei
-        private static bool VerifyPasswordHash(string password, BitArray storedHash, BitArray storedSalt)
+        private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
         {
             if (password == null) throw new ArgumentNullException("password");
             if (storedHash.Length != 64) throw new ArgumentException("hash exceeds limit");
             if (storedSalt.Length != 128) throw new ArgumentException("salt exceeds limit");
 
-            using (var hmac = new System.Security.Cryptography.HMACSHA512(ToByteArray(storedSalt)))
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
             {
                 var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
                 for (int i = 0; i < computedHash.Length; i++)
                 {
-                    if (computedHash[i] != ToByteArray(storedHash)[i]) return false;
+                    if (computedHash[i] != storedHash[i]) return false;
                 }
             }
-            
-
             return true;
         }
     }

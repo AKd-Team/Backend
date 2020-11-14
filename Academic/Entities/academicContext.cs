@@ -70,11 +70,11 @@ namespace Academic.Entities
 
                 entity.Property(e => e.PHash)
                     .HasColumnName("p_hash")
-                    .HasColumnType("bit varying(255)");
+                    .HasColumnType("bytea");
 
                 entity.Property(e => e.PSalt)
                     .HasColumnName("p_salt")
-                    .HasColumnType("bit varying(255)");
+                    .HasColumnType("bytea");
 
                 entity.Property(e => e.Prenume)
                     .HasColumnName("prenume")
@@ -364,11 +364,11 @@ namespace Academic.Entities
 
                 entity.Property(e => e.PHash)
                     .HasColumnName("p_hash")
-                    .HasColumnType("bit varying(255)");
+                    .HasColumnType("bytea");
 
                 entity.Property(e => e.PSalt)
                     .HasColumnName("p_salt")
-                    .HasColumnType("bit varying(255)");
+                    .HasColumnType("bytea");
 
                 entity.Property(e => e.Prenume)
                     .HasColumnName("prenume")
@@ -514,11 +514,11 @@ namespace Academic.Entities
 
                 entity.Property(e => e.PHash)
                     .HasColumnName("p_hash")
-                    .HasColumnType("bit varying(255)");
+                    .HasColumnType("bytea");
 
                 entity.Property(e => e.PSalt)
                     .HasColumnName("p_salt")
-                    .HasColumnType("bit varying(255)");
+                    .HasColumnType("bytea");
 
                 entity.Property(e => e.Prenume)
                     .HasColumnName("prenume")
@@ -558,11 +558,11 @@ namespace Academic.Entities
 
                 entity.Property(e => e.PHash)
                     .HasColumnName("p_hash")
-                    .HasColumnType("bit varying(255)");
+                    .HasColumnType("bytea");
 
                 entity.Property(e => e.PSalt)
                     .HasColumnName("p_salt")
-                    .HasColumnType("bit varying(255)");
+                    .HasColumnType("bytea");
 
                 entity.Property(e => e.Prenume)
                     .HasColumnName("prenume")
