@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Academic.Services;
@@ -20,14 +21,14 @@ namespace Academic.Helpers
             _appSettings = appSettings.Value;
         }
         //invoca atasarea UserContextului
-        public async Task Invoke(HttpContext context, UserService.IUsersService userService)
+        public async Task Invoke(HttpContext context, IUsersService userService)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             if (token != null)
                 attachUserContext(context, userService, token);
             await _next(context);
         }
-        private void attachUserContext(HttpContext context, UserService.IUsersService userService, string token)
+        private void attachUserContext(HttpContext context, IUsersService userService, string token)
         {
             try
             {

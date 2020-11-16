@@ -11,6 +11,9 @@
         <e p="appsettings.json" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
+          <e p="AdminController.cs" t="Include" />
+          <e p="ProfesorController.cs" t="Include" />
+          <e p="StudentController.cs" t="Include" />
           <e p="UsersController.cs" t="Include" />
         </e>
         <e p="Entities" t="Include">
@@ -33,6 +36,7 @@
         <e p="Helpers" t="Include">
           <e p="AppException.cs" t="Include" />
           <e p="AppSettings.cs" t="Include" />
+          <e p="AuthorizeAttribute.cs" t="Include" />
           <e p="AutoMapperProfile.cs" t="Include" />
           <e p="JwtMiddleware.cs" t="Include" />
         </e>
@@ -58,6 +62,9 @@
           <e p="launchSettings.json" t="Include" />
         </e>
         <e p="Services" t="Include">
+          <e p="AdminService.cs" t="Include" />
+          <e p="ProfesorService.cs" t="Include" />
+          <e p="StudentService.cs" t="Include" />
           <e p="UserService.cs" t="Include" />
         </e>
         <e p="Startup.cs" t="Include" />

@@ -1,29 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Academic.Models;
 using Academic.Services;
-using System.Security.Cryptography;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 using Academic.Entities;
 using AutoMapper;
 using Academic.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
-using Academic.Services;
 //in controller se fac requesturile la api
 namespace Academic.Controllers
 {
 
         [ApiController]
-        [Route("[controller]")]
+        [Route("users")]
         public class UsersController : ControllerBase
         {
-            private UserService.IUsersService _usersService;
+            private IUsersService _usersService;
             private IMapper _mapper;
             private readonly AppSettings _appSettings;
 
             public UsersController(
-                UserService.IUsersService userService,
+                IUsersService userService,
                 IOptions<AppSettings> appSettings,
                 IMapper mapper)
             {
@@ -41,7 +37,6 @@ namespace Academic.Controllers
                     return BadRequest(new {message = "User or Password is incorrect"});
                 return Ok(response);
             }
-            
             [HttpPost("register")]
             public IActionResult Register(RegisterRequest model)
             {
@@ -62,6 +57,7 @@ namespace Academic.Controllers
             }
             //request-ul ce returneaa un user dupa id
             [HttpGet("{id}")]
+            [Authorize("")]
             public IActionResult GetById(int id)
             {
                 var user = _usersService.GetById(id);
@@ -91,8 +87,8 @@ namespace Academic.Controllers
             }
             */
             //requestul ce returneaza toti userii
-            [Authorize]
             [HttpGet]
+            [Authorize("")]
             public IActionResult GetAll()
             {
                 var users = _usersService.GetAll();

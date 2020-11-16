@@ -8,7 +8,7 @@ namespace Academic.Helpers
         public AutoMapperProfile()
         {
             CreateMap<Users, LoginResponse>();
-            //CreateMap<RegisterRequest, User>();
+            CreateMap<RegisterRequest, Users>();
             //CreateMap<UpdateRequest, User>();
         }
     }

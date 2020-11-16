@@ -5,8 +5,6 @@ namespace Academic.Models
     public class RegisterRequest
     {
         [Required]
-        public int IdUser { get; set; }
-        [Required]
         public string Username { get; set; }
         [Required]
         public string Nume { get; set; }

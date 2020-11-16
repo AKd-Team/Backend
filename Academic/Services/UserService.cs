@@ -14,9 +14,7 @@ using Academic.Models;
 
 namespace Academic.Services
 {
-    public class UserService
-    {
-        public interface IUsersService
+    public interface IUsersService
     {
         LoginResponse Login(string username, string password);
         IEnumerable<Users> GetAll();
@@ -25,13 +23,13 @@ namespace Academic.Services
         void Delete(int id);
         //void Update(Users user, string password = null);
     }
-    public class UsersService : IUsersService
+    public class UserService : IUsersService
     {
 
         private academicContext _context;
         private readonly AppSettings _appSettings;
 
-        public UsersService(IOptions<AppSettings> appSettings, academicContext context)
+        public UserService(IOptions<AppSettings> appSettings, academicContext context)
         {
             _appSettings = appSettings.Value;
             _context = context;
@@ -132,6 +130,11 @@ namespace Academic.Services
         {
             return _context.Users.Find(id);
         }
+
+        public string GetType(int id)
+        {
+            return _context.Users.Find(id).TipUtilizator;
+        }
         //serviciul ce genereaza token-ul
         private string generateJwtToken(Users user)
         {
@@ -139,7 +142,11 @@ namespace Academic.Services
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.IdUser.ToString()) }),
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim("id", user.IdUser.ToString()),
+                    //new Claim("tip",user.TipUtilizator)
+                }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
@@ -147,7 +154,6 @@ namespace Academic.Services
             return tokenHandler.WriteToken(token);
         }
         //serviciul folosit pt verificarea tokenului
-        //!!trebuie facute conversiile din byte in bitarray
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             if (password == null) throw new ArgumentNullException("empty password");
@@ -175,7 +181,6 @@ namespace Academic.Services
             }
             return true;
         }
-    }
     }
 }
 //ar fi recomandat sa creem adminService, pt a putea face request-uri de creere cont si sa putem verifica cum trebuie login-ul!

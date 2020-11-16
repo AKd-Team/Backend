@@ -1,16 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Academic.Helpers;
 using Academic.Services;
 using Microsoft.EntityFrameworkCore;
@@ -38,10 +30,22 @@ namespace Academic
             //adauga corsul(chestia care decide daca te lasa sau nu sa faci request, trebuie dezvoltat
             services.AddCors();
             services.AddControllers();
+            /*
+            services.AddAuthorization(options =>
+            {
+                //options.AddPolicy("Administrators", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("admin", policy => policy.RequireClaim("tip", "admin"));
+                options.AddPolicy("student", policy => policy.RequireClaim("tip", "student"));
+                options.AddPolicy("profesor", policy => policy.RequireClaim("tip", "profesor"));
+            });
+            */
             //basic appsettings
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             //se adauga user service-ul ce se va ocupa de servicii
-            services.AddScoped<UserService.IUsersService, UserService.UsersService>();
+            services.AddScoped<IUsersService, UserService>();
+            services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IProfesorService, ProfesorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +66,7 @@ namespace Academic
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader());
+
                 //basically meniul de "home" dar pt api-uri
                 //aici putem selecta adresa pe care facem toate requesturile(in cazul actual /users/...
                 app.UseMiddleware<JwtMiddleware>();
