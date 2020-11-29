@@ -7,14 +7,16 @@ namespace Academic.Entities
     {
         public Facultate()
         {
-            Profesor = new HashSet<Profesor>();
+            Departament = new HashSet<Departament>();
+            Regulament = new HashSet<Regulament>();
             Specializare = new HashSet<Specializare>();
         }
 
         public int IdFacultate { get; set; }
         public string Nume { get; set; }
 
-        public virtual ICollection<Profesor> Profesor { get; set; }
+        public virtual ICollection<Departament> Departament { get; set; }
+        public virtual ICollection<Regulament> Regulament { get; set; }
         public virtual ICollection<Specializare> Specializare { get; set; }
     }
 }

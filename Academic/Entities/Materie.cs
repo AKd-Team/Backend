@@ -8,6 +8,7 @@ namespace Academic.Entities
         public Materie()
         {
             Detaliucontract = new HashSet<Detaliucontract>();
+            MaterieSpecializare = new HashSet<MaterieSpecializare>();
             Orarmaterie = new HashSet<Orarmaterie>();
         }
 
@@ -21,6 +22,7 @@ namespace Academic.Entities
         public int? TipActivitate { get; set; }
 
         public virtual ICollection<Detaliucontract> Detaliucontract { get; set; }
+        public virtual ICollection<MaterieSpecializare> MaterieSpecializare { get; set; }
         public virtual ICollection<Orarmaterie> Orarmaterie { get; set; }
     }
 }

@@ -14,6 +14,8 @@ namespace Academic.Entities
         public int AnDeStudiu { get; set; }
         public string AnCalendaristic { get; set; }
         public string Cod { get; set; }
+        public string FormaBugetare { get; set; }
+        public string Frecventa { get; set; }
 
         public virtual Student IdStudentNavigation { get; set; }
         public virtual ICollection<Detaliucontract> Detaliucontract { get; set; }

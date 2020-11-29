@@ -18,12 +18,15 @@ namespace Academic.Entities
         public virtual DbSet<Admin> Admin { get; set; }
         public virtual DbSet<Contractdestudiu> Contractdestudiu { get; set; }
         public virtual DbSet<Criteriu> Criteriu { get; set; }
+        public virtual DbSet<Departament> Departament { get; set; }
         public virtual DbSet<Detaliucontract> Detaliucontract { get; set; }
         public virtual DbSet<Facultate> Facultate { get; set; }
         public virtual DbSet<Formatie> Formatie { get; set; }
         public virtual DbSet<Materie> Materie { get; set; }
+        public virtual DbSet<MaterieSpecializare> MaterieSpecializare { get; set; }
         public virtual DbSet<Orarmaterie> Orarmaterie { get; set; }
         public virtual DbSet<Profesor> Profesor { get; set; }
+        public virtual DbSet<Regulament> Regulament { get; set; }
         public virtual DbSet<Review> Review { get; set; }
         public virtual DbSet<Sala> Sala { get; set; }
         public virtual DbSet<Specializare> Specializare { get; set; }
@@ -35,7 +38,7 @@ namespace Academic.Entities
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseNpgsql("Host=localhost;Database=academic;Username=postgres;Password=BiggieSmalls");
+                optionsBuilder.UseNpgsql("Host=localhost;Database=academic;Username=postgres;Password=craniulucigas");
             }
         }
 
@@ -43,22 +46,20 @@ namespace Academic.Entities
         {
             modelBuilder.Entity<Admin>(entity =>
             {
-                entity.HasKey(e => e.IdAdmin)
+                entity.HasKey(e => e.IdUser)
                     .HasName("admin_pkey");
 
                 entity.ToTable("admin");
 
-                entity.Property(e => e.IdAdmin).HasColumnName("id_admin");
+                entity.Property(e => e.IdUser)
+                    .HasColumnName("id_user")
+                    .HasDefaultValueSql("nextval('users_id_user_seq'::regclass)");
 
                 entity.Property(e => e.Cnp)
                     .HasColumnName("cnp")
                     .HasMaxLength(13);
 
                 entity.Property(e => e.IdSpecializare).HasColumnName("id_specializare");
-
-                entity.Property(e => e.IdUser)
-                    .HasColumnName("id_user")
-                    .HasDefaultValueSql("nextval('users_id_user_seq'::regclass)");
 
                 entity.Property(e => e.Mail)
                     .HasColumnName("mail")
@@ -68,13 +69,9 @@ namespace Academic.Entities
                     .HasColumnName("nume")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.PHash)
-                    .HasColumnName("p_hash")
-                    .HasColumnType("bytea");
+                entity.Property(e => e.PHash).HasColumnName("p_hash");
 
-                entity.Property(e => e.PSalt)
-                    .HasColumnName("p_salt")
-                    .HasColumnType("bytea");
+                entity.Property(e => e.PSalt).HasColumnName("p_salt");
 
                 entity.Property(e => e.Prenume)
                     .HasColumnName("prenume")
@@ -114,6 +111,14 @@ namespace Academic.Entities
                     .HasColumnName("cod")
                     .HasMaxLength(50);
 
+                entity.Property(e => e.FormaBugetare)
+                    .HasColumnName("forma_bugetare")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.Frecventa)
+                    .HasColumnName("frecventa")
+                    .HasMaxLength(10);
+
                 entity.HasOne(d => d.IdStudentNavigation)
                     .WithMany(p => p.Contractdestudiu)
                     .HasForeignKey(d => d.IdStudent)
@@ -132,6 +137,28 @@ namespace Academic.Entities
                 entity.Property(e => e.Descriere)
                     .HasColumnName("descriere")
                     .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Departament>(entity =>
+            {
+                entity.HasKey(e => e.IdDepartament)
+                    .HasName("departament_pkey");
+
+                entity.ToTable("departament");
+
+                entity.Property(e => e.IdDepartament).HasColumnName("id_departament");
+
+                entity.Property(e => e.IdFacultate).HasColumnName("id_facultate");
+
+                entity.Property(e => e.Nume)
+                    .HasColumnName("nume")
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.IdFacultateNavigation)
+                    .WithMany(p => p.Departament)
+                    .HasForeignKey(d => d.IdFacultate)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("fk_facultate");
             });
 
             modelBuilder.Entity<Detaliucontract>(entity =>
@@ -261,6 +288,30 @@ namespace Academic.Entities
                 entity.Property(e => e.TipActivitate).HasColumnName("tip_activitate");
             });
 
+            modelBuilder.Entity<MaterieSpecializare>(entity =>
+            {
+                entity.HasKey(e => new { e.IdSpecializare, e.IdMaterie })
+                    .HasName("pk_ms");
+
+                entity.ToTable("materie_specializare");
+
+                entity.Property(e => e.IdSpecializare).HasColumnName("id_specializare");
+
+                entity.Property(e => e.IdMaterie).HasColumnName("id_materie");
+
+                entity.Property(e => e.Semestru).HasColumnName("semestru");
+
+                entity.HasOne(d => d.IdMaterieNavigation)
+                    .WithMany(p => p.MaterieSpecializare)
+                    .HasForeignKey(d => d.IdMaterie)
+                    .HasConstraintName("fk_materie");
+
+                entity.HasOne(d => d.IdSpecializareNavigation)
+                    .WithMany(p => p.MaterieSpecializare)
+                    .HasForeignKey(d => d.IdSpecializare)
+                    .HasConstraintName("fk_specializare");
+            });
+
             modelBuilder.Entity<Orarmaterie>(entity =>
             {
                 entity.HasKey(e => new { e.OraInceput, e.OraSfarsit, e.IdMaterie, e.IdProfesor, e.ZiuaSaptamanii, e.Frecventa, e.IdFormatie, e.IdSpecializare })
@@ -329,30 +380,24 @@ namespace Academic.Entities
 
             modelBuilder.Entity<Profesor>(entity =>
             {
-                entity.HasKey(e => e.IdProfesor)
+                entity.HasKey(e => e.IdUser)
                     .HasName("profesor_pkey");
 
                 entity.ToTable("profesor");
 
-                entity.Property(e => e.IdProfesor).HasColumnName("id_profesor");
+                entity.Property(e => e.IdUser)
+                    .HasColumnName("id_user")
+                    .HasDefaultValueSql("nextval('users_id_user_seq'::regclass)");
 
                 entity.Property(e => e.Cnp)
                     .HasColumnName("cnp")
                     .HasMaxLength(13);
 
-                entity.Property(e => e.Domeniu)
-                    .HasColumnName("domeniu")
-                    .HasMaxLength(20);
-
                 entity.Property(e => e.Grad)
                     .HasColumnName("grad")
                     .HasMaxLength(15);
 
-                entity.Property(e => e.IdFacultate).HasColumnName("id_facultate");
-
-                entity.Property(e => e.IdUser)
-                    .HasColumnName("id_user")
-                    .HasDefaultValueSql("nextval('users_id_user_seq'::regclass)");
+                entity.Property(e => e.IdDepartament).HasColumnName("id_departament");
 
                 entity.Property(e => e.Mail)
                     .HasColumnName("mail")
@@ -362,13 +407,9 @@ namespace Academic.Entities
                     .HasColumnName("nume")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.PHash)
-                    .HasColumnName("p_hash")
-                    .HasColumnType("bytea");
+                entity.Property(e => e.PHash).HasColumnName("p_hash");
 
-                entity.Property(e => e.PSalt)
-                    .HasColumnName("p_salt")
-                    .HasColumnType("bytea");
+                entity.Property(e => e.PSalt).HasColumnName("p_salt");
 
                 entity.Property(e => e.Prenume)
                     .HasColumnName("prenume")
@@ -386,11 +427,36 @@ namespace Academic.Entities
                     .HasColumnName("username")
                     .HasMaxLength(50);
 
-                entity.HasOne(d => d.IdFacultateNavigation)
+                entity.HasOne(d => d.IdDepartamentNavigation)
                     .WithMany(p => p.Profesor)
-                    .HasForeignKey(d => d.IdFacultate)
+                    .HasForeignKey(d => d.IdDepartament)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("fk_facultate");
+                    .HasConstraintName("fk_departament");
+            });
+
+            modelBuilder.Entity<Regulament>(entity =>
+            {
+                entity.HasKey(e => e.IdRegulament)
+                    .HasName("regulament_pkey");
+
+                entity.ToTable("regulament");
+
+                entity.Property(e => e.IdRegulament).HasColumnName("id_regulament");
+
+                entity.Property(e => e.Continut)
+                    .HasColumnName("continut")
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.IdFacultate).HasColumnName("id_facultate");
+
+                entity.Property(e => e.Titlu)
+                    .HasColumnName("titlu")
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.IdFacultateNavigation)
+                    .WithMany(p => p.Regulament)
+                    .HasForeignKey(d => d.IdFacultate)
+                    .HasConstraintName("regulament_id_facultate_fkey");
             });
 
             modelBuilder.Entity<Review>(entity =>
@@ -468,6 +534,10 @@ namespace Academic.Entities
 
                 entity.Property(e => e.IdFacultate).HasColumnName("id_facultate");
 
+                entity.Property(e => e.Nivel)
+                    .HasColumnName("nivel")
+                    .HasMaxLength(8);
+
                 entity.Property(e => e.Nume)
                     .HasColumnName("nume")
                     .HasMaxLength(50);
@@ -481,12 +551,14 @@ namespace Academic.Entities
 
             modelBuilder.Entity<Student>(entity =>
             {
-                entity.HasKey(e => e.IdStudent)
+                entity.HasKey(e => e.IdUser)
                     .HasName("student_pkey");
 
                 entity.ToTable("student");
 
-                entity.Property(e => e.IdStudent).HasColumnName("id_student");
+                entity.Property(e => e.IdUser)
+                    .HasColumnName("id_user")
+                    .HasDefaultValueSql("nextval('users_id_user_seq'::regclass)");
 
                 entity.Property(e => e.Cnp)
                     .HasColumnName("cnp")
@@ -500,9 +572,9 @@ namespace Academic.Entities
 
                 entity.Property(e => e.IdSpecializare).HasColumnName("id_specializare");
 
-                entity.Property(e => e.IdUser)
-                    .HasColumnName("id_user")
-                    .HasDefaultValueSql("nextval('users_id_user_seq'::regclass)");
+                entity.Property(e => e.Mail)
+                    .HasColumnName("mail")
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.NrMatricol)
                     .HasColumnName("nr_matricol")
@@ -512,13 +584,9 @@ namespace Academic.Entities
                     .HasColumnName("nume")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.PHash)
-                    .HasColumnName("p_hash")
-                    .HasColumnType("bytea");
+                entity.Property(e => e.PHash).HasColumnName("p_hash");
 
-                entity.Property(e => e.PSalt)
-                    .HasColumnName("p_salt")
-                    .HasColumnType("bytea");
+                entity.Property(e => e.PSalt).HasColumnName("p_salt");
 
                 entity.Property(e => e.Prenume)
                     .HasColumnName("prenume")
@@ -552,17 +620,17 @@ namespace Academic.Entities
                     .HasColumnName("cnp")
                     .HasMaxLength(13);
 
+                entity.Property(e => e.Mail)
+                    .HasColumnName("mail")
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.Nume)
                     .HasColumnName("nume")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.PHash)
-                    .HasColumnName("p_hash")
-                    .HasColumnType("bytea");
+                entity.Property(e => e.PHash).HasColumnName("p_hash");
 
-                entity.Property(e => e.PSalt)
-                    .HasColumnName("p_salt")
-                    .HasColumnType("bytea");
+                entity.Property(e => e.PSalt).HasColumnName("p_salt");
 
                 entity.Property(e => e.Prenume)
                     .HasColumnName("prenume")

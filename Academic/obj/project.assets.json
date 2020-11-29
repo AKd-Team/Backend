@@ -7742,19 +7742,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mvirg\\.nuget\\packages\\": {}
+    "C:\\Users\\MisuL\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mvirg\\RiderProjects\\Academic\\Academic\\Academic.csproj",
+      "projectUniqueName": "D:\\Backend\\Academic\\Academic.csproj",
       "projectName": "Academic",
-      "projectPath": "C:\\Users\\mvirg\\RiderProjects\\Academic\\Academic\\Academic.csproj",
-      "packagesPath": "C:\\Users\\mvirg\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mvirg\\RiderProjects\\Academic\\Academic\\obj\\",
+      "projectPath": "D:\\Backend\\Academic\\Academic.csproj",
+      "packagesPath": "C:\\Users\\MisuL\\.nuget\\packages\\",
+      "outputPath": "D:\\Backend\\Academic\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\mvirg\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\MisuL\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7844,7 +7844,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.Text.Json.Serialization;
 
 namespace Academic.Entities
 {
@@ -13,9 +11,8 @@ namespace Academic.Entities
         public string Prenume { get; set; }
         public string Cnp { get; set; }
         public string TipUtilizator { get; set; }
-        [JsonIgnore]
+        public string Mail { get; set; }
         public byte[] PHash { get; set; }
-        [JsonIgnore]
         public byte[] PSalt { get; set; }
     }
 }
