@@ -13,37 +13,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="59eca938-9bf3-402d-849e-68bda72e82ad" name="Default Changelist" comment="login works!Also it's commented now">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/contentModel.xml" afterDir="false" />
+    <list default="true" id="59eca938-9bf3-402d-849e-68bda72e82ad" name="Default Changelist" comment="V3 pt baza de date. Au fost adaugate cateva tipuri noi de date, mai precis: Departament, Materie_Specializare, Regulament. In unele tabele am adaugat cateva atribute in plus.">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Entities/Admin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Entities/Admin.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Entities/Contractdestudiu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Entities/Contractdestudiu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Entities/Facultate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Entities/Facultate.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Entities/Materie.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Entities/Materie.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Entities/Profesor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Entities/Profesor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Entities/Specializare.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Entities/Specializare.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Entities/Student.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Entities/Student.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Entities/Users.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Entities/Users.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Entities/academicContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Entities/academicContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.runtimeconfig.dev.json" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.runtimeconfig.dev.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Academic.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Academic.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Academic.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Academic.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.csprojAssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +151,7 @@
       <workItem from="1606634926842" duration="608000" />
       <workItem from="1606659847150" duration="607000" />
       <workItem from="1606664136426" duration="398000" />
-      <workItem from="1606664623352" duration="585000" />
+      <workItem from="1606664623352" duration="1283000" />
     </task>
     <task id="LOCAL-00001" summary="v1">
       <created>1604256192843</created>
@@ -233,7 +209,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605390453066</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="V3 pt baza de date. Au fost adaugate cateva tipuri noi de date, mai precis: Departament, Materie_Specializare, Regulament. In unele tabele am adaugat cateva atribute in plus.">
+      <created>1606665476114</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1606665476114</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -259,7 +242,8 @@
     <MESSAGE value="login works!" />
     <MESSAGE value="login works!Also it's commented now" />
     <MESSAGE value="new version&#10;we have a register class!&#10;password encryption successful&#10;next up:&#10;Roles and Policies" />
-    <option name="LAST_COMMIT_MESSAGE" value="new version&#10;we have a register class!&#10;password encryption successful&#10;next up:&#10;Roles and Policies" />
+    <MESSAGE value="V3 pt baza de date. Au fost adaugate cateva tipuri noi de date, mai precis: Departament, Materie_Specializare, Regulament. In unele tabele am adaugat cateva atribute in plus." />
+    <option name="LAST_COMMIT_MESSAGE" value="V3 pt baza de date. Au fost adaugate cateva tipuri noi de date, mai precis: Departament, Materie_Specializare, Regulament. In unele tabele am adaugat cateva atribute in plus." />
   </component>
   <component name="WindowStateProjectService">
     <state x="849" y="357" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605121189677">
@@ -302,9 +286,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="252" key="Rider.ProjectTemplateDialog.Size/0.0.1920.1040@0.0.1920.1040" timestamp="1604330801959" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1604759402405">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="442" y="200" key="Vcs.Push.Dialog.v2" timestamp="1606665515426">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="442" y="200" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606665515426" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1604759402405" />
     <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605516481272">
       <screen x="0" y="0" width="1536" height="824" />
