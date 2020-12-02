@@ -49,8 +49,11 @@
           <e p="academicContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="Models" t="Include">
+          <e p="LoginAdmin.cs" t="Include" />
+          <e p="LoginProfesor.cs" t="Include" />
           <e p="loginRequest.cs" t="Include" />
           <e p="loginResponse.cs" t="Include" />
+          <e p="LoginStudent.cs" t="Include" />
           <e p="RegisterAdmin.cs" t="Include" />
           <e p="RegisterProfesor.cs" t="Include" />
           <e p="RegisterRequest.cs" t="Include" />

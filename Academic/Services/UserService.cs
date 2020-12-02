@@ -15,6 +15,9 @@ namespace Academic.Services
     public interface IUsersService
     {
         LoginResponse Login(string username, string password);
+        LoginStudent LoginStudent(string username, string token);
+        LoginAdmin LoginAdmin(string username, string token);
+        LoginProfesor LoginProfesor(string username, string token);
         IEnumerable<Users> GetAll();
         Users GetById(int id);
         Users Create(Users user, string password);
@@ -40,14 +43,39 @@ namespace Academic.Services
 
             // return null if user not found
             if (user == null) return null;
-            
+
             if (!VerifyPasswordHash(Password, user.PHash, user.PSalt))
                 return null;
 
             // authentication successful so generate jwt token
             var token = generateJwtToken(user);
 
-            return new LoginResponse(user, token);
+            return new LoginResponse(user,token);
+
+        }
+
+        public LoginProfesor LoginProfesor(string Username, string token)
+        {
+            var profesor = _context.Profesor.SingleOrDefault(x => x.Username == Username);
+            if (profesor == null)
+                return null;
+            return new LoginProfesor(profesor, token);
+
+        }
+        public LoginAdmin LoginAdmin(string Username, string token)
+        {
+            var admin = _context.Admin.SingleOrDefault(x => x.Username == Username);
+            if (admin == null)
+                return null;
+            return new LoginAdmin(admin, token);
+
+        }
+        public LoginStudent LoginStudent(string Username, string token)
+        {
+            var student = _context.Student.SingleOrDefault(x => x.Username == Username);
+            if (student == null)
+                return null;
+            return new LoginStudent(student, token);
         }
         /*
         public void Update(Users userParam, string password = null)

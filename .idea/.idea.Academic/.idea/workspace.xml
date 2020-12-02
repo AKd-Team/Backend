@@ -13,34 +13,20 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="59eca938-9bf3-402d-849e-68bda72e82ad" name="Default Changelist" comment="Controllers work! Services work! Type based auth works! It's on!!!">
-      <change afterPath="$PROJECT_DIR$/Academic/Models/RegisterAdmin.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Academic/Models/RegisterProfesor.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Academic/Models/RegisterStudent.cs" afterDir="false" />
+    <list default="true" id="59eca938-9bf3-402d-849e-68bda72e82ad" name="Default Changelist" comment="Register works!">
+      <change afterPath="$PROJECT_DIR$/Academic/Models/LoginAdmin.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Academic/Models/LoginProfesor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Academic/Models/LoginStudent.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Controllers/AdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Controllers/AdminController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Academic/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Controllers/UsersController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Academic/Entities/academicContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Entities/academicContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Helpers/AutoMapperProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Helpers/AutoMapperProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Services/AdminService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Services/AdminService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Academic/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Services/UserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.runtimeconfig.dev.json" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.runtimeconfig.dev.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Academic.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Academic.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Academic.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Academic.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.csprojAssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/project.nuget.cache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,16 +75,19 @@
         <option value="$PROJECT_DIR$/Academic/Controllers/ProfesorController.cs" />
         <option value="$PROJECT_DIR$/Academic/Services/ProfesorService.cs" />
         <option value="$PROJECT_DIR$/Academic/Services/StudentService.cs" />
-        <option value="$PROJECT_DIR$/Academic/Entities/academicContext.cs" />
         <option value="$PROJECT_DIR$/Academic/appsettings.json" />
         <option value="$PROJECT_DIR$/Academic/Models/RegisterAdmin.cs" />
         <option value="$PROJECT_DIR$/Academic/Models/RegisterStudent.cs" />
         <option value="$PROJECT_DIR$/Academic/Models/RegisterProfesor.cs" />
         <option value="$PROJECT_DIR$/Academic/Services/AdminService.cs" />
-        <option value="$PROJECT_DIR$/Academic/Services/UserService.cs" />
         <option value="$PROJECT_DIR$/Academic/Helpers/AutoMapperProfile.cs" />
-        <option value="$PROJECT_DIR$/Academic/Controllers/UsersController.cs" />
         <option value="$PROJECT_DIR$/Academic/Controllers/AdminController.cs" />
+        <option value="$PROJECT_DIR$/Academic/Models/LoginProfesor.cs" />
+        <option value="$PROJECT_DIR$/Academic/Models/LoginStudent.cs" />
+        <option value="$PROJECT_DIR$/Academic/Services/UserService.cs" />
+        <option value="$PROJECT_DIR$/Academic/Controllers/UsersController.cs" />
+        <option value="$PROJECT_DIR$/Academic/Entities/academicContext.cs" />
+        <option value="$PROJECT_DIR$/Academic/Models/LoginAdmin.cs" />
       </list>
     </option>
   </component>
@@ -246,7 +235,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606665476114</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Register works!">
+      <created>1606923890403</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1606923890404</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,7 +269,8 @@
     <MESSAGE value="login works!Also it's commented now" />
     <MESSAGE value="new version&#10;we have a register class!&#10;password encryption successful&#10;next up:&#10;Roles and Policies" />
     <MESSAGE value="V3 pt baza de date. Au fost adaugate cateva tipuri noi de date, mai precis: Departament, Materie_Specializare, Regulament. In unele tabele am adaugat cateva atribute in plus." />
-    <option name="LAST_COMMIT_MESSAGE" value="V3 pt baza de date. Au fost adaugate cateva tipuri noi de date, mai precis: Departament, Materie_Specializare, Regulament. In unele tabele am adaugat cateva atribute in plus." />
+    <MESSAGE value="Register works!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Register works!" />
   </component>
   <component name="WindowStateProjectService">
     <state x="849" y="357" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605121189677">
@@ -288,26 +285,26 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="691" y="226" key="Github.UntrackedFilesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604256102896" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1606922256940">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1606927889126">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606635537301" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1606922256940" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1606922256939">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1606927889126" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1606927889125">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1606635537301" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1606922256939" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1606922256939">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1606927889125" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1606927889123">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1606635537301" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1606922256939" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1606922256939">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1606927889123" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1606927889126">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1606635537301" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1606922256939" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1606927889126" />
     <state width="196" height="455" key="HiddenNamespacesPopup" timestamp="1605121039789">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -316,11 +313,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="252" key="Rider.ProjectTemplateDialog.Size/0.0.1920.1040@0.0.1920.1040" timestamp="1604330801959" />
-    <state x="442" y="200" key="Vcs.Push.Dialog.v2" timestamp="1606665515426">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1606924872517">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="442" y="200" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606665515426" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1604759402405" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1606924872517" />
     <state x="733" y="411" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606753918329">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

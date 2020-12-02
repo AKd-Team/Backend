@@ -31,11 +31,25 @@ namespace Academic.Controllers
             [HttpPost("login")]
             public IActionResult Login(LoginRequest model)
             {
+                object resp = null;
                 var response = _usersService.Login(model.Username, model.Password);
-
                 if (response == null)
                     return BadRequest(new {message = "User or Password is incorrect"});
-                return Ok(response);
+                if (response.TipUtilizator == "admin")
+                {
+                    resp = (_usersService.LoginAdmin(response.Username, response.Token));
+                }
+                else if (response.TipUtilizator == "profesor")
+                {
+                    resp = (_usersService.LoginProfesor(response.Username, response.Token));
+
+                }
+                else if (response.TipUtilizator == "student")
+                {
+                    resp= (_usersService.LoginStudent(response.Username, response.Token));
+                }
+
+                return Ok(resp);
             }
             [HttpPost("registerAdmin")]
             public IActionResult RegisterAdmin(RegisterAdmin model)
