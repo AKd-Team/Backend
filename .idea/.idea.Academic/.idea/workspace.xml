@@ -13,20 +13,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="59eca938-9bf3-402d-849e-68bda72e82ad" name="Default Changelist" comment="Register works!">
-      <change afterPath="$PROJECT_DIR$/Academic/Models/LoginAdmin.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Academic/Models/LoginProfesor.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Academic/Models/LoginStudent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Academic/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Controllers/UsersController.cs" afterDir="false" />
+    <list default="true" id="59eca938-9bf3-402d-849e-68bda72e82ad" name="Default Changelist" comment="Register works! Login works">
       <change beforePath="$PROJECT_DIR$/Academic/Entities/academicContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Entities/academicContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/Services/UserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/bin/Debug/netcoreapp3.1/Academic.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Academic/obj/Debug/netcoreapp3.1/Academic.pdb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +32,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5D1746F2-9DF0-47A4-9D82-6D67D1E3B282/6/JwtSecurityTokenHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D10C4126-C7D9-480B-B385-377D8928D950/28/0c3bc951/HMACSHA512.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/801E21FA-45A0-41F2-98F7-7D0F475783CA/cb/f05e0fe2/ControllerEndpointRouteBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/F423A09D-18AD-41DA-973D-AA418BC06C2C/6/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -86,8 +75,8 @@
         <option value="$PROJECT_DIR$/Academic/Models/LoginStudent.cs" />
         <option value="$PROJECT_DIR$/Academic/Services/UserService.cs" />
         <option value="$PROJECT_DIR$/Academic/Controllers/UsersController.cs" />
-        <option value="$PROJECT_DIR$/Academic/Entities/academicContext.cs" />
         <option value="$PROJECT_DIR$/Academic/Models/LoginAdmin.cs" />
+        <option value="$PROJECT_DIR$/Academic/Entities/academicContext.cs" />
       </list>
     </option>
   </component>
@@ -242,7 +231,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606923890404</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Register works! Login works">
+      <created>1606928459442</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1606928459442</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,7 +266,8 @@
     <MESSAGE value="new version&#10;we have a register class!&#10;password encryption successful&#10;next up:&#10;Roles and Policies" />
     <MESSAGE value="V3 pt baza de date. Au fost adaugate cateva tipuri noi de date, mai precis: Departament, Materie_Specializare, Regulament. In unele tabele am adaugat cateva atribute in plus." />
     <MESSAGE value="Register works!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Register works!" />
+    <MESSAGE value="Register works! Login works" />
+    <option name="LAST_COMMIT_MESSAGE" value="Register works! Login works" />
   </component>
   <component name="WindowStateProjectService">
     <state x="849" y="357" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605121189677">
@@ -313,11 +310,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="252" key="Rider.ProjectTemplateDialog.Size/0.0.1920.1040@0.0.1920.1040" timestamp="1604330801959" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1606924872517">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1606928472695">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="442" y="200" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606665515426" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1606924872517" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1606928472695" />
     <state x="733" y="411" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606753918329">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
