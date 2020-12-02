@@ -37,16 +37,16 @@ namespace Academic.Controllers
                     return BadRequest(new {message = "User or Password is incorrect"});
                 return Ok(response);
             }
-            [HttpPost("register")]
-            public IActionResult Register(RegisterRequest model)
+            [HttpPost("registerAdmin")]
+            public IActionResult RegisterAdmin(RegisterAdmin model)
             {
                 // map model to entity
-                var user = _mapper.Map<Users>(model);
+                var admin = _mapper.Map<Admin>(model);
     
                 try
                 {
                     // create user
-                    _usersService.Create(user,model.Password);
+                    _usersService.CreateAdmin(admin,model.Password);
                     return Ok();
                 }
                 catch (AppException ex)
@@ -55,6 +55,7 @@ namespace Academic.Controllers
                     return BadRequest(new { message = ex.Message });
                 }
             }
+            
             //request-ul ce returneaa un user dupa id
             [HttpGet("{id}")]
             [Authorize("")]

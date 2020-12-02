@@ -1,11 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Numerics;
 using System.Security.Claims;
 using System.Text;
 using Academic.Entities;
@@ -20,6 +18,7 @@ namespace Academic.Services
         IEnumerable<Users> GetAll();
         Users GetById(int id);
         Users Create(Users user, string password);
+        public Admin CreateAdmin(Admin admin, string password);
         void Delete(int id);
         //void Update(Users user, string password = null);
     }
@@ -99,7 +98,22 @@ namespace Academic.Services
                 _context.SaveChanges();
             }
         }
+        public Admin CreateAdmin(Admin admin, string password)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+                throw new AppException("Password is required");
 
+            if (_context.Users.Any(x => x.Username == admin.Username))
+                throw new AppException("Username \"" + admin.Username + "\" is already taken");
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            admin.PHash = passwordHash;
+            admin.PSalt = passwordSalt;
+            
+            _context.Admin.Add(admin);
+            _context.SaveChanges();
+            return admin;
+        }
         public Users Create(Users user, string password)
         {
             // validation

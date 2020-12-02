@@ -28,16 +28,16 @@ namespace Academic.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("register")]
-        public IActionResult Register(RegisterRequest model)
+        [HttpPost("registerAdmin")]
+        public IActionResult RegisterAdmin(RegisterAdmin model)
         {
             // map model to entity
-            var user = _mapper.Map<Users>(model);
+            var admin = _mapper.Map<Admin>(model);
 
             try
             {
                 // create user
-                _adminService.Create(user, model.Password);
+                _adminService.CreateAdmin(admin, model.Password);
                 return Ok();
             }
             catch (AppException ex)
@@ -46,6 +46,43 @@ namespace Academic.Controllers
                 return BadRequest(new {message = ex.Message});
             }
         }
+        [HttpPost("registerStudent")]
+        public IActionResult RegisterStudent(RegisterStudent model)
+        {
+            // map model to entity
+            var student = _mapper.Map<Student>(model);
+
+            try
+            {
+                // create user
+                _adminService.CreateStudent(student, model.Password);
+                return Ok();
+            }
+            catch (AppException ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new {message = ex.Message});
+            }
+        }
+        [HttpPost("registerProfesor")]
+        public IActionResult RegisterProfesor(RegisterProfesor model)
+        {
+            // map model to entity
+            var profesor = _mapper.Map<Profesor>(model);
+
+            try
+            {
+                // create user
+                _adminService.CreateProfesor(profesor, model.Password);
+                return Ok();
+            }
+            catch (AppException ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new {message = ex.Message});
+            }
+        }
+
         [HttpGet]
         public IActionResult GetAll()
         {
