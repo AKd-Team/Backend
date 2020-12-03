@@ -7742,27 +7742,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mvirg\\.nuget\\packages\\": {}
+    "C:\\Users\\rares\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mvirg\\RiderProjects\\Academic\\Academic\\Academic.csproj",
+      "projectUniqueName": "C:\\New folder\\Backend\\Academic\\Academic.csproj",
       "projectName": "Academic",
-      "projectPath": "C:\\Users\\mvirg\\RiderProjects\\Academic\\Academic\\Academic.csproj",
-      "packagesPath": "C:\\Users\\mvirg\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mvirg\\RiderProjects\\Academic\\Academic\\obj\\",
+      "projectPath": "C:\\New folder\\Backend\\Academic\\Academic.csproj",
+      "packagesPath": "C:\\Users\\rares\\.nuget\\packages\\",
+      "outputPath": "C:\\New folder\\Backend\\Academic\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\mvirg\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\rares\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://www.myget.org/F/uipath": {}
       },
       "frameworks": {
         "netcoreapp3.1": {
@@ -7809,6 +7808,7 @@
             "version": "[2.0.3, )"
           },
           "Microsoft.NETCore.App": {
+            "suppressParent": "All",
             "target": "Package",
             "version": "[2.2.8, )"
           },
@@ -7843,7 +7843,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.404\\RuntimeIdentifierGraph.json"
       }
     }
   }

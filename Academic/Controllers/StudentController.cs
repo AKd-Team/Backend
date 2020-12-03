@@ -33,5 +33,19 @@ namespace Academic.Controllers
             var model = _mapper.Map<Users>(user);
             return Ok(model);
         }
+        [HttpGet("profesor/{id}")]
+        public IActionResult GetByTeacherId(int id)
+        {
+            var profesor = _studentService.GetByTeacherId(id);
+            var model = _mapper.Map<Profesor>(profesor);
+            return Ok(model);
+        }
+        [HttpGet("profesor")]
+        public IActionResult GetAllTeachers()
+        {
+            var profesor = _studentService.GetAllTeachers();
+            return Ok(profesor);
+        }
+        
     }
 }
