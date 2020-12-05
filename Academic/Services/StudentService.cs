@@ -15,6 +15,7 @@ namespace Academic.Services
         Profesori GetByTeacherId(int id);
         IEnumerable<Profesori> GetAllTeachers();
         Student GetStudentById(int id);
+        IEnumerable<FacultatiCuDepartamente> GetFacultati();
     }
 
     public class StudentService : IStudentService
@@ -62,6 +63,28 @@ namespace Academic.Services
         public Student GetStudentById(int id)
         {
             return _context.Student.Find(id);
+        }
+
+        /*
+         * Descriere: O functie, nu tocmai eficienta, care returneaza o lista de FacultatiCuDepartamente
+         * In: Nu trebuie date de intrare
+         * Out: listFac - IEnumerable<FacultatiCuDepartamente>
+         * Err: Nu am pus caz de eroare, inca!
+         */
+        public IEnumerable<FacultatiCuDepartamente> GetFacultati()
+        {
+            var listFac = new List<FacultatiCuDepartamente>();
+            foreach (var f in _context.Facultate.ToList())
+            {
+                var dep = new List<string>();
+                foreach (var d in _context.Departament.ToList())
+                {
+                    if (d.IdFacultate == f.IdFacultate)
+                        dep.Add(d.Nume);
+                }
+                listFac.Add(new FacultatiCuDepartamente(f.Nume, dep));
+            }
+            return listFac;
         }
     }
 }

@@ -53,6 +53,12 @@ namespace Academic.Controllers
             var model = _mapper.Map<Student>(student);
             return Ok(model);
         }
-        
+
+        [HttpGet("listaFacultati")]
+        public IActionResult GetFacultati()
+        {
+            var facultati = _studentService.GetFacultati();
+            return Ok(facultati);
+        }
     }
 }
