@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Academic.Entities
 {
@@ -17,14 +18,17 @@ namespace Academic.Entities
         public string Cnp { get; set; }
         public string TipUtilizator { get; set; }
         public string Mail { get; set; }
+        [JsonIgnore]
         public byte[] PHash { get; set; }
+        [JsonIgnore]
         public byte[] PSalt { get; set; }
         public string NrMatricol { get; set; }
         public string Cup { get; set; }
         public int? IdFormatie { get; set; }
         public int? IdSpecializare { get; set; }
-
+        [JsonIgnore]
         public virtual Formatie Id { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Contractdestudiu> Contractdestudiu { get; set; }
     }
 }

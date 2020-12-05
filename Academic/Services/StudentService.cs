@@ -11,6 +11,7 @@ namespace Academic.Services
         Users GetById(int id);
         Profesor GetByTeacherId(int id);
         IEnumerable<Profesor> GetAllTeachers();
+        Student GetStudentById(int id);
     }
 
     public class StudentService : IStudentService
@@ -38,6 +39,11 @@ namespace Academic.Services
         public IEnumerable<Profesor> GetAllTeachers()
         {
             return _context.Profesor;
+        }
+
+        public Student GetStudentById(int id)
+        {
+            return _context.Student.Find(id);
         }
     }
 }

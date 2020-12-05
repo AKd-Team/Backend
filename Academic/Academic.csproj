@@ -25,4 +25,9 @@
       <Folder Include="Entities" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Migrations\20201107131145_InitialAdd.cs" />
+      <Compile Remove="Migrations\20201107131145_InitialAdd.Designer.cs" />
+    </ItemGroup>
+
 </Project>

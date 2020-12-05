@@ -1,15 +1,16 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "C:\\New folder\\Backend\\Academic\\Academic.csproj",
+    "projectUniqueName": "D:\\an 3\\colectiv\\akd\\Backend\\Academic\\Academic.csproj",
     "projectName": "Academic",
-    "projectPath": "C:\\New folder\\Backend\\Academic\\Academic.csproj",
-    "outputPath": "C:\\New folder\\Backend\\Academic\\obj\\",
+    "projectPath": "D:\\an 3\\colectiv\\akd\\Backend\\Academic\\Academic.csproj",
+    "outputPath": "D:\\an 3\\colectiv\\akd\\Backend\\Academic\\obj\\",
     "projectStyle": "PackageReference",
     "originalTargetFrameworks": [
       "netcoreapp3.1"
     ],
     "sources": {
+      "D:\\an 3\\RPA\\customActivities": {},
       "https://api.nuget.org/v3/index.json": {},
       "https://www.myget.org/F/uipath": {}
     },
@@ -93,7 +94,7 @@
           "privateAssets": "all"
         }
       },
-      "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.404\\RuntimeIdentifierGraph.json"
+      "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
     }
   }
 }
