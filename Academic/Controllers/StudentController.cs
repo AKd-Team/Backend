@@ -37,8 +37,7 @@ namespace Academic.Controllers
         public IActionResult GetByTeacherId(int id)
         {
             var profesor = _studentService.GetByTeacherId(id);
-            var model = _mapper.Map<Profesor>(profesor);
-            return Ok(model);
+            return Ok(profesor);
         }
         [HttpGet("profesor")]
         public IActionResult GetAllTeachers()
