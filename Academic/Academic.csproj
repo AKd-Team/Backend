@@ -28,6 +28,7 @@
     <ItemGroup>
       <Compile Remove="Migrations\20201107131145_InitialAdd.cs" />
       <Compile Remove="Migrations\20201107131145_InitialAdd.Designer.cs" />
+      <Compile Remove="Models\AdminDep.cs" />
     </ItemGroup>
 
 </Project>

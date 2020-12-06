@@ -83,6 +83,23 @@ namespace Academic.Controllers
             }
         }
 
+        [HttpGet("departamente/{idFacultate}")]
+        public IActionResult GetDepartamente(int idFacultate)
+        {
+            var dep = _adminService.GetDepartaments(idFacultate);
+            return Ok(dep);
+        }
+        
+        /*
+         * Desc: Functie care preia o lista cu toate specializarile si grupele si semigrupele acestora
+         */
+        [HttpGet("formSpec/{idFacultate}")]
+        public IActionResult GetSpecForm(int idFacultate)
+        {
+            var specForm = _adminService.GetFormSpec(idFacultate);
+            return Ok(specForm);
+        }
+
         [HttpGet]
         public IActionResult GetAll()
         {
