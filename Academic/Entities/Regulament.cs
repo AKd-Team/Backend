@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Academic.Entities
 {
@@ -10,6 +11,7 @@ namespace Academic.Entities
         public string Continut { get; set; }
         public int? IdFacultate { get; set; }
 
+        [JsonIgnore]
         public virtual Facultate IdFacultateNavigation { get; set; }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Academic.Entities;
 using Academic.Helpers;
 using Academic.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace Academic.Services
@@ -16,6 +18,7 @@ namespace Academic.Services
         IEnumerable<Profesori> GetAllTeachers();
         Student GetStudentById(int id);
         IEnumerable<FacultatiCuDepartamente> GetFacultati();
+        IEnumerable<Regulament> GetRegulament(int id);
     }
 
     public class StudentService : IStudentService
@@ -85,6 +88,28 @@ namespace Academic.Services
                 listFac.Add(new FacultatiCuDepartamente(f.Nume, dep));
             }
             return listFac;
+        }
+
+        /*
+         * Desc: Aceasta functie cauta toate regulamentele unei facultati pe baza unui id de specializare
+         * In: id - int - reprezentand id specializarii studentului
+         * Out: O lista cu regulamentele facultatii
+         */
+        public IEnumerable<Regulament> GetRegulament(int id)
+        {
+            var spec = _context.Specializare.FirstOrDefault(s => s.IdSpecializare == id);
+            if (spec != null) //Verifica existenta specializarii respective
+            {
+                if (spec.IdFacultate != null)
+                {
+                    var idFac = spec.IdFacultate.Value;
+                    
+                    return _context.Regulament.Where(r => (r.IdFacultate == idFac || r.IdFacultate == null))
+                        .OrderByDescending(r => r.IdFacultate).ToList();
+                }
+            }
+            //Pt cazul in care nu exista specializare
+            return _context.Regulament.Where(r => r.IdFacultate == null);
         }
     }
 }

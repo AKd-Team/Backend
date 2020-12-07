@@ -60,5 +60,12 @@ namespace Academic.Controllers
             var facultati = _studentService.GetFacultati();
             return Ok(facultati);
         }
+
+        [HttpGet("regulamen/{idSpec}")]
+        public IActionResult GetRegulament(int idSpec)
+        {
+            var regulament = _studentService.GetRegulament(idSpec);
+            return Ok(regulament);
+        }
     }
 }

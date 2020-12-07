@@ -67,7 +67,12 @@ namespace Academic.Services
             var admin = _context.Admin.SingleOrDefault(x => x.Username == Username);
             if (admin == null)
                 return null;
-            return new LoginAdmin(admin, token);
+            var spec = _context.Specializare
+                .FirstOrDefault(s => s.IdSpecializare == admin.IdSpecializare);
+            if (spec?.IdFacultate == null)
+                return null;
+            var idFac = spec.IdFacultate.Value;
+            return new LoginAdmin(admin, idFac, token);
 
         }
         public LoginStudent LoginStudent(string Username, string token)
