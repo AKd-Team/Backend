@@ -399,7 +399,7 @@ namespace Academic.Entities
 
                 entity.Property(e => e.Grad)
                     .HasColumnName("grad")
-                    .HasMaxLength(15);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.IdDepartament).HasColumnName("id_departament");
 
