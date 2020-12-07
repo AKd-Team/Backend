@@ -16,7 +16,8 @@ namespace Academic.Services
         Users GetById(int id);
         Profesori GetByTeacherId(int id);
         IEnumerable<Profesori> GetAllTeachers();
-        Student GetStudentById(int id);
+        //Student GetStudentById(int id);
+        StudentDetaliat GetStudentById(int id);
         IEnumerable<FacultatiCuDepartamente> GetFacultati();
         IEnumerable<Regulament> GetRegulament(int id);
     }
@@ -63,10 +64,23 @@ namespace Academic.Services
             throw new Exception("Nu exista profesori!!!");
         }
 
-        public Student GetStudentById(int id)
+        public StudentDetaliat GetStudentById(int id)
         {
-            return _context.Student.Find(id);
+            var student = _context.Student.Find(id);
+            if (student != null)
+            {
+                var formatie = _context.Formatie.SingleOrDefault(f => f.IdFormatie == student.IdFormatie);
+                var specializare =
+                    _context.Specializare.SingleOrDefault(s => s.IdSpecializare == student.IdSpecializare);
+                var faculta = _context.Facultate.SingleOrDefault(fac => fac.IdFacultate == specializare.IdFacultate);
+                return new StudentDetaliat(student, formatie.Grupa, formatie.SemiGrupa, formatie.AnStudiu, faculta.Nume, specializare.Nivel, specializare.Nume);
+            }
+            else
+            {
+                throw new Exception("Nu exista student cu acest id!");
+            }
         }
+       
 
         /*
          * Descriere: O functie, nu tocmai eficienta, care returneaza o lista de FacultatiCuDepartamente

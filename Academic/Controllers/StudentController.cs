@@ -1,5 +1,6 @@
 ﻿using Academic.Entities;
 using Academic.Helpers;
+using Academic.Models;
 using Academic.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +51,7 @@ namespace Academic.Controllers
         public IActionResult GetStudentById(int id)
         {
             var student = _studentService.GetStudentById(id);
-            var model = _mapper.Map<Student>(student);
+            var model = _mapper.Map<StudentDetaliat>(student);
             return Ok(model);
         }
 

@@ -48,15 +48,19 @@
           <e p="academicContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="Models" t="Include">
+          <e p="AdminFormSpec.cs" t="Include" />
+          <e p="FacultatiCuDepartamente.cs" t="Include" />
           <e p="LoginAdmin.cs" t="Include" />
           <e p="LoginProfesor.cs" t="Include" />
           <e p="loginRequest.cs" t="Include" />
           <e p="loginResponse.cs" t="Include" />
           <e p="LoginStudent.cs" t="Include" />
+          <e p="Profesori.cs" t="Include" />
           <e p="RegisterAdmin.cs" t="Include" />
           <e p="RegisterProfesor.cs" t="Include" />
           <e p="RegisterRequest.cs" t="Include" />
           <e p="RegisterStudent.cs" t="Include" />
+          <e p="StudentDetaliat.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
