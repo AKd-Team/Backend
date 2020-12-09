@@ -51,11 +51,11 @@ namespace Academic.Controllers
         {
             // map model to entity
             var student = _mapper.Map<Student>(model);
-
+            
             try
             {
                 // create user
-                _adminService.CreateStudent(student, model.Password);
+                _adminService.CreateStudent(student, model.Password,model.Semigrupa,model.Specializare);
                 return Ok();
             }
             catch (AppException ex)

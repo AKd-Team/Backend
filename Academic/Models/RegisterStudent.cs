@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Academic.Entities;
 
 namespace Academic.Models
 {
@@ -23,8 +24,8 @@ namespace Academic.Models
         [Required]
         public string Cup { get; set; }
         [Required]
-        public int? IdFormatie { get; set; }
+        public string Semigrupa { get; set; }
         [Required]
-        public int? IdSpecializare { get; set; }
+        public string Specializare { get; set; }
     }
 }

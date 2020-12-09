@@ -103,7 +103,7 @@ namespace Academic.Controllers
             */
             //requestul ce returneaza toti userii
             [HttpGet]
-            [Authorize("")]
+            [Authorize("admin")]
             public IActionResult GetAll()
             {
                 var users = _usersService.GetAll();

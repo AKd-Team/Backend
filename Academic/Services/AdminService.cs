@@ -15,7 +15,7 @@ namespace Academic.Services
              Users Create(Users user, string password);
              public Admin CreateAdmin(Admin admin, string password);
              public Profesor CreateProfesor(Profesor profesor, string password);
-             public Student CreateStudent(Student student, string password);
+             public Student CreateStudent(Student student, string password,string semigrupa,string specializare);
              public IEnumerable<Departament> GetDepartaments(int id);
              public IEnumerable<AdminFormSpec> GetFormSpec(int id); 
 
@@ -30,18 +30,27 @@ namespace Academic.Services
             _appSettings = appSettings.Value;
             _context = context;
         }
-
-        public Student CreateStudent(Student student, string password)
+        public Student CreateStudent(Student student, string password,string semigrupa,string specializare)
         {
+            var t = _context.Specializare.Where(x=>x.Cod=="MIR" ).ToList();
             if (string.IsNullOrWhiteSpace(password))
                 throw new AppException("Password is required");
 
             if (_context.Users.Any(x => x.Username == student.Username))
                 throw new AppException("Username \"" + student.Username + "\" is already taken");
+            if (_context.Specializare.Where(x=>x.Cod == specializare).Count()==0)
+                throw new AppException("Erori specializare");
+            if (_context.Formatie.Where(x => x.SemiGrupa == semigrupa).Count()==0)
+                throw new AppException("Erori semigrupa");
+            
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
             student.PHash = passwordHash;
             student.PSalt = passwordSalt;
+ var r = _context.Formatie.Where(x => x.SemiGrupa == semigrupa).ToList().First().IdFormatie;
+ var p =_context.Specializare.Where(x => x.Cod == specializare).ToList().First().IdFacultate;;
+ student.IdFormatie = r;
+ student.IdSpecializare = p;
             
             _context.Student.Add(student);
             _context.SaveChanges();
@@ -87,7 +96,6 @@ namespace Academic.Services
 
             if (_context.Users.Any(x => x.Username == user.Username))
                 throw new AppException("Username \"" + user.Username + "\" is already taken");
-
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
