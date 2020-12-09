@@ -38,7 +38,7 @@ namespace Academic.Services
 
             if (_context.Users.Any(x => x.Username == student.Username))
                 throw new AppException("Username \"" + student.Username + "\" is already taken");
-            if (_context.Specializare.Where(x=>x.Cod == specializare).Count()==0)
+            if (_context.Specializare.Where(x=>x.Nume == specializare).Count()==0)
                 throw new AppException("Erori specializare");
             if (_context.Formatie.Where(x => x.SemiGrupa == semigrupa).Count()==0)
                 throw new AppException("Erori semigrupa");
@@ -47,10 +47,11 @@ namespace Academic.Services
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
             student.PHash = passwordHash;
             student.PSalt = passwordSalt;
- var r = _context.Formatie.Where(x => x.SemiGrupa == semigrupa).ToList().First().IdFormatie;
- var p =_context.Specializare.Where(x => x.Cod == specializare).ToList().First().IdFacultate;;
- student.IdFormatie = r;
- student.IdSpecializare = p;
+            
+            var r = _context.Formatie.Where(x => x.SemiGrupa == semigrupa).ToList().First().IdFormatie;
+            var p =_context.Specializare.Where(x => x.Nume == specializare).ToList().First().IdSpecializare;
+            student.IdFormatie = r;
+            student.IdSpecializare = p;
             
             _context.Student.Add(student);
             _context.SaveChanges();
