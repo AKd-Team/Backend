@@ -32,6 +32,12 @@ namespace Academic.Controllers
             var model = _mapper.Map<Users>(user);
             return Ok(model);
         }
-        
+
+        [HttpGet("{id}")]
+        public IActionResult GetListMaterii(int id)
+        {
+            var user = _profesorService.GetListMaterii(id);
+            return Ok(user);
+        }
     }
 }
