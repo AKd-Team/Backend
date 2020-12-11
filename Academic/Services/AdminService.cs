@@ -17,7 +17,10 @@ namespace Academic.Services
              public Profesor CreateProfesor(Profesor profesor, string password);
              public Student CreateStudent(Student student, string password,string semigrupa,string specializare);
              public IEnumerable<Departament> GetDepartaments(int id);
-             public IEnumerable<AdminFormSpec> GetFormSpec(int id); 
+             public IEnumerable<AdminFormSpec> GetFormSpec(int id);
+             public IEnumerable<Regulament> GetRegulament(int idFacultate);
+             public void ChangeRegula(UpdateRegula regula);
+             public void CreateRegula(Regulament regula);
 
              IEnumerable<Users> GetAll();
          }
@@ -155,6 +158,57 @@ namespace Academic.Services
                 formSpec.Add(new AdminFormSpec(s.Nume, grupe, semiGrupe));
             }
             return formSpec;
+        }
+
+        /*
+         * Desc: Returneaza o lista de reguli(din tabela Regulament) pe baza id-ului de facultate al unui admin
+         * In: idFacultate - un int care reprezinta IdFacultate al unui admin
+         * Out: reguli - lista de elemente de tip Regulament
+         * Err: Nu exista caz de eroare
+         */
+        public IEnumerable<Regulament> GetRegulament(int idFacultate)
+        {
+            return _context.Regulament.Where(r => r.IdFacultate == idFacultate || r.IdFacultate == null)
+                .OrderByDescending(r => r.IdFacultate).ToList();
+        }
+
+        /*
+         * Desc: Schimba detaliile unei reguli(din tabela regula) din baza de date
+         * In: Un model de tip UpdateRegula care contine IdRegula, Titlu si Continut
+         * Out: Un mesaj de succes sau un mesaj de eroare
+         * Err: Pentru cazul in care IdRegula nu exista deja in tabela Regula
+         *      Pentru cazul in care exista deja o alta regula cu acel titlu sau cu acel text
+         */
+        public void ChangeRegula(UpdateRegula regula)
+        {
+            if(_context.Regulament.Any(r => r.Titlu == regula.Titlu && r.Continut == regula.Continut 
+                                            && r.IdFacultate == regula.IdFacultate))
+                throw new AppException("Deja exista o rgula cu acest titlu si continut la aceasta facultate");
+            
+            if (_context.Regulament.Count(r => r.IdRegulament == regula.IdRegula) == 0)
+                throw new AppException("Nu exista aceasta regula");
+            
+            var reg = _context.Regulament.First(r => r.IdRegulament == regula.IdRegula);
+
+            reg.Titlu = regula.Titlu;
+            reg.Continut = regula.Continut;
+            _context.SaveChanges();
+        }
+
+        /*
+         * Desc: Adauga o regula noua in baza de date
+         * In: Un model de tip AddRegula care contine titlu si continut
+         * Out: Un mesaj de succes sau un mesaj de eroare
+         * Err: In cazul in care o regula cu acelasi titlu sau acelasi text exista deja
+         */
+        public void CreateRegula(Regulament regula)
+        {
+            if(_context.Regulament.Any(r => (r.Titlu == regula.Titlu || r.Continut == regula.Continut) 
+                                            && r.IdFacultate == regula.IdFacultate))
+                throw new AppException("Deja exista o rgula cu acest titlu sau continut la aceasta facultate");
+            
+            _context.Regulament.Add(regula);
+            _context.SaveChanges();
         }
 
         public IEnumerable<Users> GetAll()

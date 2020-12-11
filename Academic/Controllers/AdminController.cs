@@ -1,4 +1,5 @@
-﻿using Academic.Entities;
+﻿using System;
+using Academic.Entities;
 using Academic.Helpers;
 using Academic.Models;
 using Academic.Services;
@@ -6,6 +7,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 
 namespace Academic.Controllers
 {
@@ -98,6 +100,61 @@ namespace Academic.Controllers
         {
             var specForm = _adminService.GetFormSpec(idFacultate);
             return Ok(specForm);
+        }
+
+        /*
+         * Desc: Returneaza o lista de reguli(din tabela Regulament) pe baza id-ului de facultate al unui admin
+         * In: idFacultate - un int care reprezinta IdFacultate al unui admin
+         * Out: reguli - lista de elemente de tip Regulament
+         * Err: Nu exista caz de eroare
+         */
+        [HttpGet("listaReguli/{idFacultate}")]
+        public IActionResult GetRegulament(int idFacultate)
+        {
+            var reguli = _adminService.GetRegulament(idFacultate);
+            return Ok(reguli);
+        }
+        
+        /*
+         * Desc: Schimba detaliile unei reguli(din tabela regula) din baza de date
+         * In: Un model de tip UpdateRegula care contine IdRegula, Titlu si Continut
+         * Out: Un mesaj de succes sau un mesaj de eroare
+         * Err: Pentru cazul in care IdRegula nu exista deja in tabela Regula
+         *      Pentru cazul in care exista deja o alta regula cu acel titlu sau cu acel text
+         */
+        [HttpGet("updateRegula")]
+        public IActionResult ChangeRegula(UpdateRegula model)
+        {
+            try
+            {
+                _adminService.ChangeRegula(model);
+                return Ok("Regula a fost modificata cu succes");
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new {message = ex.Message});
+            }
+        }
+        
+        /*
+         * Desc: Adauga o regula noua in baza de date
+         * In: Un model de tip AddRegula care contine titlu si continut
+         * Out: Un mesaj de succes sau un mesaj de eroare
+         * Err: In cazul in care o regula cu acelasi titlu sau acelasi text exista deja
+         */
+        [HttpGet("addRegula")]
+        public IActionResult CreateRegula(AddRegula model)
+        {
+            var regula = _mapper.Map<Regulament>(model);
+            try
+            {
+                _adminService.CreateRegula(regula);
+                return Ok("Regula a fost creata cu succes");
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new {message = ex.Message});
+            }
         }
 
         [HttpGet]

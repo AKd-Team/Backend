@@ -12,6 +12,7 @@ namespace Academic.Helpers
             CreateMap<RegisterStudent, Student>();
             CreateMap<RegisterAdmin, Admin>();
             CreateMap<RegisterProfesor, Profesor>();
+            CreateMap<AddRegula, Regulament>();
             //CreateMap<UpdateRequest, User>();
         }
     }
