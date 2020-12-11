@@ -9,8 +9,7 @@ namespace Academic.Models
         
         [Required] 
         public string Continut { get; set; }
-
-        [Required] 
+        
         public int? IdFacultate { get; set; }
     }
 }
