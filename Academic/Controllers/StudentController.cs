@@ -62,7 +62,7 @@ namespace Academic.Controllers
             return Ok(facultati);
         }
 
-        [HttpGet("regulamen/{idSpec}")]
+        [HttpGet("regulament/{idSpec}")]
         public IActionResult GetRegulament(int idSpec)
         {
             var regulament = _studentService.GetRegulament(idSpec);

@@ -122,7 +122,7 @@ namespace Academic.Controllers
          * Err: Pentru cazul in care IdRegula nu exista deja in tabela Regula
          *      Pentru cazul in care exista deja o alta regula cu acel titlu sau cu acel text
          */
-        [HttpGet("updateRegula")]
+        [HttpPut("updateRegula")]
         public IActionResult ChangeRegula(UpdateRegula model)
         {
             try
@@ -142,7 +142,7 @@ namespace Academic.Controllers
          * Out: Un mesaj de succes sau un mesaj de eroare
          * Err: In cazul in care o regula cu acelasi titlu sau acelasi text exista deja
          */
-        [HttpGet("addRegula")]
+        [HttpPost("addRegula")]
         public IActionResult CreateRegula(AddRegula model)
         {
             var regula = _mapper.Map<Regulament>(model);
