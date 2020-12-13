@@ -157,6 +157,26 @@ namespace Academic.Controllers
             }
         }
 
+        /*
+         * Desc: Partea de controller pentru stergerea unei reguli din tabela regulament
+         * In: idRegula - un int ce reprezinta id-ul regulii care trebuie stearsa
+         * Out: Mesaj de succes Ok("Regula a fost stearsa cu succes") sau un mesaj de insucces
+         * Err: Daca regula cu acest id nu exista
+         */
+        [HttpDelete("deleteRegula/{idRegula}")]
+        public IActionResult DeleteRegula(int idRegula) 
+        {
+            try
+            {
+                _adminService.DeleteRegula(idRegula);
+                return Ok("Regula a fost stearsa cu succes");
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new {message = ex.Message});
+            }
+        }
+
         [HttpGet]
         public IActionResult GetAll()
         {

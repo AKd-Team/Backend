@@ -21,6 +21,7 @@ namespace Academic.Services
              public IEnumerable<Regulament> GetRegulament(int idFacultate);
              public void ChangeRegula(UpdateRegula regula);
              public void CreateRegula(Regulament regula);
+             public void DeleteRegula(int idRegula);
 
              IEnumerable<Users> GetAll();
          }
@@ -208,6 +209,21 @@ namespace Academic.Services
                 throw new AppException("Deja exista o rgula cu acest titlu sau continut la aceasta facultate");
             
             _context.Regulament.Add(regula);
+            _context.SaveChanges();
+        }
+
+        /*
+         * Desc: Partea de service pentru stergerea unei reguli din tabela regulament
+         * In: idRegula - un int ce reprezinta id-ul regulii care trebuie stearsa
+         * Out:
+         * Err: Daca regula cu acest id nu exista se va transmite mesajul de eroare "Nu exista aceasta regula."
+         */
+        public void DeleteRegula(int idRegula)
+        {
+            if(_context.Regulament.Count(r => r.IdRegulament == idRegula) == 0)
+                throw new AppException("Nu exista aceasta regula.");
+            var regulament = _context.Regulament.First(r => r.IdRegulament == idRegula);
+            _context.Regulament.Remove(regulament);
             _context.SaveChanges();
         }
 
