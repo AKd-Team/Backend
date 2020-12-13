@@ -20,6 +20,7 @@ namespace Academic.Services
         StudentDetaliat GetStudentById(int id);
         IEnumerable<FacultatiCuDepartamente> GetFacultati();
         IEnumerable<Regulament> GetRegulament(int id);
+        IEnumerable<OrarPersonalizat> GetOrar(int idStudent);
     }
 
     public class StudentService : IStudentService
@@ -124,6 +125,40 @@ namespace Academic.Services
             }
             //Pt cazul in care nu exista specializare
             return _context.Regulament.Where(r => r.IdFacultate == null);
+        }
+
+        /*
+         * Desc: Partea de service pentru afisarea orarului
+         * In: idStudent - un int care reprezinta id-ul studentului pentru care afisam orarul
+         * Out: orar - o lista cu elemente de tip orar personalizat
+         * Err:
+         */
+        public IEnumerable<OrarPersonalizat> GetOrar(int idStudent)
+        {
+            var orarListat = new List<OrarPersonalizat>();
+            
+            foreach (var detaliuContract in _context.Detaliucontract
+                .Where(dc => dc.IdStudent == idStudent).ToList())
+            {
+                var numeMaterie = _context.Materie.Find(detaliuContract.IdMaterie).Nume;
+                
+                foreach (var orar in _context.Orarmaterie
+                    .Where(o => o.IdMaterie == detaliuContract.IdMaterie).ToList())
+                {
+                    var numeSala = _context.Sala.Find(orar.IdSala).Nume;
+                    var numeProfesor = _context.Profesor.Find(orar.IdProfesor).Nume;
+                    var titlu = numeMaterie + System.Environment.NewLine + orar.Tip;
+                    var formatie = _context.Formatie.Find(orar.IdFormatie, orar.IdSpecializare);
+                    var grupaSemigrupa = formatie.Grupa + System.Environment.NewLine + formatie.SemiGrupa;
+                    var oraInceput = orar.OraInceput.ToString();
+                    oraInceput = oraInceput.Substring(0, oraInceput.Length - 3);
+                    var oraSfarsit = orar.OraSfarsit.ToString();
+                    oraSfarsit = oraSfarsit.Substring(0, oraSfarsit.Length - 3);
+                    orarListat.Add(new OrarPersonalizat(titlu, oraInceput, oraSfarsit, 
+                        orar.ZiuaSaptamanii, grupaSemigrupa, numeProfesor, numeSala, orar.Frecventa));
+                }
+            }
+            return orarListat;
         }
     }
 }

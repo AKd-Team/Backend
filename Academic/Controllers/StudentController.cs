@@ -62,11 +62,25 @@ namespace Academic.Controllers
             return Ok(facultati);
         }
 
-        [HttpGet("regulamen/{idSpec}")]
+        [HttpGet("regulament/{idSpec}")]
         public IActionResult GetRegulament(int idSpec)
         {
             var regulament = _studentService.GetRegulament(idSpec);
             return Ok(regulament);
         }
+
+        /*
+         * Desc: Partea de controller pentru afisarea orarului
+         * In: idStudent - un int care reprezinta id-ul studentului pentru care afisam orarul
+         * Out: orar - o lista cu elemente de tip orar personalizat
+         * Err:
+         */
+        [HttpGet("orar/{idStudent}")]
+        public IActionResult GetOrar(int idStudent)
+        {
+            var orar = _studentService.GetOrar(idStudent);
+            return Ok(orar);
+        }
+        
     }
 }
