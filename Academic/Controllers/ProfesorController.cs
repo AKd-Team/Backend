@@ -33,11 +33,18 @@ namespace Academic.Controllers
             return Ok(model);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}/materii")]
         public IActionResult GetListMaterii(int id)
         {
             var user = _profesorService.GetListMaterii(id);
             return Ok(user);
+        }
+
+        [HttpGet("{id}/materii/{idMaterie}")]
+        public IActionResult GetStudentiLaMaterie(int id, int idMaterie)
+        {
+            var studenti = _profesorService.GetStudentiInscrisi(idMaterie, id);
+            return Ok(studenti);
         }
     }
 }

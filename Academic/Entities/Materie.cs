@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Academic.Entities
 {
@@ -20,9 +21,11 @@ namespace Academic.Entities
         public string Finalizare { get; set; }
         public int? NrPachet { get; set; }
         public int? TipActivitate { get; set; }
-
+        [JsonIgnore]
         public virtual ICollection<Detaliucontract> Detaliucontract { get; set; }
+        [JsonIgnore]
         public virtual ICollection<MaterieSpecializare> MaterieSpecializare { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Orarmaterie> Orarmaterie { get; set; }
     }
 }
