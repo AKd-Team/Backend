@@ -4,6 +4,7 @@ namespace Academic.Models
 {
     public class DateStudentPtProfesor
     {
+        public int IdStudent { get; set; }
         public string Nume { get; set; }
         public string Prenume { get; set; }
         public string Grupa { get; set; }
@@ -13,6 +14,7 @@ namespace Academic.Models
 
         public DateStudentPtProfesor(Student student, string grupa, string semigrupa, string specializare, string facultate)
         {
+            IdStudent = student.IdUser;
             Nume = student.Nume;
             Prenume = student.Prenume;
             Grupa = grupa;
