@@ -128,7 +128,7 @@ namespace Academic.Controllers
             try
             {
                 _adminService.ChangeRegula(model);
-                return Ok("Regula a fost modificata cu succes");
+                return Ok(new {message = "Regula a fost modificata cu succes"});
             }
             catch (AppException ex)
             {
@@ -149,7 +149,7 @@ namespace Academic.Controllers
             try
             {
                 _adminService.CreateRegula(regula);
-                return Ok("Regula a fost creata cu succes");
+                return Ok(new {message = "Regula a fost creata cu succes"});
             }
             catch (AppException ex)
             {
@@ -169,7 +169,7 @@ namespace Academic.Controllers
             try
             {
                 _adminService.DeleteRegula(idRegula);
-                return Ok("Regula a fost stearsa cu succes");
+                return Ok(new {message = "Regula a fost stearsa cu succes"});
             }
             catch (AppException ex)
             {
