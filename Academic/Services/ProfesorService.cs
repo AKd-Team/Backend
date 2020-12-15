@@ -14,6 +14,8 @@ namespace Academic.Services
         Users GetById(int id);
         public IEnumerable<MaterieNedetaliata> GetListMaterii(int IdProfesor);
         public IEnumerable<DateStudentPtProfesor> GetStudentiInscrisi(int idMaterie, int idProfesor);
+        public IEnumerable<Sala> GetSali();
+        public IEnumerable<OrarSali> GetOrarSali(int idSala);
     }
     public class ProfesorService : IProfesorService
     {
@@ -70,6 +72,61 @@ namespace Academic.Services
             }
 
             return StudentiDetaliati;
+        }
+
+        /* Desc: Partea de service pentru a returna o lista de sali
+         * In: -
+         * Out: sali - o lista de obiecte de tip sala
+         * Err: -
+         */
+        public IEnumerable<Sala> GetSali()
+        {
+            return _context.Sala.ToList();
+        }
+
+        /*
+         * Desc: Partea de service pentru gasirea orarului unei sali
+         * In: idSala - un int ce reprezinta id-ul salii pt care cautam orarul
+         * Out: orarSali - o lista de obiecte de tip OrarSali
+         * Err: -
+         */
+        public IEnumerable<OrarSali> GetOrarSali(int idSala)
+        {
+            var orarSali = new List<OrarSali>();
+            foreach (var orar in _context.Orarmaterie
+                .Where(o => o.IdSala == idSala && o.Tip == "Examen" && o.Data != null).ToList())
+            {
+                var profesor = _context.Profesor.Find(orar.IdProfesor);
+                var numeProfesor = profesor.Nume + " " + profesor.Prenume;
+                var formatie = _context.Formatie.Find(orar.IdFormatie, orar.IdSpecializare);
+                var specializare = _context.Specializare.Find(formatie.IdSpecializare);
+                var oraInceput = orar.OraInceput.ToString();
+                oraInceput = oraInceput.Substring(0, oraInceput.Length - 3);
+                var oraSfarsit = orar.OraSfarsit.ToString();
+                oraSfarsit = oraSfarsit.Substring(0, oraSfarsit.Length - 3);
+                var data = orar.Data;
+
+                var dataDetaliata = data.Value.ToString("yyyy-MM-dd");
+                
+                var conditieTitlu = false;
+                
+                foreach (var os in orarSali)
+                {
+                    if (specializare.Cod == os.CodSpecializare && oraInceput == os.OraInceput 
+                                                               && oraSfarsit == os.OraSfarsit && dataDetaliata == os.Data)
+                    {
+                        os.Titlu = formatie.Grupa + " " + os.Titlu;
+                        conditieTitlu = true;
+                        break;
+                    }
+                }
+
+                if (conditieTitlu) continue;
+                
+                var titlu = formatie.Grupa + " " + numeProfesor;
+                orarSali.Add(new OrarSali(titlu, oraInceput, oraSfarsit, dataDetaliata, specializare.Cod));
+            }
+            return orarSali;
         }
     }
 }

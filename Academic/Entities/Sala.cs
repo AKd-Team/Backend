@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Academic.Entities
 {
@@ -14,6 +15,7 @@ namespace Academic.Entities
         public string Nume { get; set; }
         public string Locatie { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Orarmaterie> Orarmaterie { get; set; }
     }
 }

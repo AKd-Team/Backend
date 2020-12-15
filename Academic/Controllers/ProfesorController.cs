@@ -46,5 +46,30 @@ namespace Academic.Controllers
             var studenti = _profesorService.GetStudentiInscrisi(idMaterie, id);
             return Ok(studenti);
         }
+
+        /* Desc: Partea de controller pentru a returna o lista de sali
+         * In: -
+         * Out: sali - o lista de obiecte de tip sala
+         * Err: -
+         */
+        [HttpGet("sali")]
+        public IActionResult GetSali()
+        {
+            var sali = _profesorService.GetSali();
+            return Ok(sali);
+        }
+
+        /*
+         * Desc: Partea de controller pentru gasirea orarului unei sali
+         * In: idSala - un int ce reprezinta id-ul salii pt care cautam orarul
+         * Out: orarSali - o lista de obiecte de tip OrarSali
+         * Err: -
+         */
+        [HttpGet("orarSali/{idSala}")]
+        public IActionResult GetOrarSali(int idSala)
+        {
+            var orarSali = _profesorService.GetOrarSali(idSala);
+            return Ok(orarSali);
+        }
     }
 }
