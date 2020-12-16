@@ -143,7 +143,7 @@ namespace Academic.Services
                 var numeMaterie = _context.Materie.Find(detaliuContract.IdMaterie).Nume;
                 
                 foreach (var orar in _context.Orarmaterie
-                    .Where(o => o.IdMaterie == detaliuContract.IdMaterie).ToList())
+                    .Where(o => o.IdMaterie == detaliuContract.IdMaterie && o.Tip != "Examen").ToList())
                 {
                     var numeSala = _context.Sala.Find(orar.IdSala).Nume;
                     var numeProfesor = _context.Profesor.Find(orar.IdProfesor).Nume;
