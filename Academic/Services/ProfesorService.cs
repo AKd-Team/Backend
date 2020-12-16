@@ -39,7 +39,9 @@ namespace Academic.Services
             foreach (var o in orarmaterii)
             {
                 var materie = _context.Materie.SingleOrDefault(m=> m.IdMaterie == o.IdMaterie);
-                list_materii.Add(new MaterieNedetaliata(materie));
+                var obj = new MaterieNedetaliata(materie);
+                if(!list_materii.Contains(obj))
+                        list_materii.Add(new MaterieNedetaliata(materie));
             }
 
             return list_materii;
