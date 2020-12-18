@@ -21,6 +21,7 @@ namespace Academic.Services
         IEnumerable<FacultatiCuDepartamente> GetFacultati();
         IEnumerable<Regulament> GetRegulament(int id);
         IEnumerable<OrarPersonalizat> GetOrar(int idStudent);
+        IEnumerable<OrarExamen> GetExamene(int idStudent);
     }
 
     public class StudentService : IStudentService
@@ -156,6 +157,50 @@ namespace Academic.Services
                     oraSfarsit = oraSfarsit.Substring(0, oraSfarsit.Length - 3);
                     orarListat.Add(new OrarPersonalizat(titlu, oraInceput, oraSfarsit, 
                         orar.ZiuaSaptamanii, grupaSemigrupa, numeProfesor, numeSala, orar.Frecventa));
+                }
+            }
+            return orarListat;
+        }
+
+        /*
+         * Desc: Partea de service pentru functia care returneaza orarul de examene pt un student dat
+         * In: id-ul studentului
+         * Out: orarListat - o lista de obiecte de tip OrarExamen, in care atributele obiectelor o sa fie definite astfel
+         *     titlu - un string ce contine: numele materiei, numele profesorului, sala de examen si grupa care are examenul
+         *     !!!!Pt examene in baza de date se va folosi o regula de exceptie, in care o sa fie notate grupele fara semigrupa
+         *     oraInceput - ora de inceput a examenului
+         *     oraSfarsit - ora de sfarsit a examenului
+         *     data - data in care are loc examenul
+         * Err: -
+         */
+        public IEnumerable<OrarExamen> GetExamene(int idStudent)
+        {
+            var orarListat = new List<OrarExamen>();
+            
+            foreach (var detaliuContract in _context.Detaliucontract
+                .Where(dc => dc.IdStudent == idStudent).ToList())
+            {
+                var numeMaterie = _context.Materie.Find(detaliuContract.IdMaterie).Nume;
+
+                foreach (var orar in _context.Orarmaterie
+                    .Where(o => o.IdMaterie == detaliuContract.IdMaterie && o.Tip == "Examen").ToList())
+                {
+                    if (orar.Data == null) continue;
+                    var data = orar.Data.Value.ToString("yyyy-MM-dd");
+                    var oraInceput = orar.OraInceput.ToString();
+                    oraInceput = oraInceput.Substring(0, oraInceput.Length - 3);
+                    var oraSfarsit = orar.OraSfarsit.ToString();
+                    oraSfarsit = oraSfarsit.Substring(0, oraSfarsit.Length - 3);
+                    
+                    //formare titlu
+                    var numeSala = _context.Sala.Find(orar.IdSala).Nume;
+                    var profesor = _context.Profesor.Find(orar.IdProfesor);
+                    var numeProfesor = profesor.Nume + " " + profesor.Prenume;
+                    var formatie = _context.Formatie.Find(orar.IdFormatie, orar.IdSpecializare);
+                    
+                    var titlu = numeMaterie + ", " + numeProfesor + ", " + numeSala + ", " + formatie.Grupa;
+
+                    orarListat.Add(new OrarExamen(titlu, oraInceput, oraSfarsit, data));
                 }
             }
             return orarListat;

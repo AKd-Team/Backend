@@ -81,6 +81,19 @@ namespace Academic.Controllers
             var orar = _studentService.GetOrar(idStudent);
             return Ok(orar);
         }
+
+        /*
+         * Desc: Partea de controller pentru functia care returneaza orarul de examene pt un student dat
+         * In: id-ul studentului
+         * Out: orarListat - o lista de obiecte de tip OrarExamen
+         * Err: -
+         */
+        [HttpGet("examene/{idStudent}")]
+        public IActionResult GetExamene(int idStudent)
+        {
+            var examene = _studentService.GetExamene(idStudent);
+            return Ok(examene);
+        }
         
     }
 }
