@@ -36,12 +36,21 @@ namespace Academic.Services
         }
         public Student CreateStudent(Student student, string password,string semigrupa,string specializare)
         {
-            var t = _context.Specializare.Where(x=>x.Cod=="MIR" ).ToList();
             if (string.IsNullOrWhiteSpace(password))
                 throw new AppException("Password is required");
 
             if (_context.Users.Any(x => x.Username == student.Username))
                 throw new AppException("Username \"" + student.Username + "\" is already taken");
+            
+            if (_context.Users.Any(x => x.Cnp == student.Cnp))
+                throw new AppException("Deja exista un user cu acest CNP");
+            
+            if (_context.Student.Any(x => x.NrMatricol == student.NrMatricol))
+                throw new AppException("Deja exista un student cu acest numar matricol");
+            
+            if (_context.Student.Any(x => x.Cup == student.Cup))
+                throw new AppException("Deja exista un student cu acest CUP");
+            
             if (_context.Specializare.Where(x=>x.Nume == specializare).Count()==0)
                 throw new AppException("Erori specializare");
             if (_context.Formatie.Where(x => x.SemiGrupa == semigrupa).Count()==0)
@@ -68,6 +77,10 @@ namespace Academic.Services
 
             if (_context.Users.Any(x => x.Username == profesor.Username))
                 throw new AppException("Username \"" + profesor.Username + "\" is already taken");
+            
+            if (_context.Users.Any(x => x.Cnp == profesor.Cnp))
+                throw new AppException("Deja exista un user cu acest CNP");
+            
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
             profesor.PHash = passwordHash;
