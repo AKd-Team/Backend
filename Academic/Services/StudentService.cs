@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using Academic.Entities;
 using Academic.Helpers;
 using Academic.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Options;
 
 namespace Academic.Services
@@ -22,6 +25,11 @@ namespace Academic.Services
         IEnumerable<Regulament> GetRegulament(int id);
         IEnumerable<OrarPersonalizat> GetOrar(int idStudent);
         IEnumerable<OrarExamen> GetExamene(int idStudent);
+        IEnumerable<OptiuniReview> GetOptiuniReview(int idStudent);
+        IEnumerable<ProfesorNedetaliat> GetProfesoriNedetaliati(int idMaterie, string tip);
+        bool ExistentaEvaluare(ReviewComplet rc);
+        void AdaugareReview(ReviewComplet rc);
+        IEnumerable<Criteriu> GetCriterii();
     }
 
     public class StudentService : IStudentService
@@ -205,5 +213,124 @@ namespace Academic.Services
             }
             return orarListat;
         }
+        
+        /*
+         * Desc: Partea de service pt transmiterea optiunilor de evaluare pt profesor
+         * In: idStudent - int; reprezinta id-ul unui student
+         * Out: optReview - o lista de obiecte de tip OptiuniReview
+         * Err: -
+         */
+        public IEnumerable<OptiuniReview> GetOptiuniReview(int idStudent)
+        {
+            var optReview = new List<OptiuniReview>();
+            var anMaxim = _context.Detaliucontract.Where(dc => dc.IdStudent == idStudent)
+                .Max(dc => dc.AnDeStudiu);
+            foreach (var detaliu in _context.Detaliucontract.Where(dc => dc.IdStudent == idStudent 
+                                                                         && dc.AnDeStudiu == anMaxim).ToList())
+            {
+                var idMaterie = detaliu.IdMaterie;
+                var numeMaterie = _context.Materie.Find(idMaterie).Nume;
+                var anCalendaristic = detaliu.AnCalendaristic;
+                var curs = false;
+                var seminar = false;
+                var laborator = false;
+                foreach (var orar in _context.Orarmaterie.Where(o => o.IdMaterie == idMaterie).ToList())
+                {
+                    var tip = orar.Tip;
+                    switch (tip)
+                    {
+                        case "Curs":
+                            curs = true;
+                            break;
+                        case "Seminar":
+                            seminar = true;
+                            break;
+                        case "Laborator":
+                            laborator = true;
+                            break;
+                    }
+                }
+                optReview.Add(new OptiuniReview(idMaterie, numeMaterie, anMaxim, anCalendaristic, curs, seminar, laborator));
+            }
+            return optReview;
+        }
+
+        /*
+         * Desc: Partea de service care returneaza profesorii de la o materie de un anumite tip
+         * In: idMaterie - int
+         *     tip - string, tipul activitatii
+         * Out: profesori - o lista de obiecte de tip ProfesoriNedetaliati
+         * Err: -
+         */
+        public IEnumerable<ProfesorNedetaliat> GetProfesoriNedetaliati(int idMaterie, string tip)
+        {
+            var profesori = new List<ProfesorNedetaliat>();
+            
+            foreach (var orar in _context.Orarmaterie.Where(o => o.IdMaterie == idMaterie 
+                                                                 && o.Tip == tip).ToList())
+            {
+                var profesor = _context.Profesor.Find(orar.IdProfesor);
+                var nume = profesor.Grad + " " + profesor.Nume + " " + profesor.Prenume;
+                var profesorNedetaliat = new ProfesorNedetaliat(profesor.IdUser,nume);
+                if (!profesori.Contains(profesorNedetaliat))
+                    profesori.Add(profesorNedetaliat);
+            }
+            return profesori;
+        }
+        
+        /*
+         * Desc: Partea de service pentru existenta unei anumite evaluari 
+         * In: rc - un obiect de tip ReviewComplet
+         * Out: true sau false
+         * Err: -
+         */
+        public bool ExistentaEvaluare(ReviewComplet rc)
+        {
+            if (_context.Review.Any(r => r.IdStudent == rc.IdStudent && r.IdProfesor == rc.IdProfesor 
+                                                                     && r.IdMaterie == rc.IdMaterie 
+                                                                     && r.AnDeStudiu == rc.AnDeStudiu 
+                                                                     && r.AnCaledaristic == rc.AnCalendaristic))
+                return true;
+            return false;
+        }
+
+        /*
+         * Desc: Partea de service pe a transmite datele de evaluare facute asupra unui profesor. 
+         * In: rc - un obiect de tip AdaugareReview
+         * Out: -
+         * Err: Daca numarul de note nu e egal cu numarul de criterii
+         */
+        public void AdaugareReview(ReviewComplet rc)
+        {
+            if (rc.Criterii.Count != rc.Note.Count)
+                throw new AppException("Numarul de note difera fata de cel de criterii");
+            for (var i = 0; i < rc.Criterii.Count; i++)
+            {
+                var review = new Review
+                {
+                    IdProfesor = rc.IdProfesor,
+                    IdMaterie = rc.IdMaterie,
+                    IdCriteriu = rc.Criterii.ElementAt(i),
+                    IdStudent = rc.IdStudent,
+                    AnDeStudiu = rc.AnDeStudiu,
+                    AnCaledaristic = rc.AnCalendaristic,
+                    Nota = rc.Note.ElementAt(i)
+                };
+                _context.Review.Add(review);
+                _context.SaveChanges();
+            }
+        }
+        
+        /*
+         * Desc: Partea de service pt a transmite lista de criterii pentru evaluarea unui profesor
+         * In: -
+         * Out: o lista de criterii
+         * Err: -
+         */
+        public IEnumerable<Criteriu> GetCriterii()
+        {
+            return _context.Criteriu.ToList();
+        }
+        
     }
 }
