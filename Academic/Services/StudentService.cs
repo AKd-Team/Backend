@@ -30,6 +30,7 @@ namespace Academic.Services
         bool ExistentaEvaluare(ReviewComplet rc);
         void AdaugareReview(ReviewComplet rc);
         IEnumerable<Criteriu> GetCriterii();
+        IEnumerable<NoteExamene> GetNota(int idStudent);
     }
 
     public class StudentService : IStudentService
@@ -330,6 +331,25 @@ namespace Academic.Services
         public IEnumerable<Criteriu> GetCriterii()
         {
             return _context.Criteriu.ToList();
+        }
+
+        public IEnumerable<NoteExamene> GetNota(int idStudent)
+        {
+            var noteExamene = new List<NoteExamene>();
+            foreach (var note in _context.Detaliucontract.Where(d => idStudent == d.IdStudent).ToList())
+            {
+                int? notaFinala = null;
+                if(note.Nota!=null)
+                    if (note.NotaRestanta != null && note.NotaRestanta > note.Nota)
+                        notaFinala = note.NotaRestanta;
+                    else notaFinala = note.Nota;
+                var materie = _context.Materie.Find(note.IdMaterie);
+                noteExamene.Add(new NoteExamene(note,materie,notaFinala));
+            }
+            return noteExamene;
+
+
+
         }
         
     }
