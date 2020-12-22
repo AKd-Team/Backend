@@ -16,6 +16,7 @@ namespace Academic.Services
         public IEnumerable<DateStudentPtProfesor> GetStudentiInscrisi(int idMaterie, int idProfesor);
         public IEnumerable<Sala> GetSali();
         public IEnumerable<OrarSali> GetOrarSali(int idSala);
+        public RezultatEvaluare GetRezultateEvaluare(int idMaterie, int idProfesor);
     }
     public class ProfesorService : IProfesorService
     {
@@ -129,6 +130,32 @@ namespace Academic.Services
                 orarSali.Add(new OrarSali(titlu, oraInceput, oraSfarsit, dataDetaliata, specializare.Cod));
             }
             return orarSali;
+        }
+        
+        /*
+         * Desc: Partea de service pt obtinerea rezultatelor unei evaluari
+         * In: idMaterie - int
+         *     idProfesor - int
+         * Out: rezultate - un obiect de tip rezultate evalaure
+         * Err: -
+         */
+        public RezultatEvaluare GetRezultateEvaluare(int idMaterie, int idProfesor)
+        {
+            var rezultate = new RezultatEvaluare();
+            var review = _context.Review
+                .Where(r => r.IdProfesor == idProfesor && r.IdMaterie == idMaterie && r.Nota != null)
+                .GroupBy(g => g.IdCriteriu, r => r.Nota)
+                .Select(g => new
+                {
+                    Criteriu = g.Key,
+                    Media = g.Average()
+                })
+                .ToList();
+            foreach (var r in review)
+            {
+                rezultate.AddElement(_context.Criteriu.Find(r.Criteriu).Descriere, r.Media);
+            }
+            return rezultate;
         }
     }
 }

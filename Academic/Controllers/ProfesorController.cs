@@ -71,5 +71,18 @@ namespace Academic.Controllers
             var orarSali = _profesorService.GetOrarSali(idSala);
             return Ok(orarSali);
         }
+        
+        /*
+         * Desc: Partea de controller pentru vizualizarea rezultatelor
+         * In: idMaterie - int, id-ul unei materii pt care profesorul a fost evaluat
+         *     idProfesor - int, id-ul profesorului care o sa vada rezultatele
+         * Out: Un obiect de tip RezultateEvaluare
+         * Err: -
+         */
+        [HttpGet("rezultateEvaluare/{idMAterie}/{idProfesor}")]
+        public IActionResult GetRezultateEvaluari(int idMaterie, int idProfesor)
+        {
+            return Ok(_profesorService.GetRezultateEvaluare(idMaterie, idProfesor));
+        }
     }
 }
