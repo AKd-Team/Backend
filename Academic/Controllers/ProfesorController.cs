@@ -1,10 +1,11 @@
-﻿using Academic.Entities;
+﻿using System;
+using Academic.Entities;
 using Academic.Helpers;
 using Academic.Services;
+using Academic.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-
 namespace Academic.Controllers
 {
     [ApiController] 
@@ -83,6 +84,34 @@ namespace Academic.Controllers
         public IActionResult GetRezultateEvaluari(int idMaterie, int idProfesor)
         {
             return Ok(_profesorService.GetRezultateEvaluare(idMaterie, idProfesor));
+        }
+        [HttpPost("ProgExamen")]
+        public IActionResult ProgExamen(AddExamen model)
+        {
+            
+            var examen = new Orarmaterie();
+            var oraIncT = TimeSpan.Parse(model.OraInceput);
+            examen.OraInceput = oraIncT;
+            var oraSf = TimeSpan.Parse(model.OraSfarsit);
+            examen.OraSfarsit = oraSf;
+            examen.IdMaterie = model.IdMaterie;
+            examen.IdFormatie = model.IdFormatie;
+            examen.IdProfesor = model.IdProfesor;
+            examen.IdSpecializare = model.IdSpecializare;
+            examen.IdSala = model.IdSala;
+            examen.Data = model.Data;
+            examen.ZiuaSaptamanii = "";
+            examen.Frecventa = "";
+            examen.Tip = "Examen";
+            try
+            {
+                _profesorService.ProgExamen(examen);
+                return Ok(new {message = "Examenul a fost adaugat cu succes"});
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new {message = ex.Message});
+            }
         }
     }
 }

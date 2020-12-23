@@ -17,6 +17,8 @@ namespace Academic.Services
         public IEnumerable<Sala> GetSali();
         public IEnumerable<OrarSali> GetOrarSali(int idSala);
         public RezultatEvaluare GetRezultateEvaluare(int idMaterie, int idProfesor);
+        public void ProgExamen(Orarmaterie examen);
+        
     }
     public class ProfesorService : IProfesorService
     {
@@ -157,5 +159,69 @@ namespace Academic.Services
             }
             return rezultate;
         }
+        
+ /*
+         * Desc:
+         * Input:idSala- int, dupa care rezervam sala
+         * Output: nimic
+         * ERR:
+         */
+        public void ProgExamen(Orarmaterie examen)
+        {
+            var idSala = examen.IdSala;
+            var orarSala = GetOrarSali(idSala).ToList();
+            var sali = GetSali();
+            var ok = false;
+            foreach (var sala in sali)
+            {
+                if (sala.IdSala == idSala)
+                    ok = true;
+            }
+
+            if (ok == false)
+            {
+                throw new Exception("Nu exista sala cu asemenea id");
+            }
+            var data = examen.Data;
+            var dataDetaliata = data?.ToString("yyyy-MM-dd");
+            var condOra = true;
+            /*
+             *  x=examen.OraInceput
+             * y=examen.OraSfarsit
+             * a=ora.Inc
+             * b=oraSf
+             */
+            foreach (var orar in orarSala)
+            {
+                var oraInc = TimeSpan.Parse(orar.OraInceput);
+                var oraSf = TimeSpan.Parse(orar.OraSfarsit);
+                if (TimeSpan.Compare(examen.OraInceput, oraInc) >= 0 &&
+                    TimeSpan.Compare(examen.OraInceput, oraSf) < 0) //daca x apartine [a,b)
+                {
+                    condOra = false;
+                    throw new Exception("Examenul nu poate sa inceapa in timp ce se desfasoara alt examen");
+                }
+                else if (TimeSpan.Compare(examen.OraSfarsit, oraInc) >= 0 &&
+                         TimeSpan.Compare(examen.OraSfarsit, oraSf) <= 0) //daca y apartine [a,b]
+                {
+                    condOra = false;
+                    throw new Exception("Examenul trebuie sa se termine inaintea altui examen rezervat");
+                }
+                else if (TimeSpan.Compare(examen.OraInceput, oraInc) < 0 &&
+                         TimeSpan.Compare(examen.OraSfarsit, oraSf) > 0) //daca [a,b] inclus in [x,y]
+                {
+                    condOra = false;
+                    throw new Exception("Exista un examen in acest inetrval orar");
+                }
+            }
+
+            if (condOra)
+            {
+                _context.Orarmaterie.Add(examen);
+                _context.SaveChanges();
+            }
+            
+        }
+
     }
 }
