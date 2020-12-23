@@ -159,32 +159,60 @@ namespace Academic.Services
             }
             return rezultate;
         }
-        
- /*
-         * Desc:
-         * Input:idSala- int, dupa care rezervam sala
+/*
+ * Desc:
+ * Input: orarmaterie ora1 si orarmaterie ora2
+ * output: true daca sunt egale si false daca sunt false
+ * error: fara erori
+ */
+        public bool eqOrarmater(Orarmaterie ora1, Orarmaterie ora2)
+        {
+            if (Equals(ora1.Data, ora2.Data) && Equals(ora1.IdFormatie, ora2.IdFormatie) &&
+                Equals(ora1.IdMaterie, ora2.IdMaterie) && Equals(ora1.IdProfesor, ora2.IdProfesor) &&
+                Equals(ora1.IdSala, ora2.IdSala) && Equals(ora1.OraInceput, ora2.OraSfarsit) &&
+                Equals(ora1.IdSpecializare, ora2.IdSpecializare))
+            {
+                return true;
+            }
+
+            return false;
+        }
+        /*
+         * Desc: 
+         * Input:Orarmaterie
          * Output: nimic
-         * ERR:
+         * ERR:-daca id-ul salii nu exista
+         *     -daca intervalul examenului se intersecteaza cu un alt examen
+         *     
          */
         public void ProgExamen(Orarmaterie examen)
         {
+            foreach (var ora in _context.Orarmaterie.ToList())
+            {
+                if (eqOrarmater(examen,ora)==true)
+                {
+                    throw new Exception("Examenul este deja programat");
+                }
+            }
             var idSala = examen.IdSala;
             var orarSala = GetOrarSali(idSala).ToList();
             var sali = GetSali();
             var ok = false;
+            var numesala = _context.Sala.Find(idSala).Nume;
             foreach (var sala in sali)
             {
                 if (sala.IdSala == idSala)
+                {
                     ok = true;
+                }
             }
-
             if (ok == false)
             {
                 throw new Exception("Nu exista sala cu asemenea id");
             }
+            
             var data = examen.Data;
             var dataDetaliata = data?.ToString("yyyy-MM-dd");
-            var condOra = true;
             /*
              *  x=examen.OraInceput
              * y=examen.OraSfarsit
@@ -196,31 +224,24 @@ namespace Academic.Services
                 var oraInc = TimeSpan.Parse(orar.OraInceput);
                 var oraSf = TimeSpan.Parse(orar.OraSfarsit);
                 if (TimeSpan.Compare(examen.OraInceput, oraInc) >= 0 &&
-                    TimeSpan.Compare(examen.OraInceput, oraSf) < 0) //daca x apartine [a,b)
+                    TimeSpan.Compare(examen.OraInceput, oraSf) < 0 && String.CompareOrdinal(numesala,"Online")!= 0) //daca x apartine [a,b) si sala nu este 1(cea online)
                 {
-                    condOra = false;
                     throw new Exception("Examenul nu poate sa inceapa in timp ce se desfasoara alt examen");
                 }
                 else if (TimeSpan.Compare(examen.OraSfarsit, oraInc) >= 0 &&
-                         TimeSpan.Compare(examen.OraSfarsit, oraSf) <= 0) //daca y apartine [a,b]
+                         TimeSpan.Compare(examen.OraSfarsit, oraSf) <= 0 && String.CompareOrdinal(numesala,"Online")!= 0) //daca y apartine [a,b]
                 {
-                    condOra = false;
                     throw new Exception("Examenul trebuie sa se termine inaintea altui examen rezervat");
                 }
                 else if (TimeSpan.Compare(examen.OraInceput, oraInc) < 0 &&
-                         TimeSpan.Compare(examen.OraSfarsit, oraSf) > 0) //daca [a,b] inclus in [x,y]
+                         TimeSpan.Compare(examen.OraSfarsit, oraSf) > 0 && String.CompareOrdinal(numesala,"Online")!= 0) //daca [a,b] inclus in [x,y]
                 {
-                    condOra = false;
                     throw new Exception("Exista un examen in acest inetrval orar");
                 }
             }
 
-            if (condOra)
-            {
-                _context.Orarmaterie.Add(examen);
-                _context.SaveChanges();
-            }
-            
+            _context.Orarmaterie.Add(examen);
+            _context.SaveChanges();
         }
 
     }
