@@ -169,8 +169,8 @@ namespace Academic.Services
         {
             if (Equals(ora1.Data, ora2.Data) && Equals(ora1.IdFormatie, ora2.IdFormatie) &&
                 Equals(ora1.IdMaterie, ora2.IdMaterie) && Equals(ora1.IdProfesor, ora2.IdProfesor) &&
-                Equals(ora1.IdSala, ora2.IdSala) && Equals(ora1.OraInceput, ora2.OraSfarsit) &&
-                Equals(ora1.IdSpecializare, ora2.IdSpecializare))
+                Equals(ora1.IdSala, ora2.IdSala) && Equals(ora1.OraInceput, ora2.OraInceput) && 
+                Equals(ora1.OraSfarsit,ora2.OraSfarsit) && Equals(ora1.IdSpecializare, ora2.IdSpecializare))
             {
                 return true;
             }
