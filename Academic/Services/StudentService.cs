@@ -206,9 +206,8 @@ namespace Academic.Services
                     var profesor = _context.Profesor.Find(orar.IdProfesor);
                     var numeProfesor = profesor.Nume + " " + profesor.Prenume;
                     var formatie = _context.Formatie.Find(orar.IdFormatie, orar.IdSpecializare);
-                    
                     var titlu = numeMaterie + ", " + numeProfesor + ", " + numeSala + ", " + formatie.Grupa;
-
+                    
                     orarListat.Add(new OrarExamen(titlu, oraInceput, oraSfarsit, data));
                 }
             }
@@ -336,8 +335,10 @@ namespace Academic.Services
         public IEnumerable<NoteExamene> GetNota(int idStudent)
         {
             var noteExamene = new List<NoteExamene>();
-            foreach (var note in _context.Detaliucontract.Where(d => idStudent == d.IdStudent).ToList())
+            foreach (var note in _context.Detaliucontract.Where(d => idStudent == d.IdStudent).
+                OrderBy(d => d.Semestru).ToList())
             {
+                
                 int? notaFinala = null;
                 if(note.Nota!=null)
                     if (note.NotaRestanta != null && note.NotaRestanta > note.Nota)
