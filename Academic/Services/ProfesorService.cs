@@ -18,7 +18,7 @@ namespace Academic.Services
         public IEnumerable<OrarSali> GetOrarSali(int idSala);
         public RezultatEvaluare GetRezultateEvaluare(int idMaterie, int idProfesor);
         public void ProgExamen(Orarmaterie examen);
-        
+        public void AdaugareNote(AdaugareNota an);
     }
     public class ProfesorService : IProfesorService
     {
@@ -241,6 +241,40 @@ namespace Academic.Services
             }
 
             _context.Orarmaterie.Add(examen);
+            _context.SaveChanges();
+        }
+
+        public void AdaugareNote(AdaugareNota an)
+        {
+            var anDeStudiu = _context.Detaliucontract.Where(dc => dc.IdStudent == an.idStudent)
+                .Max(dc => dc.AnDeStudiu);
+            var anCalendaristic = _context.Detaliucontract.SingleOrDefault(dc => dc.IdStudent == an.idStudent
+                                                                         && dc.AnDeStudiu == anDeStudiu)?.AnCalendaristic;
+
+            var detaliucontract = _context.Detaliucontract.First(dc => dc.IdStudent == an.idStudent
+                                                            && dc.IdMaterie == an.idMaterie 
+                                                            && dc.AnDeStudiu==anDeStudiu 
+                                                            && dc.AnCalendaristic==anCalendaristic);
+            if (an.restanta)
+            {
+                detaliucontract.NotaRestanta = an.nota;
+                if (an.nota >= 5)
+                {
+                    detaliucontract.DataPromovarii = detaliucontract.DataRestanta;
+                    detaliucontract.Promovata = true;
+                }
+            }
+            else
+            {
+                detaliucontract.Nota = an.nota;
+                if (an.nota >= 5)
+                {
+                    detaliucontract.DataPromovarii = detaliucontract.DataExamen;
+                    detaliucontract.Promovata = true;
+                }
+            }
+
+
             _context.SaveChanges();
         }
 

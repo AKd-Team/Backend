@@ -113,5 +113,19 @@ namespace Academic.Controllers
                 return BadRequest(new {message = ex.Message});
             }
         }
+
+        [HttpPut("AdugareNote")]
+        public IActionResult AdaugareNote(AdaugareNota an)
+        {
+            try
+            {
+                _profesorService.AdaugareNote(an);
+                return Ok(new {message = "Nota a fost modificata cu succes"});
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new {message = ex.Message});
+            }
+        }
     }
 }
