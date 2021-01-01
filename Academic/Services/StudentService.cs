@@ -146,9 +146,10 @@ namespace Academic.Services
         public IEnumerable<OrarPersonalizat> GetOrar(int idStudent)
         {
             var orarListat = new List<OrarPersonalizat>();
-            
+            var anMaxim = _context.Detaliucontract.Where(dc => dc.IdStudent == idStudent)
+                .Max(dc => dc.AnDeStudiu);
             foreach (var detaliuContract in _context.Detaliucontract
-                .Where(dc => dc.IdStudent == idStudent).ToList())
+                .Where(dc => dc.IdStudent == idStudent && dc.AnDeStudiu == anMaxim).ToList())
             {
                 var numeMaterie = _context.Materie.Find(detaliuContract.IdMaterie).Nume;
                 
@@ -185,9 +186,10 @@ namespace Academic.Services
         public IEnumerable<OrarExamen> GetExamene(int idStudent)
         {
             var orarListat = new List<OrarExamen>();
-            
+            var anMaxim = _context.Detaliucontract.Where(dc => dc.IdStudent == idStudent)
+                .Max(dc => dc.AnDeStudiu);
             foreach (var detaliuContract in _context.Detaliucontract
-                .Where(dc => dc.IdStudent == idStudent).ToList())
+                .Where(dc => dc.IdStudent == idStudent && dc.AnDeStudiu == anMaxim).ToList())
             {
                 var numeMaterie = _context.Materie.Find(detaliuContract.IdMaterie).Nume;
 
