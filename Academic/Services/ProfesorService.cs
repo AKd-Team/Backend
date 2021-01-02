@@ -246,7 +246,8 @@ namespace Academic.Services
 
         public void AdaugareNote(AdaugareNota an)
         {
-            var anDeStudiu = _context.Detaliucontract.Where(dc => dc.IdStudent == an.idStudent)
+            var anDeStudiu = _context.Detaliucontract.Where(dc => dc.IdStudent == an.idStudent 
+                                                                  && dc.IdMaterie==an.idMaterie)
                 .Max(dc => dc.AnDeStudiu);
             var anCalendaristic = _context.Detaliucontract.SingleOrDefault(dc => dc.IdStudent == an.idStudent
                                                                          && dc.AnDeStudiu == anDeStudiu)?.AnCalendaristic;
