@@ -19,6 +19,8 @@ namespace Academic.Services
         public RezultatEvaluare GetRezultateEvaluare(int idMaterie, int idProfesor);
         public void ProgExamen(Orarmaterie examen);
         public void AdaugareNote(AdaugareNota an);
+
+        public IEnumerable<StudentFaraNota> GetStudentFaraNota(int id_materie, int id_profesor);
     }
     public class ProfesorService : IProfesorService
     {
@@ -278,6 +280,36 @@ namespace Academic.Services
 
             _context.SaveChanges();
         }
+        
+        /*
+         * Desc: O functie care primeste id-ul materiei si returneaza o lista cu studentii care nu au nota la materia respectiva
+         * Input: Integer care reprezinta id_ul Materiei
+         * Output: Un list de StudentFaraNota
+         * Error: -
+         */
+        public IEnumerable<StudentFaraNota> GetStudentFaraNota(int id_materie, int id_profesor)
+        { 
+            var studentiInscrisi=GetStudentiInscrisi(id_materie, id_profesor);
+            var stdFaraNota =new List<StudentFaraNota>();
+            var detaliuContract = _context.Detaliucontract.ToList();
+            foreach (var student in studentiInscrisi)
+            {
+                foreach (var detContract in detaliuContract)
+                {
+                    if (student.IdStudent == detContract.IdStudent && detContract.Nota == null &&
+                        detContract.NotaRestanta == null && detContract.IdMaterie == id_materie)
+                    {
+                        var nume = student.Nume;
+                        var prenume = student.Prenume;
+                        var grupa = student.Grupa;
+                        var specializare = student.Specializare;
+                        var idStudent = student.IdStudent;
+                        stdFaraNota.Add(new StudentFaraNota(nume, prenume,grupa, specializare,idStudent));
+                    }
+                }
+            }
 
+            return stdFaraNota;
+        }
     }
 }

@@ -127,5 +127,12 @@ namespace Academic.Controllers
                 return BadRequest(new {message = ex.Message});
             }
         }
+
+        [HttpGet("StudFaraNote/{id_materie}/{id_profesor}")]
+        public IActionResult GetStudentFaraNota(int id_materie, int id_profesor)
+        {
+            var StudFaraNota = _profesorService.GetStudentFaraNota(id_materie,id_profesor);
+            return Ok(StudFaraNota);
+        }
     }
 }
