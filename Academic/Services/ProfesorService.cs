@@ -19,8 +19,7 @@ namespace Academic.Services
         public RezultatEvaluare GetRezultateEvaluare(int idMaterie, int idProfesor);
         public void ProgExamen(Orarmaterie examen);
         public void AdaugareNote(AdaugareNota an);
-
-        public IEnumerable<StudentFaraNota> GetStudentFaraNota(int id_materie, int id_profesor);
+        public IEnumerable<StudentFaraNota> GetStudentFaraNota(int id_materie);
     }
     public class ProfesorService : IProfesorService
     {
@@ -287,29 +286,31 @@ namespace Academic.Services
          * Output: Un list de StudentFaraNota
          * Error: -
          */
-        public IEnumerable<StudentFaraNota> GetStudentFaraNota(int id_materie, int id_profesor)
+        public IEnumerable<StudentFaraNota> GetStudentFaraNota(int id_materie)
         { 
-            var studentiInscrisi=GetStudentiInscrisi(id_materie, id_profesor);
+            
             var stdFaraNota =new List<StudentFaraNota>();
-            var detaliuContract = _context.Detaliucontract.ToList();
-            foreach (var student in studentiInscrisi)
+            var listaStudenti = _context.Student.ToList();
+            var detaliuContract = _context.Detaliucontract.Where(dc => dc.IdMaterie == id_materie).ToList();
+            foreach (var ctr in detaliuContract)
             {
-                foreach (var detContract in detaliuContract)
+                foreach (var student in listaStudenti)
                 {
-                    if (student.IdStudent == detContract.IdStudent && detContract.Nota == null &&
-                        detContract.NotaRestanta == null && detContract.IdMaterie == id_materie)
+                    if (student.IdUser == ctr.IdStudent && ctr.Nota == null && ctr.NotaRestanta == null)
                     {
                         var nume = student.Nume;
                         var prenume = student.Prenume;
-                        var grupa = student.Grupa;
-                        var specializare = student.Specializare;
-                        var idStudent = student.IdStudent;
-                        stdFaraNota.Add(new StudentFaraNota(nume, prenume,grupa, specializare,idStudent));
+                        var grupa = _context.Formatie.SingleOrDefault(fr => fr.IdFormatie == student.IdFormatie)
+                            ?.Grupa;
+                        var specializare = _context.Specializare.SingleOrDefault(spe => spe.IdSpecializare == student.IdSpecializare)?.Nume;
+                        var idStud = student.IdUser;
+                        
+                        stdFaraNota.Add(new StudentFaraNota(nume, prenume,grupa,specializare, idStud));
                     }
                 }
             }
-
-            return stdFaraNota;
+            
+                return stdFaraNota;
         }
     }
 }

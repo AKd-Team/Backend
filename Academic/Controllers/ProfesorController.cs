@@ -128,10 +128,10 @@ namespace Academic.Controllers
             }
         }
 
-        [HttpGet("StudFaraNote/{id_materie}/{id_profesor}")]
-        public IActionResult GetStudentFaraNota(int id_materie, int id_profesor)
+        [HttpGet("StudFaraNote/{id_materie}")]
+        public IActionResult GetStudentFaraNota(int id_materie)
         {
-            var StudFaraNota = _profesorService.GetStudentFaraNota(id_materie,id_profesor);
+            var StudFaraNota = _profesorService.GetStudentFaraNota(id_materie);
             return Ok(StudFaraNota);
         }
     }

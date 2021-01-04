@@ -22,6 +22,7 @@ namespace Academic.Models
             Specializare = specializare;
             idStudent = id_student;
         }
+        
     }
 
 }
