@@ -16,6 +16,10 @@ namespace Academic.Services
         public IEnumerable<DateStudentPtProfesor> GetStudentiInscrisi(int idMaterie, int idProfesor);
         public IEnumerable<Sala> GetSali();
         public IEnumerable<OrarSali> GetOrarSali(int idSala);
+        public RezultatEvaluare GetRezultateEvaluare(int idMaterie, int idProfesor);
+        public void ProgExamen(Orarmaterie examen);
+        public void AdaugareNote(AdaugareNota an);
+        public IEnumerable<StudentFaraNota> GetStudentFaraNota(int id_materie);
     }
     public class ProfesorService : IProfesorService
     {
@@ -157,6 +161,184 @@ namespace Academic.Services
                 orarSali.Add(new OrarSali(titlu, oraInceput, oraSfarsit, dataDetaliata, specializare.Cod));
             }
             return orarSali;
+        }
+        
+        /*
+         * Desc: Partea de service pt obtinerea rezultatelor unei evaluari
+         * In: idMaterie - int
+         *     idProfesor - int
+         * Out: rezultate - un obiect de tip rezultate evalaure
+         * Err: -
+         */
+        public RezultatEvaluare GetRezultateEvaluare(int idMaterie, int idProfesor)
+        {
+            var rezultate = new RezultatEvaluare();
+            var review = _context.Review
+                .Where(r => r.IdProfesor == idProfesor && r.IdMaterie == idMaterie && r.Nota != null)
+                .GroupBy(g => g.IdCriteriu, r => r.Nota)
+                .Select(g => new
+                {
+                    Criteriu = g.Key,
+                    Media = g.Average()
+                })
+                .ToList();
+            foreach (var r in review)
+            {
+                rezultate.AddElement(_context.Criteriu.Find(r.Criteriu).Descriere, r.Media);
+            }
+            return rezultate;
+        }
+/*
+ * Desc:
+ * Input: orarmaterie ora1 si orarmaterie ora2
+ * output: true daca sunt egale si false daca sunt false
+ * error: fara erori
+ */
+        public bool eqOrarmater(Orarmaterie ora1, Orarmaterie ora2)
+        {
+            if (Equals(ora1.Data, ora2.Data) && Equals(ora1.IdFormatie, ora2.IdFormatie) &&
+                Equals(ora1.IdMaterie, ora2.IdMaterie) && Equals(ora1.IdProfesor, ora2.IdProfesor) &&
+                Equals(ora1.IdSala, ora2.IdSala) && Equals(ora1.OraInceput, ora2.OraInceput) && 
+                Equals(ora1.OraSfarsit,ora2.OraSfarsit) && Equals(ora1.IdSpecializare, ora2.IdSpecializare))
+            {
+                return true;
+            }
+
+            return false;
+        }
+        /*
+         * Desc: 
+         * Input:Orarmaterie
+         * Output: nimic
+         * ERR:-daca id-ul salii nu exista
+         *     -daca intervalul examenului se intersecteaza cu un alt examen
+         *     
+         */
+        public void ProgExamen(Orarmaterie examen)
+        {
+            foreach (var ora in _context.Orarmaterie.ToList())
+            {
+                if (eqOrarmater(examen,ora)==true)
+                {
+                    throw new Exception("Examenul este deja programat");
+                }
+            }
+            var idSala = examen.IdSala;
+            var orarSala = GetOrarSali(idSala).ToList();
+            var sali = GetSali();
+            var ok = false;
+            var numesala = _context.Sala.Find(idSala).Nume;
+            foreach (var sala in sali)
+            {
+                if (sala.IdSala == idSala)
+                {
+                    ok = true;
+                }
+            }
+            if (ok == false)
+            {
+                throw new Exception("Nu exista sala cu asemenea id");
+            }
+            
+            var data = examen.Data;
+            var dataDetaliata = data?.ToString("yyyy-MM-dd");
+            /*
+             *  x=examen.OraInceput
+             * y=examen.OraSfarsit
+             * a=ora.Inc
+             * b=oraSf
+             */
+            foreach (var orar in orarSala)
+            {
+                var oraInc = TimeSpan.Parse(orar.OraInceput);
+                var oraSf = TimeSpan.Parse(orar.OraSfarsit);
+                if (TimeSpan.Compare(examen.OraInceput, oraInc) >= 0 &&
+                    TimeSpan.Compare(examen.OraInceput, oraSf) < 0 && String.CompareOrdinal(numesala,"Online")!= 0) //daca x apartine [a,b) si sala nu este 1(cea online)
+                {
+                    throw new Exception("Examenul nu poate sa inceapa in timp ce se desfasoara alt examen");
+                }
+                else if (TimeSpan.Compare(examen.OraSfarsit, oraInc) >= 0 &&
+                         TimeSpan.Compare(examen.OraSfarsit, oraSf) <= 0 && String.CompareOrdinal(numesala,"Online")!= 0) //daca y apartine [a,b]
+                {
+                    throw new Exception("Examenul trebuie sa se termine inaintea altui examen rezervat");
+                }
+                else if (TimeSpan.Compare(examen.OraInceput, oraInc) < 0 &&
+                         TimeSpan.Compare(examen.OraSfarsit, oraSf) > 0 && String.CompareOrdinal(numesala,"Online")!= 0) //daca [a,b] inclus in [x,y]
+                {
+                    throw new Exception("Exista un examen in acest inetrval orar");
+                }
+            }
+
+            _context.Orarmaterie.Add(examen);
+            _context.SaveChanges();
+        }
+
+        public void AdaugareNote(AdaugareNota an)
+        {
+            var anDeStudiu = _context.Detaliucontract.Where(dc => dc.IdStudent == an.idStudent 
+                                                                  && dc.IdMaterie==an.idMaterie)
+                .Max(dc => dc.AnDeStudiu);
+            var anCalendaristic = _context.Detaliucontract.SingleOrDefault(dc => dc.IdStudent == an.idStudent
+                                                                         && dc.AnDeStudiu == anDeStudiu)?.AnCalendaristic;
+
+            var detaliucontract = _context.Detaliucontract.First(dc => dc.IdStudent == an.idStudent
+                                                            && dc.IdMaterie == an.idMaterie 
+                                                            && dc.AnDeStudiu==anDeStudiu 
+                                                            && dc.AnCalendaristic==anCalendaristic);
+            if (an.restanta)
+            {
+                detaliucontract.NotaRestanta = an.nota;
+                if (an.nota >= 5)
+                {
+                    detaliucontract.DataPromovarii = detaliucontract.DataRestanta;
+                    detaliucontract.Promovata = true;
+                }
+            }
+            else
+            {
+                detaliucontract.Nota = an.nota;
+                if (an.nota >= 5)
+                {
+                    detaliucontract.DataPromovarii = detaliucontract.DataExamen;
+                    detaliucontract.Promovata = true;
+                }
+            }
+
+
+            _context.SaveChanges();
+        }
+        
+        /*
+         * Desc: O functie care primeste id-ul materiei si returneaza o lista cu studentii care nu au nota la materia respectiva
+         * Input: Integer care reprezinta id_ul Materiei
+         * Output: Un list de StudentFaraNota
+         * Error: -
+         */
+        public IEnumerable<StudentFaraNota> GetStudentFaraNota(int id_materie)
+        { 
+            
+            var stdFaraNota =new List<StudentFaraNota>();
+            var listaStudenti = _context.Student.ToList();
+            var detaliuContract = _context.Detaliucontract.Where(dc => dc.IdMaterie == id_materie).ToList();
+            foreach (var ctr in detaliuContract)
+            {
+                foreach (var student in listaStudenti)
+                {
+                    if (student.IdUser == ctr.IdStudent && ctr.Nota == null && ctr.NotaRestanta == null)
+                    {
+                        var nume = student.Nume;
+                        var prenume = student.Prenume;
+                        var grupa = _context.Formatie.SingleOrDefault(fr => fr.IdFormatie == student.IdFormatie)
+                            ?.Grupa;
+                        var specializare = _context.Specializare.SingleOrDefault(spe => spe.IdSpecializare == student.IdSpecializare)?.Nume;
+                        var idStud = student.IdUser;
+                        
+                        stdFaraNota.Add(new StudentFaraNota(nume, prenume,grupa,specializare, idStud));
+                    }
+                }
+            }
+            
+                return stdFaraNota;
         }
     }
 }

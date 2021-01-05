@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Academic.Entities
 {
@@ -13,6 +14,7 @@ namespace Academic.Entities
         public int IdCriteriu { get; set; }
         public string Descriere { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Review> Review { get; set; }
     }
 }
