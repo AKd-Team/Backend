@@ -34,7 +34,7 @@ namespace Academic.Services
 
         public IEnumerable<MaterieNedetaliata> GetListMaterii(int IdProfesor)
         {
-            var orarmaterii = _context.Orarmaterie.Where(o => (o.IdProfesor == IdProfesor)).ToList();
+            var orarmaterii = _context.Orarmaterie.Where(o => (o.IdProfesor == IdProfesor && o.Tip.Equals("Curs"))).ToList();
             var list_materii = new HashSet<MaterieNedetaliata>();
             foreach (var o in orarmaterii)
             {
@@ -47,7 +47,7 @@ namespace Academic.Services
             return list_materii;
         }
 
-        public IEnumerable<DateStudentPtProfesor> GetStudentiInscrisi(int idMaterie, int idProfesor)
+        /*public IEnumerable<DateStudentPtProfesor> GetStudentiInscrisi(int idMaterie, int idProfesor)
         {
             var orarmaterie = _context.Orarmaterie.Where(o => (o.IdMaterie == idMaterie && o.IdProfesor == idProfesor)).ToList();
             var listIdFormatieSpecializare = new HashSet<Tuple<Int32, Int32>>();
@@ -71,6 +71,34 @@ namespace Academic.Services
                     StudentiDetaliati.Add(new DateStudentPtProfesor(student, formatie.Grupa, formatie.SemiGrupa, specializare.Nume, faculta.Nume));
                 }
 
+            }
+
+            return StudentiDetaliati;
+        }*/
+        
+
+        public IEnumerable<DateStudentPtProfesor> GetStudentiInscrisi(int idMaterie, int idProfesor)
+        {
+            var dataCurenta = DateTime.Now;
+            int anUniversitarInceput = dataCurenta.Year;
+            if (dataCurenta.Month < 10)
+            {
+                anUniversitarInceput--;
+            }
+            string anCalendaristic = anUniversitarInceput.ToString() + "-" + (anUniversitarInceput + 1).ToString();
+
+            var StudentiDetaliati = new List<DateStudentPtProfesor>();
+            var detaliuContractList = _context.Detaliucontract.Where(det =>
+                det.IdMaterie == idMaterie && det.AnCalendaristic.Equals(anCalendaristic)).ToList();
+            foreach (var detaliuContract in detaliuContractList)
+            {
+                int idStudent = detaliuContract.IdStudent;
+                var student = _context.Student.Find(idStudent);
+                var formatie = _context.Formatie.SingleOrDefault(f => f.IdFormatie == student.IdFormatie);
+                var specializare =
+                    _context.Specializare.SingleOrDefault(s => s.IdSpecializare == student.IdSpecializare);
+                var faculta = _context.Facultate.SingleOrDefault(fac => fac.IdFacultate == specializare.IdFacultate);
+                StudentiDetaliati.Add(new DateStudentPtProfesor(student, formatie.Grupa, formatie.SemiGrupa, specializare.Nume, faculta.Nume));
             }
 
             return StudentiDetaliati;
