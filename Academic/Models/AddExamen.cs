@@ -14,9 +14,7 @@ namespace Academic.Models
         [Required] public int IdProfesor { get; set; }
 
         [Required] public int IdFormatie { get; set; }
-        
-        [Required] public int IdSpecializare { get; set; }
-        
+
         [Required] public int IdSala { get; set; }
         
         [Required] public DateTime Data { get; set; }

@@ -20,6 +20,7 @@ namespace Academic.Services
         public void ProgExamen(Orarmaterie examen);
         public void AdaugareNote(AdaugareNota an);
         public IEnumerable<StudentFaraNota> GetStudentFaraNota(int id_materie);
+        public IEnumerable<ListaFormatii> GetFormatii();
     }
     public class ProfesorService : IProfesorService
     {
@@ -315,9 +316,9 @@ namespace Academic.Services
          * Error: -
          */
         public IEnumerable<StudentFaraNota> GetStudentFaraNota(int id_materie)
-        { 
-            
-            var stdFaraNota =new List<StudentFaraNota>();
+        {
+
+            var stdFaraNota = new List<StudentFaraNota>();
             var listaStudenti = _context.Student.ToList();
             var detaliuContract = _context.Detaliucontract.Where(dc => dc.IdMaterie == id_materie).ToList();
             foreach (var ctr in detaliuContract)
@@ -330,15 +331,33 @@ namespace Academic.Services
                         var prenume = student.Prenume;
                         var grupa = _context.Formatie.SingleOrDefault(fr => fr.IdFormatie == student.IdFormatie)
                             ?.Grupa;
-                        var specializare = _context.Specializare.SingleOrDefault(spe => spe.IdSpecializare == student.IdSpecializare)?.Nume;
+                        var specializare = _context.Specializare
+                            .SingleOrDefault(spe => spe.IdSpecializare == student.IdSpecializare)?.Nume;
                         var idStud = student.IdUser;
-                        
-                        stdFaraNota.Add(new StudentFaraNota(nume, prenume,grupa,specializare, idStud));
+
+                        stdFaraNota.Add(new StudentFaraNota(nume, prenume, grupa, specializare, idStud));
                     }
                 }
             }
-            
-                return stdFaraNota;
+
+            return stdFaraNota;
+        }
+    
+        
+        /*
+         * un mic get pentru fromatii
+         */
+        public IEnumerable<ListaFormatii> GetFormatii()
+        {
+            var listform = new List<ListaFormatii>();
+            foreach (var formatie in _context.Formatie.ToList())
+            {
+                var id = formatie.IdFormatie;
+                var grupa = formatie.Grupa;
+                listform.Add(new ListaFormatii(id, grupa));
+            }
+
+            return listform;
         }
     }
 }
