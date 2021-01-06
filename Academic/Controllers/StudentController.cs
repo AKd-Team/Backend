@@ -170,5 +170,11 @@ namespace Academic.Controllers
         {
             return Ok(_studentService.GetNota(idStudent));
         }
+
+        [HttpGet("materii/{idStudent}")]
+        public IActionResult GetMaterii(int idStudent)
+        {
+            return Ok(_studentService.GetMaterii(idStudent));
+        }
     }
 }

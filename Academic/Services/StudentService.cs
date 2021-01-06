@@ -31,6 +31,7 @@ namespace Academic.Services
         void AdaugareReview(ReviewComplet rc);
         IEnumerable<Criteriu> GetCriterii();
         IEnumerable<NoteExamene> GetNota(int idStudent);
+        IEnumerable<MaterieNedetaliata> GetMaterii(int idStudent);
     }
 
     public class StudentService : IStudentService
@@ -353,6 +354,28 @@ namespace Academic.Services
 
 
 
+        }
+
+        public IEnumerable<MaterieNedetaliata> GetMaterii(int idStudent)
+        {
+            var listMaterii = new List<MaterieNedetaliata>();
+            var dataCurenta = DateTime.Now;
+            int anUniversitarInceput = dataCurenta.Year;
+            if (dataCurenta.Month < 10)
+            {
+                anUniversitarInceput--;
+            }
+            string anCalendaristic = anUniversitarInceput.ToString() + "-" + (anUniversitarInceput + 1).ToString();
+            
+            var detaliuContracte = _context.Detaliucontract.Where(d =>
+                d.IdStudent == idStudent && d.AnCalendaristic.Equals(anCalendaristic)).ToList();
+            foreach (var det in detaliuContracte)
+            {
+                var materie = _context.Materie.Find(det.IdMaterie);
+                listMaterii.Add(new MaterieNedetaliata(materie));
+            }
+
+            return listMaterii;
         }
         
     }
