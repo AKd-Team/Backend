@@ -133,5 +133,12 @@ namespace Academic.Controllers
             var StudFaraNota = _profesorService.GetStudentFaraNota(id_materie);
             return Ok(StudFaraNota);
         }
+
+        [HttpGet("getFormatii")]
+        public IActionResult getFormatii()
+        {
+            var listaForm = _profesorService.GetFormatii();
+            return Ok(listaForm);
+        }
     }
 }
