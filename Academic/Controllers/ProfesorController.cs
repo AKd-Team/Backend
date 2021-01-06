@@ -97,7 +97,6 @@ namespace Academic.Controllers
             examen.IdMaterie = model.IdMaterie;
             examen.IdFormatie = model.IdFormatie;
             examen.IdProfesor = model.IdProfesor;
-            examen.IdSpecializare = model.IdSpecializare;
             examen.IdSala = model.IdSala;
             examen.Data = model.Data;
             examen.ZiuaSaptamanii = "";
