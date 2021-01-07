@@ -176,5 +176,12 @@ namespace Academic.Controllers
         {
             return Ok(_studentService.GetMaterii(idStudent));
         }
+
+        [HttpGet("materii/statistici/{idMaterie}")]
+        public IActionResult GetStatisticiMaterie(int idMaterie)
+        {
+            return Ok(_studentService.GetStatisticiMaterie(idMaterie));
+        }
+            
     }
 }
