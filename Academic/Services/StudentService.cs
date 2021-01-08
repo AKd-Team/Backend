@@ -227,35 +227,42 @@ namespace Academic.Services
         public IEnumerable<OptiuniReview> GetOptiuniReview(int idStudent)
         {
             var optReview = new List<OptiuniReview>();
-            var anMaxim = _context.Detaliucontract.Where(dc => dc.IdStudent == idStudent)
-                .Max(dc => dc.AnDeStudiu);
-            foreach (var detaliu in _context.Detaliucontract.Where(dc => dc.IdStudent == idStudent 
-                                                                         && dc.AnDeStudiu == anMaxim).ToList())
+            var contract = _context.Detaliucontract.Where(dc => dc.IdStudent == idStudent).ToList();
+            int anMaxim;
+            if (contract.Count() != 0)
             {
-                var idMaterie = detaliu.IdMaterie;
-                var numeMaterie = _context.Materie.Find(idMaterie).Nume;
-                var anCalendaristic = detaliu.AnCalendaristic;
-                var curs = false;
-                var seminar = false;
-                var laborator = false;
-                foreach (var orar in _context.Orarmaterie.Where(o => o.IdMaterie == idMaterie).ToList())
+                anMaxim = contract.Max(dc => dc.AnDeStudiu);
+                foreach (var detaliu in _context.Detaliucontract.Where(dc => dc.IdStudent == idStudent
+                                                                             && dc.AnDeStudiu == anMaxim).ToList())
                 {
-                    var tip = orar.Tip;
-                    switch (tip)
+                    var idMaterie = detaliu.IdMaterie;
+                    var numeMaterie = _context.Materie.Find(idMaterie).Nume;
+                    var anCalendaristic = detaliu.AnCalendaristic;
+                    var curs = false;
+                    var seminar = false;
+                    var laborator = false;
+                    foreach (var orar in _context.Orarmaterie.Where(o => o.IdMaterie == idMaterie).ToList())
                     {
-                        case "Curs":
-                            curs = true;
-                            break;
-                        case "Seminar":
-                            seminar = true;
-                            break;
-                        case "Laborator":
-                            laborator = true;
-                            break;
+                        var tip = orar.Tip;
+                        switch (tip)
+                        {
+                            case "Curs":
+                                curs = true;
+                                break;
+                            case "Seminar":
+                                seminar = true;
+                                break;
+                            case "Laborator":
+                                laborator = true;
+                                break;
+                        }
                     }
+
+                    optReview.Add(new OptiuniReview(idMaterie, numeMaterie, anMaxim, anCalendaristic, curs, seminar,
+                        laborator));
                 }
-                optReview.Add(new OptiuniReview(idMaterie, numeMaterie, anMaxim, anCalendaristic, curs, seminar, laborator));
             }
+
             return optReview;
         }
 
