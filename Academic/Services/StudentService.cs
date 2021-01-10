@@ -32,7 +32,7 @@ namespace Academic.Services
         IEnumerable<Criteriu> GetCriterii();
         IEnumerable<NoteExamene> GetNota(int idStudent);
         IEnumerable<MaterieNedetaliata> GetMaterii(int idStudent);
-        StatisticiMaterie GetStatisticiMaterie(int idMaterie);
+        IEnumerable<NotaStudenti> GetStatisticiMaterie(int idMaterie);
     }
 
     public class StudentService : IStudentService
@@ -379,7 +379,7 @@ namespace Academic.Services
             return listMaterii;
         }
 
-        public StatisticiMaterie GetStatisticiMaterie(int idMaterie)
+        public IEnumerable<NotaStudenti> GetStatisticiMaterie(int idMaterie)
         {
             StatisticiMaterie statistici = new StatisticiMaterie();
             var dataCurenta = DateTime.Now;
@@ -399,11 +399,15 @@ namespace Academic.Services
                     nota = Math.Max((byte)det.Nota, (byte)det.NotaRestanta);
                 else if (det.Nota != null)
                     nota = (int)det.Nota;
-                if(nota != 0)
+                if (nota != 0)
+                {
+                    
+                }
                     statistici.updateNrStudenti(nota);
             }
 
-            return statistici;
+            return statistici.StatisticiNote;
+            
         }
     }
 }

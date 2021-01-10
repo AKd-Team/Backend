@@ -5,26 +5,30 @@ namespace Academic.Models
 {
     public class StatisticiMaterie
     {
-        public Dictionary<int, int> StatisticiNote { get; set; }
+        public List<NotaStudenti> StatisticiNote { get; set; }
 
         public StatisticiMaterie()
         {
-            StatisticiNote = new Dictionary<int, int>();
-            StatisticiNote.Add(1, 0);
-            StatisticiNote.Add(2, 0);
-            StatisticiNote.Add(3, 0);
-            StatisticiNote.Add(4, 0);
-            StatisticiNote.Add(5, 0);
-            StatisticiNote.Add(6, 0);
-            StatisticiNote.Add(7, 0);
-            StatisticiNote.Add(8, 0);
-            StatisticiNote.Add(9, 0);
-            StatisticiNote.Add(10, 0);
+            StatisticiNote = new List<NotaStudenti>();
+            StatisticiNote.Add(new NotaStudenti(1));
+            StatisticiNote.Add(new NotaStudenti(2));
+            StatisticiNote.Add(new NotaStudenti(3));
+            StatisticiNote.Add(new NotaStudenti(4));
+            StatisticiNote.Add(new NotaStudenti(5));
+            StatisticiNote.Add(new NotaStudenti(6));
+            StatisticiNote.Add(new NotaStudenti(7));
+            StatisticiNote.Add(new NotaStudenti(8));
+            StatisticiNote.Add(new NotaStudenti(9));
+            StatisticiNote.Add(new NotaStudenti(10));
         }
 
         public void updateNrStudenti(int nota)
         {
-            StatisticiNote[nota]++;
+            foreach (var notaStudenti in StatisticiNote)
+            {
+                if(notaStudenti.Nota == nota)
+                    notaStudenti.updateStudenti(nota);
+            }
         }
     }
 }
