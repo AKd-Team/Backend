@@ -283,7 +283,7 @@ namespace Academic.Services
             var anDeStudiu = _context.Detaliucontract.Where(dc => dc.IdStudent == an.idStudent 
                                                                   && dc.IdMaterie==an.idMaterie)
                 .Max(dc => dc.AnDeStudiu);
-            var anCalendaristic = _context.Detaliucontract.SingleOrDefault(dc => dc.IdStudent == an.idStudent
+            var anCalendaristic = _context.Detaliucontract.FirstOrDefault(dc => dc.IdStudent == an.idStudent
                                                                          && dc.AnDeStudiu == anDeStudiu)?.AnCalendaristic;
 
             var detaliucontract = _context.Detaliucontract.First(dc => dc.IdStudent == an.idStudent

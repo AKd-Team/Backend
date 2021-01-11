@@ -113,7 +113,7 @@ namespace Academic.Controllers
             }
         }
 
-        [HttpPut("AdugareNote")]
+        [HttpPut("AdaugareNote")]
         public IActionResult AdaugareNote(AdaugareNota an)
         {
             try
