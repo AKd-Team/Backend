@@ -229,6 +229,8 @@ namespace Academic.Services
             var sali = GetSali();
             var ok = false;
             var numesala = _context.Sala.Find(idSala).Nume;
+            int idSpec = _context.Formatie.SingleOrDefault(formatie => formatie.IdFormatie == examen.IdFormatie)
+                .IdSpecializare;
             foreach (var sala in sali)
             {
                 if (sala.IdSala == idSala)
@@ -270,6 +272,7 @@ namespace Academic.Services
                 }
             }
 
+            examen.IdSpecializare = idSpec;
             _context.Orarmaterie.Add(examen);
             _context.SaveChanges();
         }
