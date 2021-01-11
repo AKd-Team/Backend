@@ -21,6 +21,7 @@ namespace Academic.Services
         public void AdaugareNote(AdaugareNota an);
         public IEnumerable<StudentFaraNota> GetStudentFaraNota(int id_materie);
         public IEnumerable<ListaFormatii> GetFormatii();
+        public IEnumerable<NotaStudenti> GetStatisticiMaterie(int idMaterie);
     }
     public class ProfesorService : IProfesorService
     {
@@ -361,6 +362,36 @@ namespace Academic.Services
             }
 
             return listform;
+        }
+        
+        public IEnumerable<NotaStudenti> GetStatisticiMaterie(int idMaterie)
+        {
+            StatisticiMaterie statistici = new StatisticiMaterie();
+            var dataCurenta = DateTime.Now;
+            int anUniversitarInceput = dataCurenta.Year;
+            if (dataCurenta.Month < 10)
+            {
+                anUniversitarInceput--;
+            }
+            string anCalendaristic = anUniversitarInceput.ToString() + "-" + (anUniversitarInceput + 1).ToString();
+            
+            var detaliuContracte = _context.Detaliucontract.Where(d =>
+                d.IdMaterie == idMaterie && d.AnCalendaristic.Equals(anCalendaristic)).ToList();
+            foreach (var det in detaliuContracte)
+            {
+                int nota = 0;
+                if (det.NotaRestanta != null)
+                    nota = Math.Max((byte)det.Nota, (byte)det.NotaRestanta);
+                else if (det.Nota != null)
+                    nota = (int)det.Nota;
+                if (nota != 0)
+                {
+                    
+                }
+                statistici.updateNrStudenti(nota);
+            }
+            return statistici.StatisticiNote;
+            
         }
     }
 }

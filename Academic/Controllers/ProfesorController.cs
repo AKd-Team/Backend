@@ -140,5 +140,11 @@ namespace Academic.Controllers
             var listaForm = _profesorService.GetFormatii();
             return Ok(listaForm);
         }
+        [HttpGet("materii/statistici/{idMaterie}")]
+        public IActionResult GetStatisticiMaterie(int idMaterie)
+        {
+            var statistici = _profesorService.GetStatisticiMaterie(idMaterie);
+            return Ok(statistici);
+        }
     }
 }
