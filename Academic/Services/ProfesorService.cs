@@ -22,6 +22,7 @@ namespace Academic.Services
         public IEnumerable<StudentFaraNota> GetStudentFaraNota(int id_materie);
         public IEnumerable<ListaFormatii> GetFormatii();
         public IEnumerable<NotaStudenti> GetStatisticiMaterie(int idMaterie);
+        public IEnumerable<OrarPersonalizatProfesor> GetOrar(int idProfesor);
     }
     public class ProfesorService : IProfesorService
     {
@@ -392,6 +393,27 @@ namespace Academic.Services
             }
             return statistici.StatisticiNote;
             
+        }
+
+        public IEnumerable<OrarPersonalizatProfesor> GetOrar(int idProfesor)
+        {
+            var orarListat = new List<OrarPersonalizatProfesor>();
+            foreach (var orar in _context.Orarmaterie
+                .Where(o => o.IdProfesor == idProfesor && o.Tip != "Examen").ToList())
+            {
+                var numeMaterie = _context.Materie.Find(orar.IdMaterie).Nume;
+                var oraInceput = orar.OraInceput.ToString();
+                oraInceput = oraInceput.Substring(0, oraInceput.Length - 3);
+                var oraSfarsit = orar.OraSfarsit.ToString();
+                oraSfarsit = oraSfarsit.Substring(0, oraSfarsit.Length - 3);
+                var formatie = _context.Formatie.Find(orar.IdFormatie, orar.IdSpecializare);
+                var grupaSemigrupa = formatie.Grupa + " " + formatie.SemiGrupa;
+                var numeSala = _context.Sala.Find(orar.IdSala).Nume;
+                orarListat.Add(new OrarPersonalizatProfesor(numeMaterie, oraInceput, oraSfarsit, 
+                    orar.ZiuaSaptamanii, grupaSemigrupa, numeSala, orar.Frecventa));
+            }
+
+            return orarListat;
         }
     }
 }
