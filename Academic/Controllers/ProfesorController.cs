@@ -119,7 +119,7 @@ namespace Academic.Controllers
             try
             {
                 _profesorService.AdaugareNote(an);
-                return Ok(new {message = "Nota a fost modificata cu succes"});
+                return Ok(new {message = "Nota a fost adaugata cu succes"});
             }
             catch (AppException ex)
             {
@@ -140,11 +140,22 @@ namespace Academic.Controllers
             var listaForm = _profesorService.GetFormatii();
             return Ok(listaForm);
         }
+        
         [HttpGet("materii/statistici/{idMaterie}")]
         public IActionResult GetStatisticiMaterie(int idMaterie)
         {
             var statistici = _profesorService.GetStatisticiMaterie(idMaterie);
             return Ok(statistici);
         }
+
+        [HttpGet("orar/{idProfesor}")]
+        public IActionResult GetOrar(int idProfesor)
+        {
+            {
+                var orar = _profesorService.GetOrar(idProfesor);
+                return Ok(orar);
+            }
+        }
+        
     }
 }

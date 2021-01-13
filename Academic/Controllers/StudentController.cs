@@ -127,7 +127,7 @@ namespace Academic.Controllers
          * Out: true sau false
          * Err: -
          */
-        [HttpGet("existentaEvaluare")]
+        [HttpPost("existentaEvaluare")]
         public IActionResult ExistentaEvaluare(ReviewComplet rc)
         {
             return Ok(_studentService.ExistentaEvaluare(rc));
