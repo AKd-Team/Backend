@@ -253,26 +253,28 @@ namespace Academic.Services
              * a=ora.Inc
              * b=oraSf
              */
-            foreach (var orar in orarSala)
+            if(String.CompareOrdinal(numesala,"Online")!= 0)
+            {
+                foreach (var orar in orarSala)
             {
                 var oraInc = TimeSpan.Parse(orar.OraInceput);
                 var oraSf = TimeSpan.Parse(orar.OraSfarsit);
                 if (TimeSpan.Compare(examen.OraInceput, oraInc) >= 0 &&
-                    TimeSpan.Compare(examen.OraInceput, oraSf) < 0 && String.CompareOrdinal(numesala,"Online")!= 0) //daca x apartine [a,b) si sala nu este 1(cea online)
+                    TimeSpan.Compare(examen.OraInceput, oraSf) < 0) //daca x apartine [a,b) si sala nu este 1(cea online)
                 {
                     throw new Exception("Examenul nu poate sa inceapa in timp ce se desfasoara alt examen");
                 }
-                else if (TimeSpan.Compare(examen.OraSfarsit, oraInc) >= 0 &&
-                         TimeSpan.Compare(examen.OraSfarsit, oraSf) <= 0 && String.CompareOrdinal(numesala,"Online")!= 0) //daca y apartine [a,b]
+                if (TimeSpan.Compare(examen.OraSfarsit, oraInc) >= 0 &&
+                         TimeSpan.Compare(examen.OraSfarsit, oraSf) <= 0 ) //daca y apartine [a,b]
                 {
                     throw new Exception("Examenul trebuie sa se termine inaintea altui examen rezervat");
                 }
-                else if (TimeSpan.Compare(examen.OraInceput, oraInc) < 0 &&
-                         TimeSpan.Compare(examen.OraSfarsit, oraSf) > 0 && String.CompareOrdinal(numesala,"Online")!= 0) //daca [a,b] inclus in [x,y]
+                if (TimeSpan.Compare(examen.OraInceput, oraInc) < 0 &&
+                         TimeSpan.Compare(examen.OraSfarsit, oraSf) > 0) //daca [a,b] inclus in [x,y]
                 {
                     throw new Exception("Exista un examen in acest inetrval orar");
                 }
-            }
+            }}
 
             examen.IdSpecializare = idSpec;
             _context.Orarmaterie.Add(examen);
