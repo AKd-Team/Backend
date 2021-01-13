@@ -48,16 +48,17 @@ namespace Academic.Controllers
                 return BadRequest(new {message = ex.Message});
             }
         }
+
         [HttpPost("registerStudent")]
         public IActionResult RegisterStudent(RegisterStudent model)
         {
             // map model to entity
             var student = _mapper.Map<Student>(model);
-            
+
             try
             {
                 // create user
-                _adminService.CreateStudent(student, model.Password,model.Semigrupa,model.Specializare);
+                _adminService.CreateStudent(student, model.Password, model.Semigrupa, model.Specializare);
                 return Ok();
             }
             catch (AppException ex)
@@ -66,6 +67,7 @@ namespace Academic.Controllers
                 return BadRequest(new {message = ex.Message});
             }
         }
+
         [HttpPost("registerProfesor")]
         public IActionResult RegisterProfesor(RegisterProfesor model)
         {
@@ -91,7 +93,7 @@ namespace Academic.Controllers
             var dep = _adminService.GetDepartaments(idFacultate);
             return Ok(dep);
         }
-        
+
         /*
          * Desc: Functie care preia o lista cu toate specializarile si grupele si semigrupele acestora
          */
@@ -114,7 +116,7 @@ namespace Academic.Controllers
             var reguli = _adminService.GetRegulament(idFacultate);
             return Ok(reguli);
         }
-        
+
         /*
          * Desc: Schimba detaliile unei reguli(din tabela regula) din baza de date
          * In: Un model de tip UpdateRegula care contine IdRegula, Titlu si Continut
@@ -135,7 +137,7 @@ namespace Academic.Controllers
                 return BadRequest(new {message = ex.Message});
             }
         }
-        
+
         /*
          * Desc: Adauga o regula noua in baza de date
          * In: Un model de tip AddRegula care contine titlu si continut
@@ -164,7 +166,7 @@ namespace Academic.Controllers
          * Err: Daca regula cu acest id nu exista
          */
         [HttpDelete("deleteRegula/{idRegula}")]
-        public IActionResult DeleteRegula(int idRegula) 
+        public IActionResult DeleteRegula(int idRegula)
         {
             try
             {
@@ -182,6 +184,105 @@ namespace Academic.Controllers
         {
             var users = _adminService.GetAll();
             return Ok(users);
+        }
+
+        [HttpGet("getSpecializari/{IdSpecializare}")]
+        public IActionResult GetAllSpec(int IdSpecializare)
+        {
+            var specializari = _adminService.GetAllSpec(IdSpecializare);
+            return Ok(specializari);
+        }
+
+        [HttpPost("AddMatSpec")]
+
+        public IActionResult AddMaterieSpec(MaterieSpec materiespec)
+        {
+            var materie = new MaterieSpecializare();
+            materie.Semestru = materiespec.Semestru;
+            materie.IdMaterie = materiespec.IdMaterie;
+            materie.IdSpecializare = materiespec.IdSpecializare;
+            try
+            {
+                _adminService.AddMaterieSpec(materie);
+                return Ok(new {message = "Materia a fost adaugata cu succes"});
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new {message = ex.Message});
+            }
+        }
+
+        [HttpPut("UpdateMatSpec")]
+
+        public IActionResult UpdateMatSpec(MaterieSpec mater)
+        {
+            try
+            {
+                _adminService.EditMaterieSpec(mater);
+                return Ok(new {message = "Materia a fost modificata cu succes"});
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new {message = ex.Message});
+            }
+        }
+
+        [HttpGet("GetMaterii/{idSpec}")]
+
+        public IActionResult GetMaterieSpec(int idSpec)
+        {
+            var materii = _adminService.GetMaterieSpec(idSpec);
+            return Ok(materii);
+        }
+
+        [HttpPost("addMaterie")]
+        public IActionResult AddMaterie(AddMaterie model)
+        {
+            var materie = new Materie();
+            materie.Nume = model.Nume;
+            materie.Cod = model.Cod;
+            materie.NrCredite = model.NrCredite;
+            materie.Descriere = model.Descriere;
+            materie.Finalizare = model.Finalizare;
+            materie.NrPachet = model.NrPachet;
+            materie.TipActivitate = model.TipActivitate;
+            try
+            {
+                _adminService.AddMaterie(materie);
+                return Ok(new {message = "Materia a fost adaugata cu succes"});
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new {message = ex.Message});
+            }
+        }
+
+        [HttpDelete("DeleteMaterie/{idMaterie}")]
+        public IActionResult DeleteMaterie(int idMaterie)
+        {
+            try
+            {
+                _adminService.DeleteMaterie(idMaterie);
+                return Ok(new {message = "Materia a fost stearsa cu succes"});
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new {message = ex.Message});
+            }
+        }
+
+        [HttpPut("EditMaterie")]
+        public IActionResult EditMaterie(MaterieSem model)
+        {
+            try
+            {
+                _adminService.EditMaterie(model);
+                return Ok(new {message = "Materia a fost modificata cu succes"});
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new {message = ex.Message});
+            }
         }
     }
 }
