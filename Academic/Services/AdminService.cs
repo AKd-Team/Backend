@@ -290,6 +290,11 @@ namespace Academic.Services
                 throw new Exception("Exista deja materia");
             }
 
+            if (_context.Materie.Count(mat => mat.IdMaterie == materiespec.IdMaterie) == 0)
+            {
+                throw new Exception("Materia asta nu exista"); 
+            }
+
             _context.MaterieSpecializare.Add(materiespec);
             _context.SaveChanges();
         }
