@@ -33,6 +33,9 @@ namespace Academic.Services
         IEnumerable<NoteExamene> GetNota(int idStudent);
         IEnumerable<MaterieNedetaliata> GetMaterii(int idStudent);
         IEnumerable<NotaStudenti> GetStatisticiMaterie(int idMaterie);
+
+        public IEnumerable<ContractStud> GetContractStud(int idStudent, int semestru);
+
     }
 
     public class StudentService : IStudentService
@@ -53,7 +56,7 @@ namespace Academic.Services
         }
 
         public Profesori GetByTeacherId(int id)
-        { 
+        {
             var p = _context.Profesor.Find(id);
             var dep = _context.Departament.SingleOrDefault(d => d.IdDepartament == p.IdDepartament);
             var fac = _context.Facultate.SingleOrDefault(f => f.IdFacultate == dep.IdFacultate);
@@ -69,11 +72,12 @@ namespace Academic.Services
                 {
                     var dep = _context.Departament.SingleOrDefault(d => d.IdDepartament == p.IdDepartament);
                     var fac = _context.Facultate.SingleOrDefault(f => f.IdFacultate == dep.IdFacultate);
-                    list_prof.Add(new Profesori(p,dep.Nume,fac.Nume));
+                    list_prof.Add(new Profesori(p, dep.Nume, fac.Nume));
                 }
 
                 return list_prof;
             }
+
             throw new Exception("Nu exista profesori!!!");
         }
 
@@ -86,14 +90,15 @@ namespace Academic.Services
                 var specializare =
                     _context.Specializare.SingleOrDefault(s => s.IdSpecializare == student.IdSpecializare);
                 var faculta = _context.Facultate.SingleOrDefault(fac => fac.IdFacultate == specializare.IdFacultate);
-                return new StudentDetaliat(student, formatie.Grupa, formatie.SemiGrupa, formatie.AnStudiu, faculta.Nume, specializare.Nivel, specializare.Nume);
+                return new StudentDetaliat(student, formatie.Grupa, formatie.SemiGrupa, formatie.AnStudiu, faculta.Nume,
+                    specializare.Nivel, specializare.Nume);
             }
             else
             {
                 throw new Exception("Nu exista student cu acest id!");
             }
         }
-       
+
 
         /*
          * Descriere: O functie, nu tocmai eficienta, care returneaza o lista de FacultatiCuDepartamente
@@ -112,8 +117,10 @@ namespace Academic.Services
                     if (d.IdFacultate == f.IdFacultate)
                         dep.Add(d.Nume);
                 }
+
                 listFac.Add(new FacultatiCuDepartamente(f.Nume, dep));
             }
+
             return listFac;
         }
 
@@ -130,11 +137,12 @@ namespace Academic.Services
                 if (spec.IdFacultate != null)
                 {
                     var idFac = spec.IdFacultate.Value;
-                    
+
                     return _context.Regulament.Where(r => (r.IdFacultate == idFac || r.IdFacultate == null))
                         .OrderByDescending(r => r.IdFacultate).ToList();
                 }
             }
+
             //Pt cazul in care nu exista specializare
             return _context.Regulament.Where(r => r.IdFacultate == null);
         }
@@ -154,7 +162,7 @@ namespace Academic.Services
                 .Where(dc => dc.IdStudent == idStudent && dc.AnDeStudiu == anMaxim).ToList())
             {
                 var numeMaterie = _context.Materie.Find(detaliuContract.IdMaterie).Nume;
-                
+
                 foreach (var orar in _context.Orarmaterie
                     .Where(o => o.IdMaterie == detaliuContract.IdMaterie && o.Tip != "Examen").ToList())
                 {
@@ -167,10 +175,11 @@ namespace Academic.Services
                     oraInceput = oraInceput.Substring(0, oraInceput.Length - 3);
                     var oraSfarsit = orar.OraSfarsit.ToString();
                     oraSfarsit = oraSfarsit.Substring(0, oraSfarsit.Length - 3);
-                    orarListat.Add(new OrarPersonalizat(titlu, oraInceput, oraSfarsit, 
+                    orarListat.Add(new OrarPersonalizat(titlu, oraInceput, oraSfarsit,
                         orar.ZiuaSaptamanii, grupaSemigrupa, numeProfesor, numeSala, orar.Frecventa));
                 }
             }
+
             return orarListat;
         }
 
@@ -204,20 +213,21 @@ namespace Academic.Services
                     oraInceput = oraInceput.Substring(0, oraInceput.Length - 3);
                     var oraSfarsit = orar.OraSfarsit.ToString();
                     oraSfarsit = oraSfarsit.Substring(0, oraSfarsit.Length - 3);
-                    
+
                     //formare titlu
                     var numeSala = _context.Sala.Find(orar.IdSala).Nume;
                     var profesor = _context.Profesor.Find(orar.IdProfesor);
                     var numeProfesor = profesor.Nume + " " + profesor.Prenume;
                     var formatie = _context.Formatie.Find(orar.IdFormatie, orar.IdSpecializare);
                     var titlu = numeMaterie + ", " + numeProfesor + ", " + numeSala + ", " + formatie.Grupa;
-                    
+
                     orarListat.Add(new OrarExamen(titlu, oraInceput, oraSfarsit, data));
                 }
             }
+
             return orarListat;
         }
-        
+
         /*
          * Desc: Partea de service pt transmiterea optiunilor de evaluare pt profesor
          * In: idStudent - int; reprezinta id-ul unui student
@@ -276,19 +286,20 @@ namespace Academic.Services
         public IEnumerable<ProfesorNedetaliat> GetProfesoriNedetaliati(int idMaterie, string tip)
         {
             var profesori = new List<ProfesorNedetaliat>();
-            
-            foreach (var orar in _context.Orarmaterie.Where(o => o.IdMaterie == idMaterie 
+
+            foreach (var orar in _context.Orarmaterie.Where(o => o.IdMaterie == idMaterie
                                                                  && o.Tip == tip).ToList())
             {
                 var profesor = _context.Profesor.Find(orar.IdProfesor);
                 var nume = profesor.Grad + " " + profesor.Nume + " " + profesor.Prenume;
-                var profesorNedetaliat = new ProfesorNedetaliat(profesor.IdUser,nume);
+                var profesorNedetaliat = new ProfesorNedetaliat(profesor.IdUser, nume);
                 if (!profesori.Contains(profesorNedetaliat))
                     profesori.Add(profesorNedetaliat);
             }
+
             return profesori;
         }
-        
+
         /*
          * Desc: Partea de service pentru existenta unei anumite evaluari 
          * In: rc - un obiect de tip ReviewComplet
@@ -297,9 +308,9 @@ namespace Academic.Services
          */
         public bool ExistentaEvaluare(ReviewComplet rc)
         {
-            if (_context.Review.Any(r => r.IdStudent == rc.IdStudent && r.IdProfesor == rc.IdProfesor 
-                                                                     && r.IdMaterie == rc.IdMaterie 
-                                                                     && r.AnDeStudiu == rc.AnDeStudiu 
+            if (_context.Review.Any(r => r.IdStudent == rc.IdStudent && r.IdProfesor == rc.IdProfesor
+                                                                     && r.IdMaterie == rc.IdMaterie
+                                                                     && r.AnDeStudiu == rc.AnDeStudiu
                                                                      && r.AnCaledaristic == rc.AnCalendaristic))
                 return true;
             return false;
@@ -331,7 +342,7 @@ namespace Academic.Services
                 _context.SaveChanges();
             }
         }
-        
+
         /*
          * Desc: Partea de service pt a transmite lista de criterii pentru evaluarea unui profesor
          * In: -
@@ -346,18 +357,19 @@ namespace Academic.Services
         public IEnumerable<NoteExamene> GetNota(int idStudent)
         {
             var noteExamene = new List<NoteExamene>();
-            foreach (var note in _context.Detaliucontract.Where(d => idStudent == d.IdStudent).
-                OrderBy(d => d.Semestru).ToList())
+            foreach (var note in _context.Detaliucontract.Where(d => idStudent == d.IdStudent).OrderBy(d => d.Semestru)
+                .ToList())
             {
-                
+
                 int? notaFinala = null;
-                if(note.Nota!=null)
+                if (note.Nota != null)
                     if (note.NotaRestanta != null && note.NotaRestanta > note.Nota)
                         notaFinala = note.NotaRestanta;
                     else notaFinala = note.Nota;
                 var materie = _context.Materie.Find(note.IdMaterie);
-                noteExamene.Add(new NoteExamene(note,materie,notaFinala));
+                noteExamene.Add(new NoteExamene(note, materie, notaFinala));
             }
+
             return noteExamene;
 
 
@@ -373,8 +385,9 @@ namespace Academic.Services
             {
                 anUniversitarInceput--;
             }
+
             string anCalendaristic = anUniversitarInceput.ToString() + "-" + (anUniversitarInceput + 1).ToString();
-            
+
             var detaliuContracte = _context.Detaliucontract.Where(d =>
                 d.IdStudent == idStudent && d.AnCalendaristic.Equals(anCalendaristic)).ToList();
             foreach (var det in detaliuContracte)
@@ -395,26 +408,68 @@ namespace Academic.Services
             {
                 anUniversitarInceput--;
             }
+
             string anCalendaristic = anUniversitarInceput.ToString() + "-" + (anUniversitarInceput + 1).ToString();
-            
+
             var detaliuContracte = _context.Detaliucontract.Where(d =>
                 d.IdMaterie == idMaterie && d.AnCalendaristic.Equals(anCalendaristic)).ToList();
             foreach (var det in detaliuContracte)
             {
                 int nota = 0;
                 if (det.NotaRestanta != null)
-                    nota = Math.Max((byte)det.Nota, (byte)det.NotaRestanta);
+                    nota = Math.Max((byte) det.Nota, (byte) det.NotaRestanta);
                 else if (det.Nota != null)
-                    nota = (int)det.Nota;
+                    nota = (int) det.Nota;
                 if (nota != 0)
                 {
-                    
+
                 }
-                    statistici.updateNrStudenti(nota);
+
+                statistici.updateNrStudenti(nota);
             }
 
             return statistici.StatisticiNote;
-            
+
+        }
+
+
+        public IEnumerable<ContractStud> GetContractStud(int idStudent, int semestru)
+        {
+            var idMaterii = new Dictionary<int, bool>();
+            var idMateriiSem = new Dictionary<int, bool>();
+            var contracte = new List<ContractStud>();
+            foreach (var materie in _context.Detaliucontract.Where(detaliucontract =>
+                detaliucontract.IdStudent == idStudent))
+            {
+                idMaterii.Add(materie.IdMaterie, materie.Promovata);
+            }
+
+            foreach (var id in idMaterii)
+            {
+                foreach (var materie in _context.MaterieSpecializare.Where(materiespec =>
+                    materiespec.Semestru == semestru))
+                {
+                    if (materie.IdMaterie == id.Key)
+                    {
+                        idMateriiSem.Add(id.Key, id.Value);
+                    }
+
+                }
+            }
+
+            foreach (var idmaterie in idMateriiSem)
+            {
+                foreach (var materie in _context.Materie.Where(m => m.IdMaterie == idmaterie.Key)
+                ) ///incearca sa modifici aici daca nu merge
+                {
+                    var nume = materie.Nume;
+                    var cod = materie.Cod;
+                    var promovat = idmaterie.Value;
+                    contracte.Add(new ContractStud(cod, nume, promovat));
+                }
+            }
+
+            return contracte;
         }
     }
 }
