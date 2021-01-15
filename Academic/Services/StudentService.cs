@@ -431,27 +431,25 @@ namespace Academic.Services
             return statistici.StatisticiNote;
 
         }
-
-
+        
+        
         public IEnumerable<ContractStud> GetContractStud(int idStudent, int semestru)
         {
-            var idMaterii = new Dictionary<int, bool>();
-            var idMateriiSem = new Dictionary<int, bool>();
+            var idMaterii = new Dictionary<int, bool?>();
+            var idMateriiSem =new Dictionary<int, bool?>();
             var contracte = new List<ContractStud>();
-            foreach (var materie in _context.Detaliucontract.Where(detaliucontract =>
-                detaliucontract.IdStudent == idStudent))
+            foreach (var materie in _context.Detaliucontract.Where(detaliucontract => detaliucontract.IdStudent== idStudent))
             {
                 idMaterii.Add(materie.IdMaterie, materie.Promovata);
             }
 
             foreach (var id in idMaterii)
             {
-                foreach (var materie in _context.MaterieSpecializare.Where(materiespec =>
-                    materiespec.Semestru == semestru))
+                foreach (var materie in _context.MaterieSpecializare.Where(materiespec=>materiespec.Semestru == semestru))
                 {
                     if (materie.IdMaterie == id.Key)
                     {
-                        idMateriiSem.Add(id.Key, id.Value);
+                        idMateriiSem.Add(id.Key,id.Value);
                     }
 
                 }
@@ -459,8 +457,7 @@ namespace Academic.Services
 
             foreach (var idmaterie in idMateriiSem)
             {
-                foreach (var materie in _context.Materie.Where(m => m.IdMaterie == idmaterie.Key)
-                ) ///incearca sa modifici aici daca nu merge
+                foreach (var materie  in _context.Materie.Where(m=> m.IdMaterie== idmaterie.Key)) 
                 {
                     var nume = materie.Nume;
                     var cod = materie.Cod;
@@ -470,6 +467,6 @@ namespace Academic.Services
             }
 
             return contracte;
-        }
+            }
     }
 }
