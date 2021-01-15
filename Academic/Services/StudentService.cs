@@ -33,6 +33,9 @@ namespace Academic.Services
         IEnumerable<NoteExamene> GetNota(int idStudent);
         IEnumerable<MaterieNedetaliata> GetMaterii(int idStudent);
         IEnumerable<NotaStudenti> GetStatisticiMaterie(int idMaterie);
+
+        public IEnumerable<ContractStud> GetContractStud(int idStudent, int semestru);
+
     }
 
     public class StudentService : IStudentService
@@ -395,26 +398,68 @@ namespace Academic.Services
             {
                 anUniversitarInceput--;
             }
+
             string anCalendaristic = anUniversitarInceput.ToString() + "-" + (anUniversitarInceput + 1).ToString();
-            
+
             var detaliuContracte = _context.Detaliucontract.Where(d =>
                 d.IdMaterie == idMaterie && d.AnCalendaristic.Equals(anCalendaristic)).ToList();
             foreach (var det in detaliuContracte)
             {
                 int nota = 0;
                 if (det.NotaRestanta != null)
-                    nota = Math.Max((byte)det.Nota, (byte)det.NotaRestanta);
+                    nota = Math.Max((byte) det.Nota, (byte) det.NotaRestanta);
                 else if (det.Nota != null)
-                    nota = (int)det.Nota;
+                    nota = (int) det.Nota;
                 if (nota != 0)
                 {
-                    
+
                 }
-                    statistici.updateNrStudenti(nota);
+
+                statistici.updateNrStudenti(nota);
             }
 
             return statistici.StatisticiNote;
-            
+
         }
+        
+        /*
+         * 
+         */
+        public IEnumerable<ContractStud> GetContractStud(int idStudent, int semestru)
+        {
+            var idMaterii = new Dictionary<int, bool>();
+            var idMateriiSem =new Dictionary<int, bool>();
+            var contracte = new List<ContractStud>();
+            foreach (var materie in _context.Detaliucontract.Where(detaliucontract => detaliucontract.IdStudent== idStudent))
+            {
+                idMaterii.Add(materie.IdMaterie, materie.Promovata);
+            }
+
+            foreach (var id in idMaterii)
+            {
+                foreach (var materie in _context.MaterieSpecializare.Where(materiespec=>materiespec.Semestru == semestru))
+                {
+                    if (materie.IdMaterie == id.Key)
+                    {
+                        idMateriiSem.Add(id.Key,id.Value);
+                    }
+                    
+                }
+            }
+
+            foreach (var idmaterie in idMateriiSem)
+            {
+                foreach (var materie  in _context.Materie.Where(m=> m.IdMaterie== idmaterie.Key)) ///incearca sa modifici aici daca nu merge
+                {
+                    var nume = materie.Nume;
+                    var cod = materie.Cod;
+                    var promovat = idmaterie.Value;
+                    contracte.Add(new ContractStud(cod, nume, promovat));
+                }
+            }
+
+            return contracte;
+        }
+
     }
 }

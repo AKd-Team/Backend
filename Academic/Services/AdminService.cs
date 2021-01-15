@@ -305,7 +305,9 @@ namespace Academic.Services
         { 
             if (_context.MaterieSpecializare.Count(r => r.IdSpecializare == materie.IdSpecializare) == 0 || _context.MaterieSpecializare.Count(r => r.IdMaterie == materie.IdMaterie) == 0)
             {  throw new AppException("Nu exista aceasta materie/specializare");}
-            var mat = _context.MaterieSpecializare.First(m => m.IdMaterie == materie.IdMaterie && m.IdSpecializare== materie.IdSpecializare);
+
+            var mat = _context.MaterieSpecializare.First(m =>
+                m.IdMaterie == materie.IdMaterie && m.IdSpecializare == materie.IdSpecializare);
             mat.Semestru = materie.Semestru;
             _context.SaveChanges();
         }
@@ -366,11 +368,7 @@ namespace Academic.Services
         public void EditMaterie(MaterieSem materies)
         {
             if (_context.Materie.Count(m => m.IdMaterie == materies.IdMaterie) == 0)
-                throw new AppException("Nu exista aceasta regula");
-            if (_context.Materie.Any(m => m.Nume == materies.Nume))
-            {
-                throw new AppException("Exista o regula cu acest nume");
-            }
+                throw new AppException("Nu exista aceasta materie");
             var materie = _context.Materie.First(m => m.IdMaterie == materies.IdMaterie);
             
             materie.Nume = materies.Nume;
