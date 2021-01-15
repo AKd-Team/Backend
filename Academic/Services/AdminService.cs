@@ -24,6 +24,17 @@ namespace Academic.Services
              public void DeleteRegula(int idRegula);
 
              IEnumerable<Users> GetAll();
+             public IEnumerable<SpecializariAdmin> GetAllSpec(int idSpecializare);
+             public void AddMaterieSpec(MaterieSpecializare materiespec);
+             public void EditMaterieSpec(MaterieSpec materie);
+             public IEnumerable<MaterieSem> GetMaterieSpec(int idSpec);
+             public void AddMaterie(Materie mater);
+             public void DeleteMaterie(int idMaterie);
+             public void EditMaterie(MaterieSem materies);
+
+
+
+
          }
     public class AdminService : IAdminService
     {
@@ -244,5 +255,133 @@ namespace Academic.Services
         {
             return _context.Users;
         }
+
+        /*
+         * Un get pentru toate specializarile de la facultatea unde e adminul in functie de id_specilizarea lui
+         */
+        public IEnumerable<SpecializariAdmin> GetAllSpec(int idSpecializare)
+        {
+            var specializari = new List<SpecializariAdmin>();
+            var idfacultate = _context.Specializare.SingleOrDefault(spec => spec.IdSpecializare == idSpecializare)
+                ?.IdFacultate;
+            foreach (var spec in _context.Specializare.ToList())
+            {
+                if (spec.IdFacultate ==idfacultate)
+                {
+                    var idspec = spec.IdSpecializare;
+                    var nume = spec.Nume;
+                    var cod = spec.Cod;
+                    specializari.Add(new SpecializariAdmin(idspec, nume, cod));
+                }
+            }
+
+            return specializari;
+        }
+        /*
+         * Input: Primeste input O materieSpec
+         * Output:-
+         * Err: daca materia este deja in tabel
+         */
+        public void AddMaterieSpec(MaterieSpecializare materiespec)
+        {
+
+            if (_context.MaterieSpecializare.Count(mat => mat.IdMaterie == materiespec.IdMaterie) != 0)
+            {
+                throw new Exception("Exista deja materia");
+            }
+
+            if (_context.Materie.Count(mat => mat.IdMaterie == materiespec.IdMaterie) == 0)
+            {
+                throw new Exception("Materia asta nu exista"); 
+            }
+
+            _context.MaterieSpecializare.Add(materiespec);
+            _context.SaveChanges();
+        }
+        /*
+         * 
+         */
+        public void EditMaterieSpec(MaterieSpec materie)
+        { 
+            if (_context.MaterieSpecializare.Count(r => r.IdSpecializare == materie.IdSpecializare) == 0 || _context.MaterieSpecializare.Count(r => r.IdMaterie == materie.IdMaterie) == 0)
+            {  throw new AppException("Nu exista aceasta materie/specializare");}
+            var mat = _context.MaterieSpecializare.First(m => m.IdMaterie == materie.IdMaterie && m.IdSpecializare== materie.IdSpecializare);
+            mat.Semestru = materie.Semestru;
+            _context.SaveChanges();
+        }
+        /*
+         * input:idSpec
+         * Output: un vector MaterieSem
+         */
+        public IEnumerable<MaterieSem> GetMaterieSpec(int idSpec)
+        {
+            var materie = new List<MaterieSem>();
+            var materiespec = _context.MaterieSpecializare.Where(mat => mat.IdSpecializare == idSpec).ToList();
+
+            foreach (var id in materiespec)
+            {
+                var mat = _context.Materie.First(materie1 => materie1.IdMaterie == id.IdMaterie);
+                var idmaterie=mat.IdMaterie;
+                var nume = mat.Nume;
+                var cod = mat.Cod;
+                var nrCredite = mat.NrCredite;
+                var descriere = mat.Descriere;
+                var finalizare = mat.Finalizare;
+                var nrpachet = mat.NrPachet;
+                var tipactivitate = mat.TipActivitate;
+                materie.Add(new MaterieSem(idmaterie, nume, cod, nrCredite, descriere, finalizare, nrpachet,
+                    tipactivitate));
+            }
+            return materie;
+        }
+
+        public void AddMaterie(Materie mater)
+        {
+            if (_context.Materie.Any(materie => materie.Nume == mater.Nume))
+            {
+                throw new AppException("Exista o materie cu numele asta");
+            }
+            if (_context.Materie.Any(materie => materie.Cod == mater.Cod))
+            {
+                throw new AppException("Exista o materie cu codul asta"); 
+            }
+            if (_context.Materie.Any(materie => materie.Nume == mater.Nume) &&_context.Materie.Any(materie => materie.Cod == mater.Cod))
+            {
+                throw new AppException("Exista materia respectiva"); 
+            }
+
+            _context.Materie.Add(mater);
+            _context.SaveChanges();
+        }
+
+        public void DeleteMaterie(int idMaterie)
+        {
+            if(_context.Materie.Count(r => r.IdMaterie == idMaterie) == 0)
+                throw new AppException("Nu exista aceasta materie.");
+            var materie = _context.Materie.First(mat => mat.IdMaterie == idMaterie);
+            _context.Materie.Remove(materie);
+            _context.SaveChanges();
+        }
+
+        public void EditMaterie(MaterieSem materies)
+        {
+            if (_context.Materie.Count(m => m.IdMaterie == materies.IdMaterie) == 0)
+                throw new AppException("Nu exista aceasta regula");
+            if (_context.Materie.Any(m => m.Nume == materies.Nume))
+            {
+                throw new AppException("Exista o regula cu acest nume");
+            }
+            var materie = _context.Materie.First(m => m.IdMaterie == materies.IdMaterie);
+            
+            materie.Nume = materies.Nume;
+            materies.Cod = materies.Cod;
+            materie.NrCredite = materies.NrCredite;
+            materie.Descriere = materies.Descriere;
+            materie.Finalizare = materies.Finalizare;
+            materie.NrPachet = materies.NrPachet;
+            materie.TipActivitate = materies.TipActivitate;
+            _context.SaveChanges();
+        }
+        
     }
 }

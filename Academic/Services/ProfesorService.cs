@@ -22,6 +22,7 @@ namespace Academic.Services
         public IEnumerable<StudentFaraNota> GetStudentFaraNota(int id_materie);
         public IEnumerable<ListaFormatii> GetFormatii();
         public IEnumerable<NotaStudenti> GetStatisticiMaterie(int idMaterie);
+        public IEnumerable<OrarPersonalizatProfesor> GetOrar(int idProfesor);
     }
     public class ProfesorService : IProfesorService
     {
@@ -230,6 +231,8 @@ namespace Academic.Services
             var sali = GetSali();
             var ok = false;
             var numesala = _context.Sala.Find(idSala).Nume;
+            int idSpec = _context.Formatie.SingleOrDefault(formatie => formatie.IdFormatie == examen.IdFormatie)
+                .IdSpecializare;
             foreach (var sala in sali)
             {
                 if (sala.IdSala == idSala)
@@ -250,27 +253,30 @@ namespace Academic.Services
              * a=ora.Inc
              * b=oraSf
              */
-            foreach (var orar in orarSala)
+            if(String.CompareOrdinal(numesala,"Online")!= 0)
+            {
+                foreach (var orar in orarSala)
             {
                 var oraInc = TimeSpan.Parse(orar.OraInceput);
                 var oraSf = TimeSpan.Parse(orar.OraSfarsit);
                 if (TimeSpan.Compare(examen.OraInceput, oraInc) >= 0 &&
-                    TimeSpan.Compare(examen.OraInceput, oraSf) < 0 && String.CompareOrdinal(numesala,"Online")!= 0) //daca x apartine [a,b) si sala nu este 1(cea online)
+                    TimeSpan.Compare(examen.OraInceput, oraSf) < 0) //daca x apartine [a,b) si sala nu este 1(cea online)
                 {
                     throw new Exception("Examenul nu poate sa inceapa in timp ce se desfasoara alt examen");
                 }
-                else if (TimeSpan.Compare(examen.OraSfarsit, oraInc) >= 0 &&
-                         TimeSpan.Compare(examen.OraSfarsit, oraSf) <= 0 && String.CompareOrdinal(numesala,"Online")!= 0) //daca y apartine [a,b]
+                if (TimeSpan.Compare(examen.OraSfarsit, oraInc) >= 0 &&
+                         TimeSpan.Compare(examen.OraSfarsit, oraSf) <= 0 ) //daca y apartine [a,b]
                 {
                     throw new Exception("Examenul trebuie sa se termine inaintea altui examen rezervat");
                 }
-                else if (TimeSpan.Compare(examen.OraInceput, oraInc) < 0 &&
-                         TimeSpan.Compare(examen.OraSfarsit, oraSf) > 0 && String.CompareOrdinal(numesala,"Online")!= 0) //daca [a,b] inclus in [x,y]
+                if (TimeSpan.Compare(examen.OraInceput, oraInc) < 0 &&
+                         TimeSpan.Compare(examen.OraSfarsit, oraSf) > 0) //daca [a,b] inclus in [x,y]
                 {
                     throw new Exception("Exista un examen in acest inetrval orar");
                 }
-            }
+            }}
 
+            examen.IdSpecializare = idSpec;
             _context.Orarmaterie.Add(examen);
             _context.SaveChanges();
         }
@@ -280,7 +286,7 @@ namespace Academic.Services
             var anDeStudiu = _context.Detaliucontract.Where(dc => dc.IdStudent == an.idStudent 
                                                                   && dc.IdMaterie==an.idMaterie)
                 .Max(dc => dc.AnDeStudiu);
-            var anCalendaristic = _context.Detaliucontract.SingleOrDefault(dc => dc.IdStudent == an.idStudent
+            var anCalendaristic = _context.Detaliucontract.FirstOrDefault(dc => dc.IdStudent == an.idStudent
                                                                          && dc.AnDeStudiu == anDeStudiu)?.AnCalendaristic;
 
             var detaliucontract = _context.Detaliucontract.First(dc => dc.IdStudent == an.idStudent
@@ -391,6 +397,27 @@ namespace Academic.Services
             }
             return statistici.StatisticiNote;
             
+        }
+
+        public IEnumerable<OrarPersonalizatProfesor> GetOrar(int idProfesor)
+        {
+            var orarListat = new List<OrarPersonalizatProfesor>();
+            foreach (var orar in _context.Orarmaterie
+                .Where(o => o.IdProfesor == idProfesor && o.Tip != "Examen").ToList())
+            {
+                var numeMaterie = _context.Materie.Find(orar.IdMaterie).Nume;
+                var oraInceput = orar.OraInceput.ToString();
+                oraInceput = oraInceput.Substring(0, oraInceput.Length - 3);
+                var oraSfarsit = orar.OraSfarsit.ToString();
+                oraSfarsit = oraSfarsit.Substring(0, oraSfarsit.Length - 3);
+                var formatie = _context.Formatie.Find(orar.IdFormatie, orar.IdSpecializare);
+                var grupaSemigrupa = formatie.Grupa + " " + formatie.SemiGrupa;
+                var numeSala = _context.Sala.Find(orar.IdSala).Nume;
+                orarListat.Add(new OrarPersonalizatProfesor(numeMaterie, oraInceput, oraSfarsit, 
+                    orar.ZiuaSaptamanii, grupaSemigrupa, numeSala, orar.Frecventa));
+            }
+
+            return orarListat;
         }
     }
 }
