@@ -284,5 +284,13 @@ namespace Academic.Controllers
                 return BadRequest(new {message = ex.Message});
             }
         }
+
+        [HttpGet("getIdMaterie/{nume}/{cod}/{finalizare}/{nrpachet}/{tipactiv}")]
+        public IActionResult GetIdMaterie(string nume, string cod, string finalizare, int nrpachet, int tipactiv)
+        {
+            var id = _adminService.GetIdMaterie(nume, cod, finalizare, nrpachet, tipactiv);
+            return Ok((id));
+        }
+
     }
 }

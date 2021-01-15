@@ -31,56 +31,60 @@ namespace Academic.Services
              public void AddMaterie(Materie mater);
              public void DeleteMaterie(int idMaterie);
              public void EditMaterie(MaterieSem materies);
-
+             public int GetIdMaterie(string nume, string cod, string finalizare, int nrpachet, int tipactiv);
 
 
 
          }
+
     public class AdminService : IAdminService
     {
         private academicContext _context;
         private readonly AppSettings _appSettings;
+
         public AdminService(IOptions<AppSettings> appSettings, academicContext context)
         {
             _appSettings = appSettings.Value;
             _context = context;
         }
-        public Student CreateStudent(Student student, string password,string semigrupa,string specializare)
+
+        public Student CreateStudent(Student student, string password, string semigrupa, string specializare)
         {
             if (string.IsNullOrWhiteSpace(password))
                 throw new AppException("Password is required");
 
             if (_context.Users.Any(x => x.Username == student.Username))
                 throw new AppException("Username \"" + student.Username + "\" is already taken");
-            
+
             if (_context.Users.Any(x => x.Cnp == student.Cnp))
                 throw new AppException("Deja exista un user cu acest CNP");
-            
+
             if (_context.Student.Any(x => x.NrMatricol == student.NrMatricol))
                 throw new AppException("Deja exista un student cu acest numar matricol");
-            
+
             if (_context.Student.Any(x => x.Cup == student.Cup))
                 throw new AppException("Deja exista un student cu acest CUP");
-            
-            if (_context.Specializare.Where(x=>x.Nume == specializare).Count()==0)
+
+            if (_context.Specializare.Where(x => x.Nume == specializare).Count() == 0)
                 throw new AppException("Erori specializare");
-            if (_context.Formatie.Where(x => x.SemiGrupa == semigrupa).Count()==0)
+            if (_context.Formatie.Where(x => x.SemiGrupa == semigrupa).Count() == 0)
                 throw new AppException("Erori semigrupa");
-            
+
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
             student.PHash = passwordHash;
             student.PSalt = passwordSalt;
-            
+
             var r = _context.Formatie.Where(x => x.SemiGrupa == semigrupa).ToList().First().IdFormatie;
-            var p =_context.Specializare.Where(x => x.Nume == specializare).ToList().First().IdSpecializare;
+            var p = _context.Specializare.Where(x => x.Nume == specializare).ToList().First().IdSpecializare;
             student.IdFormatie = r;
             student.IdSpecializare = p;
-            
+
             _context.Student.Add(student);
             _context.SaveChanges();
             return student;
         }
+
         public Profesor CreateProfesor(Profesor profesor, string password)
         {
             if (string.IsNullOrWhiteSpace(password))
@@ -88,19 +92,20 @@ namespace Academic.Services
 
             if (_context.Users.Any(x => x.Username == profesor.Username))
                 throw new AppException("Username \"" + profesor.Username + "\" is already taken");
-            
+
             if (_context.Users.Any(x => x.Cnp == profesor.Cnp))
                 throw new AppException("Deja exista un user cu acest CNP");
-            
+
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
             profesor.PHash = passwordHash;
             profesor.PSalt = passwordSalt;
-            
+
             _context.Profesor.Add(profesor);
             _context.SaveChanges();
             return profesor;
         }
+
         public Admin CreateAdmin(Admin admin, string password)
         {
             if (string.IsNullOrWhiteSpace(password))
@@ -112,11 +117,12 @@ namespace Academic.Services
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
             admin.PHash = passwordHash;
             admin.PSalt = passwordSalt;
-            
+
             _context.Admin.Add(admin);
             _context.SaveChanges();
             return admin;
         }
+
         public Users Create(Users user, string password)
         {
             // validation
@@ -136,6 +142,7 @@ namespace Academic.Services
 
             return user;
         }
+
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             if (password == null) throw new ArgumentNullException("empty password");
@@ -155,7 +162,7 @@ namespace Academic.Services
          */
         public IEnumerable<Departament> GetDepartaments(int id)
         {
-            return _context.Departament.Where(d=> d.IdFacultate == id).ToList();
+            return _context.Departament.Where(d => d.IdFacultate == id).ToList();
         }
 
         /*
@@ -180,8 +187,10 @@ namespace Academic.Services
                         grupe.Add(f.Grupa);
                     semiGrupe.Add(f.SemiGrupa);
                 }
+
                 formSpec.Add(new AdminFormSpec(s.Nume, grupe, semiGrupe));
             }
+
             return formSpec;
         }
 
@@ -206,13 +215,13 @@ namespace Academic.Services
          */
         public void ChangeRegula(UpdateRegula regula)
         {
-            if(_context.Regulament.Any(r => r.Titlu == regula.Titlu && r.Continut == regula.Continut 
-                                            && r.IdFacultate == regula.IdFacultate))
+            if (_context.Regulament.Any(r => r.Titlu == regula.Titlu && r.Continut == regula.Continut
+                                                                     && r.IdFacultate == regula.IdFacultate))
                 throw new AppException("Deja exista o rgula cu acest titlu si continut la aceasta facultate");
-            
+
             if (_context.Regulament.Count(r => r.IdRegulament == regula.IdRegula) == 0)
                 throw new AppException("Nu exista aceasta regula");
-            
+
             var reg = _context.Regulament.First(r => r.IdRegulament == regula.IdRegula);
 
             reg.Titlu = regula.Titlu;
@@ -228,10 +237,10 @@ namespace Academic.Services
          */
         public void CreateRegula(Regulament regula)
         {
-            if(_context.Regulament.Any(r => (r.Titlu == regula.Titlu || r.Continut == regula.Continut) 
-                                            && r.IdFacultate == regula.IdFacultate))
+            if (_context.Regulament.Any(r => (r.Titlu == regula.Titlu || r.Continut == regula.Continut)
+                                             && r.IdFacultate == regula.IdFacultate))
                 throw new AppException("Deja exista o rgula cu acest titlu sau continut la aceasta facultate");
-            
+
             _context.Regulament.Add(regula);
             _context.SaveChanges();
         }
@@ -244,7 +253,7 @@ namespace Academic.Services
          */
         public void DeleteRegula(int idRegula)
         {
-            if(_context.Regulament.Count(r => r.IdRegulament == idRegula) == 0)
+            if (_context.Regulament.Count(r => r.IdRegulament == idRegula) == 0)
                 throw new AppException("Nu exista aceasta regula.");
             var regulament = _context.Regulament.First(r => r.IdRegulament == idRegula);
             _context.Regulament.Remove(regulament);
@@ -266,7 +275,7 @@ namespace Academic.Services
                 ?.IdFacultate;
             foreach (var spec in _context.Specializare.ToList())
             {
-                if (spec.IdFacultate ==idfacultate)
+                if (spec.IdFacultate == idfacultate)
                 {
                     var idspec = spec.IdSpecializare;
                     var nume = spec.Nume;
@@ -277,6 +286,7 @@ namespace Academic.Services
 
             return specializari;
         }
+
         /*
          * Input: Primeste input O materieSpec
          * Output:-
@@ -292,25 +302,30 @@ namespace Academic.Services
 
             if (_context.Materie.Count(mat => mat.IdMaterie == materiespec.IdMaterie) == 0)
             {
-                throw new Exception("Materia asta nu exista"); 
+                throw new Exception("Materia asta nu exista");
             }
 
             _context.MaterieSpecializare.Add(materiespec);
             _context.SaveChanges();
         }
+
         /*
          * 
          */
         public void EditMaterieSpec(MaterieSpec materie)
-        { 
-            if (_context.MaterieSpecializare.Count(r => r.IdSpecializare == materie.IdSpecializare) == 0 || _context.MaterieSpecializare.Count(r => r.IdMaterie == materie.IdMaterie) == 0)
-            {  throw new AppException("Nu exista aceasta materie/specializare");}
+        {
+            if (_context.MaterieSpecializare.Count(r => r.IdSpecializare == materie.IdSpecializare) == 0 ||
+                _context.MaterieSpecializare.Count(r => r.IdMaterie == materie.IdMaterie) == 0)
+            {
+                throw new AppException("Nu exista aceasta materie/specializare");
+            }
 
             var mat = _context.MaterieSpecializare.First(m =>
                 m.IdMaterie == materie.IdMaterie && m.IdSpecializare == materie.IdSpecializare);
             mat.Semestru = materie.Semestru;
             _context.SaveChanges();
         }
+
         /*
          * input:idSpec
          * Output: un vector MaterieSem
@@ -323,7 +338,7 @@ namespace Academic.Services
             foreach (var id in materiespec)
             {
                 var mat = _context.Materie.First(materie1 => materie1.IdMaterie == id.IdMaterie);
-                var idmaterie=mat.IdMaterie;
+                var idmaterie = mat.IdMaterie;
                 var nume = mat.Nume;
                 var cod = mat.Cod;
                 var nrCredite = mat.NrCredite;
@@ -334,6 +349,7 @@ namespace Academic.Services
                 materie.Add(new MaterieSem(idmaterie, nume, cod, nrCredite, descriere, finalizare, nrpachet,
                     tipactivitate));
             }
+
             return materie;
         }
 
@@ -343,13 +359,16 @@ namespace Academic.Services
             {
                 throw new AppException("Exista o materie cu numele asta");
             }
+
             if (_context.Materie.Any(materie => materie.Cod == mater.Cod))
             {
-                throw new AppException("Exista o materie cu codul asta"); 
+                throw new AppException("Exista o materie cu codul asta");
             }
-            if (_context.Materie.Any(materie => materie.Nume == mater.Nume) &&_context.Materie.Any(materie => materie.Cod == mater.Cod))
+
+            if (_context.Materie.Any(materie => materie.Nume == mater.Nume) &&
+                _context.Materie.Any(materie => materie.Cod == mater.Cod))
             {
-                throw new AppException("Exista materia respectiva"); 
+                throw new AppException("Exista materia respectiva");
             }
 
             _context.Materie.Add(mater);
@@ -358,7 +377,7 @@ namespace Academic.Services
 
         public void DeleteMaterie(int idMaterie)
         {
-            if(_context.Materie.Count(r => r.IdMaterie == idMaterie) == 0)
+            if (_context.Materie.Count(r => r.IdMaterie == idMaterie) == 0)
                 throw new AppException("Nu exista aceasta materie.");
             var materie = _context.Materie.First(mat => mat.IdMaterie == idMaterie);
             _context.Materie.Remove(materie);
@@ -370,7 +389,7 @@ namespace Academic.Services
             if (_context.Materie.Count(m => m.IdMaterie == materies.IdMaterie) == 0)
                 throw new AppException("Nu exista aceasta materie");
             var materie = _context.Materie.First(m => m.IdMaterie == materies.IdMaterie);
-            
+
             materie.Nume = materies.Nume;
             materies.Cod = materies.Cod;
             materie.NrCredite = materies.NrCredite;
@@ -380,6 +399,13 @@ namespace Academic.Services
             materie.TipActivitate = materies.TipActivitate;
             _context.SaveChanges();
         }
-        
+
+        public int GetIdMaterie(string nume, string cod, string finalizare, int nrpachet, int tipactiv)
+        {
+            var id = _context.Materie.First(materie =>
+                materie.Nume == nume && materie.Cod == cod && materie.Finalizare == finalizare &&
+                materie.NrPachet == nrpachet && materie.TipActivitate == tipactiv).IdMaterie;
+            return id;
+        }
     }
 }
