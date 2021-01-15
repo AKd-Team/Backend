@@ -383,10 +383,12 @@ namespace Academic.Services
             foreach (var det in detaliuContracte)
             {
                 int nota = 0;
-                if (det.NotaRestanta != null)
+                if (det.NotaRestanta != null && det.Nota != null)
                     nota = Math.Max((byte)det.Nota, (byte)det.NotaRestanta);
                 else if (det.Nota != null)
                     nota = (int)det.Nota;
+                else if (det.NotaRestanta != null)
+                    nota = (int) det.NotaRestanta;
                 if (nota != 0)
                 {
                     
